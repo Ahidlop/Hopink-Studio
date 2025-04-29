@@ -1,1 +1,13 @@
-<p>shop works!</p>
+<section class="shopContent">
+    <div class="products" *ngFor="let product of products">
+      <img [src]="product.imageUrl" [alt]="product.name" />
+      <h3>{{ product.name }}</h3>
+      <p class="description">{{ product.description }}</p>
+      <p class="price">{{ product.price | currency:'EUR' }}</p>
+      <div class="actions">
+        <button (click)="addToCart(product)">🛒 Añadir</button>
+        <button class="wishlist" (click)="addToWishlist(product)">❤️</button>
+      </div>
+    </div>
+  </section>
+  

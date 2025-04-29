@@ -86,6 +86,7 @@ header{
     border: none;
     flex-shrink: 2;/*otra*/
     cursor:pointer;      
+    transition: background 0.3s;
 }
 .loginText, .cartText{
     color:inherit; /*Hereda color de login y cart*/

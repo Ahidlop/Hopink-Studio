@@ -5,8 +5,8 @@
     height: 100vh;
     width: 240px;
     background:  var(--thirdColor); 
-    z-index: 1;
-    padding: 20px 0;
+    z-index: 100;
+    padding: 6rem 0;
     flex-direction: column;
     pointer-events: none;
     text-align: center;
