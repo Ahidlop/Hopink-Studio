@@ -1,0 +1,26 @@
+:root{
+    --mainFont: "rock salt", cursive, 'Poppins', sans-serif;
+    --mainColor:#0B0F0A;
+    --secondColor:#1E2E26; /*bloques o menus*/
+    --thirdColor: #6A9F84;/*botones o resaltado*/
+    --fourthColor: #C2EABD;/*hover o fondos suaves*/
+    --lastColor: #F2F2F2;/*blanco destacar texto*/
+    --usualBorderRadius:5px;
+}
+html, body{
+    height: 100%;
+    margin: 00;
+    padding: 0;
+}
+body{
+    background-color: var(--mainColor);
+    font-family: var(--mainFont);
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main{
+    flex:1;
+}

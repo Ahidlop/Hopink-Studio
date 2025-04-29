@@ -44,8 +44,6 @@ header{
 .burguer {
     display: inline-block;
     justify-content: left;
-    flex-shrink: 1;/*aqui*/
-    
 }
 
 .burguerbutt{
@@ -69,10 +67,11 @@ header{
     height: 100vh;
     width: 240px;
     background:  var(--thirdColor); 
-    z-index: 1000;
+    z-index: 1;
     padding: 20px 0;
     flex-direction: column;
     pointer-events: none;
+    text-align: center;
 
     /*Al abrir la página no se ve*/
     transform: translateX(+100%);
@@ -202,19 +201,31 @@ footer{
     padding: 0;
     left: 0;
     width: 100%;
-    height: 15vh;
+    height: 50vh;
     bottom :0;
     display: flex;
-    
+    flex-direction: column;
     align-items: center;
     position:fixed;
+}
+.logoFooter{
+    margin: auto;
+    flex-shrink: 1;
+}
+
+.logoFooter-img{
+    height: 80px;
+    width: auto;
+    border-radius: var(--usualBorderRadius);
 }
 .timetable{
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center;
     font-size: 14px;
-    color: var(--lastColor);
+    color: var(--fourthColor);
+    opacity: 75%;
     line-height: 1.2px;
 }
 .links{
