@@ -1,0 +1,10 @@
+<section class="artistsBox">
+    <div class="artists" *ngFor="let artist of artists">
+        <img [src]="artist.image" [alt]="artist.name" />
+        <h3>{{ artist.name }}</h3>
+        <p class="description">{{ artist.description }}</p>
+        <p class="style">Estilo: {{artist.style}}</p>
+        <p class="price">Precio: {{artist.price}}</p>
+</div>
+</section>
+
