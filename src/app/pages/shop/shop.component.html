@@ -5,8 +5,17 @@
       <p class="description">{{ product.description }}</p>
       <p class="price">{{ product.price | currency:'EUR' }}</p>
       <div class="actions">
-        <button (click)="addToCart(product)">🛒 Añadir</button>
-        <button class="wishlist" (click)="addToWishlist(product)">❤️</button>
+        <button (click)="addToCart(product)">
+          <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 40 40" id="shoppingcart">
+            <path d="M38.9 11.9c-.8-.9-1.9-1.5-3.1-1.5H20.4c-.5 0-1 .4-1 1s.5 1 1 1h15.4c.6 0 1.2.3 1.6.7.4.5.6 1.1.4 1.7l-.9 5h-11c-.5 0-1 .4-1 1s.5 1 1 1h10.7l-.9 4.8c-.1.7-.8 1.2-1.5 1.2H15c-.7 0-1.3-.5-1.5-1.2L9.6 4.9c-.1-.5-.5-.8-1-.8H.9c-.5 0-1 .4-1 1s.5 1 1 1h6.9l3.8 21c.2 1.4 1.2 2.4 2.5 2.8-.5.7-.9 1.6-.9 2.6 0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5c0-.9-.3-1.8-.8-2.5h6.1c-.5.7-.8 1.6-.8 2.5 0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5c0-1-.3-1.9-.8-2.6 1.3-.3 2.4-1.4 2.7-2.8l2.2-11.8c.2-1.2-.1-2.4-.9-3.4zM20.2 32.4c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5 1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5zm11.1 2.5c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z" fill="#34a853" class="color000000 svgShape"></path>
+          </svg>
+          Añadir
+        </button>
+        <button class="wishlist" (click)="addToWishlist(product)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Heart">
+            <path fill-rule="evenodd" d="M21.28 5.627c-1.72 0-3.442.66-4.755 1.978L16 8.133l-.525-.528a6.685 6.685 0 0 0-4.752-1.976 6.69 6.69 0 0 0-4.754 1.976 6.755 6.755 0 0 0 0 9.536l.88.882 8.797 8.83a.5.5 0 0 0 .708 0l8.796-8.83.881-.882a6.755 6.755 0 0 0 0-9.536 6.687 6.687 0 0 0-4.752-1.978zm-10.557.992c1.46 0 2.919.566 4.043 1.694l.88.882a.5.5 0 0 0 .708 0l.88-.883a5.679 5.679 0 0 1 8.088 0 5.736 5.736 0 0 1 0 8.124l-.879.882L16 25.793l-8.443-8.475-.88-.882a5.736 5.736 0 0 1 0-8.123 5.694 5.694 0 0 1 4.046-1.694zm.027 1.01a4.752 4.752 0 0 0-4.113 7.125.5.5 0 1 0 .865-.5 3.748 3.748 0 0 1 3.248-5.625.5.5 0 1 0 0-1z" color="#000" font-family="sans-serif" font-weight="400" overflow="visible" style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;white-space:normal;isolation:auto;mix-blend-mode:normal;solid-color:#000;solid-opacity:1" fill="#34a853" class="color000000 svgShape"></path>
+          </svg>
+        </button>
       </div>
     </div>
 </section>

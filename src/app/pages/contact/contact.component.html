@@ -1,5 +1,5 @@
 <section class="history">
-    <div class="paragraph">
+    <div class="paragraph" id="paragraph">
         <img src="/imagenes/Artistas/home.png" alt="">
         <h2>Nuestra historia</h2>
         <p>
@@ -28,33 +28,69 @@
             En Hop Ink, cada línea cuenta una historia, y la nuestra es solo el comienzo.
         </p>
     </div>
-    <h2>Cita previa</h2>
-    <section class="dateBox">
+    <fieldset class="dateBox">
+        <legend id="date"><h2>Cita Previa</h2></legend>
         <img src="/imagenes/cita.png" alt="">
-        <div class="date">
-            <form action="" method="get" class="dateForm">
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" required>
-                <br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <br>
-                <label for="message">Mensaje:</label>
-                <input type="text" id="message" name="message" required>
-                <br>
-                <select id="artist" name="artist" required>
-                    <option value="">Selecciona un artista</option>
-                    <option value="artist1">Alejandra López</option>
-                    <option value="artist2">Pedro Peña</option>
-                    <option value="artist3">Raúl Suero</option>
-                    <option value="artist4">Fernando Peinado</option>
-                </select>
-                <br>
-                <input type="submit" name="submit" id="submit" value="Enviar">
-            </form>
-        </div>
-    </section>
-    <h1>Contacto</h1>
+        <form action="" method="get" class="dateForm" >
+            <label for="name">Nombre:</label>
+            <input type="text" class="name" name="name" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" class="email" name="email" required>
+            <br>
+            <select class="artist" name="artist" required>
+                <option value="default" selected disabled>Selecciona un artista</option>
+                <option value="Alejandra">Alejandra López</option>
+                <option value="Pedro">Pedro Peña</option>
+                <option value="Raul">Raúl Suero</option>
+                <option value="Fernando">Fernando Peinado</option>
+                <option value="Practicas">Artista en prácticas</option>
+            </select>
+            <br>
+            <label for="message">Mensaje:</label>
+            <input type="text"class="message" name="message" >
+            <br>
+            <input type="submit" name="submit" class="submit" value="Enviar">
+        </form>
+    </fieldset>
+
+    <br><br>
+    <fieldset class="contactBox" id="contactBox" class="contactBox">
+        <legend><h2>Contacto</h2></legend>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6444.704438741433!2d-5.451693!3d36.1336364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0c94ceaad65e99%3A0x7897e0a967658cc8!2sIES%20Kursaal!5e0!3m2!1ses!2ses!4v1746459957983!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="icons">
+                <div class="direction">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Location">
+                        <path d="M12,2a8,8,0,0,0-8,8c0,5.4,7.05,11.5,7.35,11.76a1,1,0,0,0,1.3,0C13,21.5,20,15.4,20,10A8,8,0,0,0,12,2Zm0,17.65c-2.13-2-6-6.31-6-9.65a6,6,0,0,1,12,0C18,13.34,14.13,17.66,12,19.65ZM12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z" fill="#34a853" class="color000000 svgShape"></path>
+                    </svg>
+                    <a href="https://www.google.es/maps/place/IES+Kursaal/@36.1336364,-5.451693,16z/data=!3m1!4b1!4m6!3m5!1s0xd0c94ceaad65e99:0x7897e0a967658cc8!8m2!3d36.1336364!4d-5.451693!16s%2Fg%2F1tt8dj52?entry=ttu&g_ep=EgoyMDI1MDQzMC4xIKXMDSoASAFQAw%3D%3D" target="_blank">Av. Virgen de Europa, 4, 11202 Algeciras, Cádiz</a>
+                </div>
+                <div class="phone">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" id="Phone">
+                        <path fill="none" fill-rule="evenodd" stroke="#34a853" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.11 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 15.92z" class="colorStroke000000 svgStroke"></path>
+                    </svg>
+                    <a href="tel:+34956670767" target="_blank">+34 956 67 07 67</a>
+                </div>
+                <div class="email">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" id="Mail">
+                        <path d="M18 0C8.065 0 0 8.065 0 18s8.065 18 18 18 18-8.065 18-18S27.935 0 18 0zm0 1c9.41 0 17.031 7.59 17.031 17S27.41 35.031 18 35.031C8.59 35.031.969 27.41.969 18 .969 8.59 8.59 1 18 1zM8.844 12.594a.5.5 0 0 0-.438.531V24.5a.5.5 0 0 0 .5.5h18.188a.5.5 0 0 0 .5-.5V13.187a.5.5 0 0 0-.5-.593H18l-9 .031a.5.5 0 0 0-.094-.031.5.5 0 0 0-.062 0zm9.156 1h7.375L18 18.219l-7.344-4.594L18 13.594zM9.406 14l8.344 5.219a.5.5 0 0 0 .531 0L26.594 14v10H9.406V14z" color="#000" font-family="Sans" font-weight="400" overflow="visible" style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;marker:none;-inkscape-font-specification:Sans" fill="#34a853" class="color000000 svgShape"></path>
+                    </svg>
+                    <a href="mailto: alejandrahidalgolopez00@gmail.com" target="_blank">info&#64;hopinkstudio.com</a>
+                </div>
+                <div class="instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2476 2476" id="Instagram">
+                        <path d="M825.4 1238c0-227.9 184.7-412.7 412.6-412.7 227.9 0 412.7 184.8 412.7 412.7 0 227.9-184.8 412.7-412.7 412.7-227.9 0-412.6-184.8-412.6-412.7m-223.1 0c0 351.1 284.6 635.7 635.7 635.7s635.7-284.6 635.7-635.7-284.6-635.7-635.7-635.7S602.3 886.9 602.3 1238m1148-660.9c0 82 66.5 148.6 148.6 148.6 82 0 148.6-66.6 148.6-148.6s-66.5-148.5-148.6-148.5-148.6 66.5-148.6 148.5M737.8 2245.7c-120.7-5.5-186.3-25.6-229.9-42.6-57.8-22.5-99-49.3-142.4-92.6-43.3-43.3-70.2-84.5-92.6-142.3-17-43.6-37.1-109.2-42.6-229.9-6-130.5-7.2-169.7-7.2-500.3s1.3-369.7 7.2-500.3c5.5-120.7 25.7-186.2 42.6-229.9 22.5-57.8 49.3-99 92.6-142.4 43.3-43.3 84.5-70.2 142.4-92.6 43.6-17 109.2-37.1 229.9-42.6 130.5-6 169.7-7.2 500.2-7.2 330.6 0 369.7 1.3 500.3 7.2 120.7 5.5 186.2 25.7 229.9 42.6 57.8 22.4 99 49.3 142.4 92.6 43.3 43.3 70.1 84.6 92.6 142.4 17 43.6 37.1 109.2 42.6 229.9 6 130.6 7.2 169.7 7.2 500.3 0 330.5-1.2 369.7-7.2 500.3-5.5 120.7-25.7 186.3-42.6 229.9-22.5 57.8-49.3 99-92.6 142.3-43.3 43.3-84.6 70.1-142.4 92.6-43.6 17-109.2 37.1-229.9 42.6-130.5 6-169.7 7.2-500.3 7.2-330.5 0-369.7-1.2-500.2-7.2M727.6 7.5c-131.8 6-221.8 26.9-300.5 57.5-81.4 31.6-150.4 74-219.3 142.8C139 276.6 96.6 345.6 65 427.1 34.4 505.8 13.5 595.8 7.5 727.6 1.4 859.6 0 901.8 0 1238s1.4 378.4 7.5 510.4c6 131.8 26.9 221.8 57.5 300.5 31.6 81.4 73.9 150.5 142.8 219.3 68.8 68.8 137.8 111.1 219.3 142.8 78.8 30.6 168.7 51.5 300.5 57.5 132.1 6 174.2 7.5 510.4 7.5 336.3 0 378.4-1.4 510.4-7.5 131.8-6 221.8-26.9 300.5-57.5 81.4-31.7 150.4-74 219.3-142.8 68.8-68.8 111.1-137.9 142.8-219.3 30.6-78.7 51.6-168.7 57.5-300.5 6-132.1 7.4-174.2 7.4-510.4s-1.4-378.4-7.4-510.4c-6-131.8-26.9-221.8-57.5-300.5-31.7-81.4-74-150.4-142.8-219.3C2199.4 139 2130.3 96.6 2049 65c-78.8-30.6-168.8-51.6-300.5-57.5-132-6-174.2-7.5-510.4-7.5-336.3 0-378.4 1.4-510.5 7.5" fill="#34a853" class="color000000 svgShape"></path>
+                    </svg>
+                    <a href="https://www.instagram.com/alexiahop/?hl=es" target="_blank">Hop Ink Studio</a>
+                </div>
+                <div class="linkedin">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="linkedin">
+                        <path d="M17.5,8.999a5.41868,5.41868,0,0,0-2.56543.64453A.99918.99918,0,0,0,14,8.999H10a.99943.99943,0,0,0-1,1v12a.99942.99942,0,0,0,1,1h4a.99942.99942,0,0,0,1-1v-5.5a1,1,0,1,1,2,0v5.5a.99942.99942,0,0,0,1,1h4a.99942.99942,0,0,0,1-1v-7.5A5.50685,5.50685,0,0,0,17.5,8.999Zm3.5,12H19v-4.5a3,3,0,1,0-6,0v4.5H11v-10h2v.70313a1.00048,1.00048,0,0,0,1.78125.625A3.48258,3.48258,0,0,1,21,14.499Zm-14-12H3a.99943.99943,0,0,0-1,1v12a.99942.99942,0,0,0,1,1H7a.99942.99942,0,0,0,1-1v-12A.99943.99943,0,0,0,7,8.999Zm-1,12H4v-10H6ZM5.01465,1.542A3.23283,3.23283,0,1,0,4.958,7.999h.02832a3.23341,3.23341,0,1,0,.02832-6.457ZM4.98633,5.999H4.958A1.22193,1.22193,0,0,1,3.58887,4.77051c0-.7461.55957-1.22852,1.42578-1.22852A1.2335,1.2335,0,0,1,6.41113,4.77051C6.41113,5.5166,5.85156,5.999,4.98633,5.999Z" fill="#34a853" class="color000000 svgShape"></path>
+                    </svg>
+                    <a href="https://www.linkedin.com/in/alejandra-l%C3%B3pez-hidalgo-b800b3204/?originalSubdomain=es" target="_blank">Hop Ink Tattoo Studio</a>
+                </div>
+            </div>
+    </fieldset>
     
 </section>
 

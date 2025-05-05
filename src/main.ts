@@ -11,4 +11,4 @@ bootstrapApplication(AppComponent,{
 })
   .catch((err) => console.error(err));
 
-  
+  export const appRouterProviders = provideRouter(routes);
