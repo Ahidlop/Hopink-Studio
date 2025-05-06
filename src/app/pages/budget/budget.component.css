@@ -63,3 +63,15 @@ legend{
   .message{
     height: 4rem;
   }
+
+  .image::file-selector-button { 
+    background-color: var(--fourthColor);
+    border: none;
+    padding: 0.4rem;
+    font-family: var(--fontFamily);
+  }
+
+  .image:hover::file-selector-button {
+    background-color: var(--lastColor);
+    transform: scale(1.05);
+  }
