@@ -1,41 +1,80 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ShopComponent } from '../shop/shop.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-
+import { ActivatedRoute, RouterModule , Router} from '@angular/router';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-shop-page',
   standalone: true,
-  imports: [CommonModule, ShopComponent, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './shop-page.component.html',
   styleUrls: ['./shop-page.component.css']
 })
 export class ShopPageComponent implements OnInit{
   allProducts: any[] = [];
   filteredProducts: any[] = [];
+  currentFilter: string ='all';
+  mensaje ='';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router, private cartService: CartService) {}
 
-  ngOnInit() {
+  /*ngOnInit() {
     this.allProducts = this.getAllProducts(); 
     this.route.queryParams.subscribe((params: any) => {
-      const filtro = params['filter'];
-      if (filtro) {
-        this.changeFilter(filtro);
-      } else {
-        this.filteredProducts = this.allProducts;
+      const filtro = params['filter'] || 'all';
+      this.changeFilter(filtro);
+      if (!params['filter']) {
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { filter: 'all' },
+          queryParamsHandling: 'merge',
+        });
       }
     });
   }
-  changeFilter(filter: string): void {
+    changeFilter(filter: string): void {
+    this.currentFilter=filter;
+    this.filteredProducts=filter==='all'
     if (filter === 'all') {
       this.filteredProducts = this.allProducts;
     } else {
       this.filteredProducts = this.allProducts.filter(product => product.category === filter);
     }
-  }
+  }*/
+    ngOnInit() {
+      this.allProducts = this.getAllProducts();
+      this.route.queryParams.subscribe((params: any) => {
+        const filtro = params['filter'] || 'all';
+        this.changeFilter(filtro);
+      });
+    }
+    changeFilter(filter: string): void {
+      this.currentFilter = filter;
+      this.filteredProducts = filter === 'all'
+        ? this.allProducts
+        : this.allProducts.filter(product => product.category === filter);
+    }
 
-  getAllProducts(): any[] {
+  /*Carrito y WishList*/
+    addToCart(product: any) {
+      this.cartService.addToCart(product);
+      this.mostrarMensaje('✅ Producto añadido al carrito');
+      console.log('Producto añadido:', product);
+    }
+  
+    addToWishlist(product: any) {
+      this.cartService.addToWishlist(product);
+      this.mostrarMensaje('❤️ Añadido a la lista de deseos');
+      console.log('Añadido a lista de deseos:', product);
+    }
+  
+    mostrarMensaje(texto: string) {
+      this.mensaje = texto;
+      setTimeout(() => {
+        this.mensaje = '';
+      }, 2000);
+    }
+
+    getAllProducts(): any[] {
       return[
         {
           id:101,
@@ -246,6 +285,7 @@ export class ShopPageComponent implements OnInit{
           imageUrl: '/imagenes/ClientesStudio/packBasico.png'
         }
       ];
-  }  
+  }
 }
+  
 

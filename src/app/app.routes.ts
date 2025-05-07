@@ -1,6 +1,5 @@
 import { Routes, provideRouter } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { ShopComponent } from './pages/shop/shop.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { BudgetComponent } from './pages/budget/budget.component';
