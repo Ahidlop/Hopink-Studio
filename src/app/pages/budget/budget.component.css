@@ -26,7 +26,8 @@ legend{
   .budget img{
     width: 50%;
     height: auto;
-    border-radius: 16px
+    border-radius: 16px;
+    max-height:40rem;
   }
 
   .budgetForm{
@@ -36,7 +37,8 @@ legend{
     padding-left: 1rem;
     color: var(--lastColor);
     flex-grow: 1;
-    max-width: 100%;
+    max-width: 50rem;
+    min-width: 2rem;
     z-index: 1;
   }
 
@@ -48,6 +50,7 @@ legend{
     background-color: var(--fourthColor);
     color: var(--secondColor);
     font-family: var(--fontFamily);
+  
   }
 
   .name, .email{
@@ -56,7 +59,7 @@ legend{
   }
 
   .budgetForm select, .submit{
-    min-width: 14rem;
+    min-width: 3rem;
     height: 1.9rem;
   } 
 
@@ -69,6 +72,7 @@ legend{
     border: none;
     padding: 0.4rem;
     font-family: var(--fontFamily);
+
   }
 
   .image:hover::file-selector-button {

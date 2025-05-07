@@ -1,1 +1,44 @@
-<p>account works!</p>
+<!--Si no has hecho login-->
+<div class="accountPage" *ngIf="!isLoggedIn">
+    <h2>Bienvenido a HopInk</h2>
+    <div class="accountForms">
+  
+      <form #loginForm="ngForm" (ngSubmit)="login(loginEmail.value, loginPassword.value)">
+        <h3>Iniciar sesión</h3>
+        <input type="email" name="loginEmail" placeholder="Email" #loginEmail required>
+        <input type="password" name="loginPassword" placeholder="Contraseña" #loginPassword required>
+        <button type="submit" class="next">Siguiente</button>
+      </form>
+  
+      <form #registerForm="ngForm" (ngSubmit)="register(regName.value, regEmail.value, regPassword.value)">
+        <h3>Registrarse</h3>
+        <input type="text" name="regName" placeholder="Nombre completo" #regName required>
+        <input type="email" name="regEmail" placeholder="Email" #regEmail required>
+        <input type="password" name="regPassword" placeholder="Contraseña" #regPassword required>
+        <button type="submit">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Tras login-->
+  <div class="accountPage" *ngIf="isLoggedIn">
+    <h2>Bienvenid&#64;, {{ user.name }} </h2>
+    <div class="accountMenu">
+      <a href="" class="profile">
+        Mi perfil
+      </a>
+      <a href="" class="orders">
+        Mis pedidos
+      </a>
+      <a href="" class="returns">
+        Devoluciones
+      </a>
+      <a href="" class="wishlist">
+        Lista de deseos
+      </a>
+      <a href="" class="settings">
+        Configuración
+      </a>
+    </div>
+  </div>
+  

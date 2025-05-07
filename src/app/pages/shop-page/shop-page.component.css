@@ -1,0 +1,49 @@
+.filters {
+    display: flex;
+    justify-content: space-around;
+    margin-top:6.6rem;
+    background-color: var(--secondColor);
+    padding: 0.5rem;
+  }
+  
+  .filters button {
+    padding: 0.5rem;
+    font-family: var(--fontFamily);
+    color: var(--mainColor);
+    background-color: var(--secondColor);
+    border: none;
+    font-weight: bold;
+    border-bottom: 1px solid transparent;
+    transition:  color 0.3s ease;
+  }
+  
+  .filters button:hover {
+    color: var(--thirdColor);
+    border-bottom: 1px solid var(--thirdColor);
+  }
+  
+
+/*filterBox{
+    margin-top: 6.5rem;
+}
+svg{
+    width: 10rem;
+    height: 10rem;
+    
+}
+
+.filters {
+    display: flex;
+    background-color: var(--fourthColor);
+    padding: 0.2rem;
+    font-family: var(--fontFamily);
+    border-radius: 0;
+  }
+
+.filters option:hover{
+    background-color: var(--mainColor);
+}*/
+
+
+  
+

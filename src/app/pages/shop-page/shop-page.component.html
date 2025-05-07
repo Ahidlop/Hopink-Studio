@@ -1,0 +1,11 @@
+<div class="filters">
+    <button (click)="changeFilter('all')">Todos</button>
+    <button (click)="changeFilter('clients')">Clientes</button>
+    <button (click)="changeFilter('tattooArtist')">Tatuadores</button>
+</div>
+<app-shop [products]="filteredProducts"></app-shop>
+
+
+
+
+

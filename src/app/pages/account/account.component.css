@@ -1,0 +1,82 @@
+.accountPage {
+    max-width: 85%;
+    margin: 5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  h2{
+    color: var(--lastColor);
+  }
+  .accountForms {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  form {
+    background-color: var(--fourthColor);
+    padding: 1rem;
+    border-radius: 12px;
+    width: 100%;
+    min-width: 15rem;
+    max-width: 35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  input {
+    width: 95%;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    margin-top: 1rem;
+    width: 90%;
+    padding: 0.5rem;
+    background-color: var(--secondColor);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    
+  }
+  .next{
+    margin-top: 3.4rem;
+  }
+  button:hover{
+    background-color: var(--mainColor);
+  }
+
+  button.logout {
+    background-color: #a22;
+    margin-bottom: 1rem;
+  }
+  
+  .accountMenu a{
+    padding: 0.75rem;
+    background: var(--fourthColor);
+    color: var(--secondColor);
+    margin-top: 1.5rem;
+    border-radius: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+    .accountMenu a:hover{
+        background: var(--thirdColor);
+        color: var(--fourthColor);
+    }
+  

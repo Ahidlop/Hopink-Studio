@@ -4,7 +4,15 @@
         <div class="spacesText">
             <h3>{{ space.name }}</h3>
             <p class="description">{{ space.description }}</p>
-            <a [routerLink]="space.pageUrl">Ver más</a>
+            <a [routerLink]="space.route" 
+                *ngIf="space.query"
+                [queryParams]="space.query">
+                Ver más
+            </a>
+
+            <a [routerLink]="space.route" *ngIf="!space.query">
+                Ver más
+            </a>
         </div>
     </div>
 </section>

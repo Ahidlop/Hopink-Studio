@@ -1,5 +1,6 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-shop',
@@ -10,12 +11,26 @@ import { CommonModule } from '@angular/common';
 })
 export class ShopComponent {
   @Input() products: any[] = [];
-  
+  mensaje = '';
+
+  constructor(private cartService: CartService) {}
+
   addToCart(product: any) {
-    console.log('Añadido al carrito:', product);
+    this.cartService.addToCart(product);
+    this.mostrarMensaje('✅ Producto añadido al carrito');
+    console.log('Producto añadido:', product);
   }
 
   addToWishlist(product: any) {
-    console.log('Añadido a favoritos:', product);
+    this.cartService.addToWishlist(product);
+    this.mostrarMensaje('❤️ Añadido a la lista de deseos');
+    console.log('Añadido a lista de deseos:', product);
+  }
+
+  mostrarMensaje(texto: string) {
+    this.mensaje = texto;
+    setTimeout(() => {
+      this.mensaje = '';
+    }, 2000);
   }
 }
