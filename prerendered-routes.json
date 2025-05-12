@@ -1,0 +1,12 @@
+{
+  "routes": {
+    "/Hopink-Studio": {},
+    "/Hopink-Studio/account": {},
+    "/Hopink-Studio/artists": {},
+    "/Hopink-Studio/budget": {},
+    "/Hopink-Studio/cart": {},
+    "/Hopink-Studio/contact": {},
+    "/Hopink-Studio/cookies": {},
+    "/Hopink-Studio/shopPage": {}
+  }
+}
