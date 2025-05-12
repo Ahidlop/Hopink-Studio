@@ -6,7 +6,8 @@ import { BudgetComponent } from './pages/budget/budget.component';
 import { AccountComponent } from './pages/account/account.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
-
+import { CookiesComponent } from './components/cookies/cookies.component';
+import path from 'path';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'artists', component: ArtistsComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'account', component: AccountComponent },
   {path: 'cart', component: CartComponent },
   {path: 'shopPage', component: ShopPageComponent },
+  {path: 'cookies' , component: CookiesComponent}
 ];
 
 export const appRouterProviders = provideRouter(routes);

@@ -1,0 +1,29 @@
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--fourthColor);
+    color: var(--secondColor);
+    padding: 1rem;
+    z-index: 999;
+    text-align: center;
+    padding: 0.5rem;
+  }
+  
+  .cookie-buttons button {
+    margin: 0 10px;
+    background-color: var(--mainColor);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .cookie-info {
+    margin-top: 1rem;
+    background: #333;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  

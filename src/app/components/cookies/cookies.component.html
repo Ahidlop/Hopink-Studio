@@ -1,0 +1,34 @@
+<div *ngIf="showBanner" class="cookie-banner">
+    <p>Usamos cookies para mejorar tu experiencia.</p>
+  
+    <div *ngIf="!showPreferences" class="cookie-buttons">
+      <button (click)="acceptAll()">Aceptar todas</button>
+      <button (click)="rejectAll()">Rechazar todas</button>
+      <button (click)="togglePreferences()">Configurar</button>
+    </div>
+  
+    <div *ngIf="showPreferences" class="cookie-preferences">
+      <p><strong>Selecciona tus preferencias:</strong></p>
+  
+      <label>
+        <input type="checkbox" [checked]="true" disabled />
+        Cookies necesarias (siempre activas)
+      </label>
+  
+      <label>
+        <input type="checkbox" [(ngModel)]="preferences.analytics" />
+        Cookies analíticas
+      </label>
+  
+      <label>
+        <input type="checkbox" [(ngModel)]="preferences.marketing" />
+        Cookies de marketing
+      </label>
+  
+      <div class="cookie-buttons">
+        <button (click)="savePreferences()">Guardar selección</button>
+        <button (click)="togglePreferences()">Volver</button>
+      </div>
+    </div>
+  </div>
+  

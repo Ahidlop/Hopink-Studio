@@ -5,11 +5,12 @@ import { HeaderComponent } from "./components/header/header.component";
 import { MenuComponent } from './components/menu/menu.component';
 import { filter } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { CookiesComponent } from './components/cookies/cookies.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, FooterComponent, HeaderComponent, MenuComponent],
+  imports: [RouterOutlet, RouterModule, FooterComponent, HeaderComponent, MenuComponent, CookiesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
