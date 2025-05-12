@@ -11,16 +11,6 @@ legend{
     padding: 1rem;
     margin: 3rem;
     margin-top: 8rem;
-
-  }
-  .budgetBox{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    border-color: var(--lastColor);
-    border: solid 2px var(--lastColor);
-    gap: 1rem;
   }
 
   .budget img{
