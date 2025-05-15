@@ -7,6 +7,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { CookiesComponent } from './components/cookies/cookies.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import path from 'path';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,8 @@ export const routes: Routes = [
   { path: 'account', component: AccountComponent },
   {path: 'cart', component: CartComponent },
   {path: 'shopPage', component: ShopPageComponent },
-  {path: 'cookies' , component: CookiesComponent}
+  {path: 'cookies' , component: CookiesComponent},
+  {path: 'wishList', component: WishlistComponent}
 ];
 
 export const appRouterProviders = provideRouter(routes);

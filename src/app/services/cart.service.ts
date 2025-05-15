@@ -1,44 +1,65 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Product } from './product.service';
 
-@Injectable({ providedIn: 'root' })
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class CartService {
-  private cartItems = new BehaviorSubject<any[]>([]);
-  cart$ = this.cartItems.asObservable();
+  private cart: CartItem[] = [];
+  private wishList: Product[] =[];
+  private cartSubject = new BehaviorSubject<CartItem[]>(this.cart);
 
-  private wishlistItems = new BehaviorSubject<any[]>([]);
-  wishlist$ = this.wishlistItems.asObservable();
+  getCartObservable() {
+    return this.cartSubject.asObservable();
+  }
 
-  addToCart(product: any) {
-    const items = this.cartItems.value;
-    const index = items.findIndex(p => p.id === product.id);
+  getCart(): CartItem[] {
+    return this.cart;
+  }
 
-    if (index > -1) {
-      items[index].quantity += 1;
+  addToCart(product: Product): void {
+    const item = this.cart.find(p => p.id === product.id);
+    if (item) {
+      item.quantity += 1;
     } else {
-      items.push({ ...product, quantity: 1 });
+      this.cart.push({ ...product, quantity: 1 });
     }
-
-    this.cartItems.next([...items]);
+    this.cartSubject.next([...this.cart]);
   }
 
-  addToWishlist(product: any) {
-    const items = this.wishlistItems.value;
-    if (!items.some(p => p.id === product.id)) {
-      this.wishlistItems.next([...items, product]);
-    }
+  removeFromCart(id: number): void {
+    this.cart = this.cart.filter(p => p.id !== id);
+    this.cartSubject.next([...this.cart]);
   }
 
-  removeFromCart(id: number) {
-    const updated = this.cartItems.value.filter(p => p.id !== id);
-    this.cartItems.next(updated);
+  emptyCart(): void {
+    this.cart = [];
+    this.cartSubject.next([]);
   }
 
-  clearCart() {
-    this.cartItems.next([]);
+  getTotal(): number {
+    return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
-  getTotal() {
-    return this.cartItems.value.reduce((sum, p) => sum + p.price * p.quantity, 0);
+  getWishlist(): Product[] {
+  return this.wishList;
+}
+
+addToWishlist(product: Product): void {
+  const exists = this.wishList.find(p => p.id === product.id);
+  if (!exists) {
+    this.wishList.push(product);
   }
+}
+
+removeFromWishlist(id: number): void {
+  this.wishList = this.wishList.filter(p => p.id !== id);
+}
+
+
 }

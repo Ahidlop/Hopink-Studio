@@ -1,0 +1,15 @@
+<div class="wishlistBox">
+  <h2>❤ Favoritos</h2>
+
+  <div *ngIf="wishlist.length === 0">
+    <p>No tienes productos en favoritos.</p>
+  </div>
+
+  <ul *ngIf="wishlist.length > 0">
+    <li *ngFor="let product of wishlist">
+      <strong>{{ product.name }}</strong> – {{ product.price | currency:'EUR' }}
+      <button (click)="addToCart(product)">➕ Añadir al carrito</button>
+      <button (click)="removeFromWishlist(product.id)">❌ Eliminar</button>
+    </li>
+  </ul>
+</div>

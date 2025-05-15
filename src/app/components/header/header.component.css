@@ -82,6 +82,16 @@ header{
     height: 20px;
     width: auto;
 }
+.cartNumber{
+    margin-bottom: 5rem;
+    right: -0.01rem;
+    background-color: red;
+    color: var(--lastColor);
+    font-size: 0.7rem;
+    padding-right: 0.3rem;
+    border-radius: 50%;
+    font-weight: bold;
+}
 
 .logo{
     margin-left: auto;
