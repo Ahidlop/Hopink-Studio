@@ -21,8 +21,8 @@
             <path d="M26 56h12v2H26zM13.002 57.073 9.07 3H0V1h10.93l4.068 55.927z" fill="#34a853" class="color000000 svgShape"></path>
             <path d="M13.07 43.998l-.14-1.996 42.264-2.948L61.74 11H11V9h53.26l-7.454 31.946z" fill="#34a853" class="color000000 svgShape"></path>
         </svg> 
-        <span class="cartNumber" *ngIf="cartService.getCart().length > 0">
-            {{ cartService.getCart().length }}
+        <span class="cartNumber" *ngIf="cartService.getItemCount() > 0">
+            {{ cartService.getItemCount() }}
         </span>
     </a>
 

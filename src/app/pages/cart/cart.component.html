@@ -18,7 +18,10 @@
         <span>{{ item.name }}</span>
         <span>x{{ item.quantity }}</span>
         <span>{{ item.price * item.quantity | currency:'EUR' }}</span>
-        <button class="remove" (click)="removeProduct(item.id)">❌</button>
+        <div class="removeButtons">
+          <button class="decrease" (click)="decreaseProduct(item.id)">-</button>
+          <button class="remove" (click)="removeProduct(item.id)">X</button>
+        </div>
       </li>
     </ul>
 
@@ -32,5 +35,7 @@
       <button class="empty" (click)="emptyCart()">Vaciar carrito</button>
       <button class="pay">Finalizar compra</button>
     </div>
+
   </div>
+
 </div>

@@ -1,5 +1,5 @@
 .cartBox {
-    max-width: 90rem;
+    max-width: 90%;
     margin: 3rem;
     margin-top: 10rem;
     padding: 1rem;
@@ -17,27 +17,45 @@
     width: 40px;
     height: auto;
   }
-  
-  ul {
-    padding: 0;
-    min-height: 15rem;
+  .emptyCart{
+    min-height: 10rem;
   }
   
-  li {
+  .cartList {
+    padding: 0;
+    min-height: 15rem;
+    width: 100%;
+  }
+  
+  .cartItem {
     background-color: var(--fourthColor);
-    margin-bottom: 0.5rem;
+    margin: 1rem;
     padding: 1rem;
-    width: 40rem;
+    width:30rem;
     border-radius: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .removeButtons{
+    display: flex;
+    justify-content: space-around;
+    gap:0.5rem;
+    
+  }
+
+  .decrease, .remove{
+    color:red;
+    font-weight: bold;
+    padding: 0.8rem;
   }
   
   .buttons {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    
   }
 
   button{

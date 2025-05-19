@@ -32,6 +32,18 @@ export class CartService {
     this.cartSubject.next([...this.cart]);
   }
 
+  decreaseQuantity(id: number): void {
+  const index = this.cart.findIndex(item => item.id === id);
+  if (index !== -1) {
+    if (this.cart[index].quantity > 1) {
+      this.cart[index].quantity -= 1;
+    } else {
+      this.cart.splice(index, 1);
+    }
+    this.cartSubject.next([...this.cart]);
+  }
+}
+
   removeFromCart(id: number): void {
     this.cart = this.cart.filter(p => p.id !== id);
     this.cartSubject.next([...this.cart]);
@@ -48,18 +60,21 @@ export class CartService {
 
   getWishlist(): Product[] {
   return this.wishList;
-}
-
-addToWishlist(product: Product): void {
-  const exists = this.wishList.find(p => p.id === product.id);
-  if (!exists) {
-    this.wishList.push(product);
   }
-}
 
-removeFromWishlist(id: number): void {
-  this.wishList = this.wishList.filter(p => p.id !== id);
-}
+  addToWishlist(product: Product): void {
+    const exists = this.wishList.find(p => p.id === product.id);
+    if (!exists) {
+      this.wishList.push(product);
+    }
+  }
 
+  removeFromWishlist(id: number): void {
+    this.wishList = this.wishList.filter(p => p.id !== id);
+  }
+
+  getItemCount(): number{
+    return this.cart.reduce((sum,item) => sum + item.quantity, 0)
+  }
 
 }
