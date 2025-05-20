@@ -1,61 +1,3 @@
-<<<<<<< Updated upstream
-<!-- Si NO has hecho login -->
-<div class="accountPage" *ngIf="!isLoggedIn">
-  <h2>Bienvenido a HopInk</h2>
-  <div class="accountForms">
-
-    <!-- Formulario login -->
-    <form #loginForm="ngForm"
-          (ngSubmit)="login(loginEmail.value, loginPassword.value)">
-      <h3>Iniciar sesión</h3>
-      <input type="email"
-             name="loginEmail"
-             placeholder="Email"
-             #loginEmail
-             required>
-      <input type="password"
-             name="loginPassword"
-             placeholder="Contraseña"
-             #loginPassword
-             required>
-      <button type="submit" class="next">Siguiente</button>
-    </form>
-
-    <!-- Formulario registro -->
-    <form #registerForm="ngForm"
-          (ngSubmit)="register(regName.value, regEmail.value, regPassword.value)">
-      <h3>Registrarse</h3>
-      <input type="text"
-             name="regName"
-             placeholder="Nombre completo"
-             #regName
-             required>
-      <input type="email"
-             name="regEmail"
-             placeholder="Email"
-             #regEmail
-             required>
-      <input type="password"
-             name="regPassword"
-             placeholder="Contraseña"
-             #regPassword
-             required>
-      <button type="submit">Crear cuenta</button>
-    </form>
-
-  </div>
-</div>
-
-<!-- Si YA has hecho login-->
-<div class="accountPage" *ngIf="isLoggedIn">
-  <h2>Bienvenid&#64;, {{ user.name }}</h2>
-  <div class="accountMenu">
-    <a routerLink="/profile"   class="profile">Mi perfil</a>
-    <a routerLink="/orders"    class="orders">Mis pedidos</a>
-    <a routerLink="/returns"   class="returns">Devoluciones</a>
-    <a routerLink="/wishList"  class="wishlist">Lista de deseos</a>
-    <a routerLink="/settings"  class="settings">Configuración</a>
-=======
 <div class="accountPage" *ngIf="!isLoggedIn">
   <h2>Bienvenido a HopInk</h2>
   <div class="accountForms">
@@ -84,7 +26,6 @@
     <a href="#" class="returns">Devoluciones</a>
     <a routerLink="/wishList" class="wishlist">Lista de deseos</a>
     <a href="#" class="settings">Configuración</a>
->>>>>>> Stashed changes
     <button (click)="logout()">Cerrar sesión</button>
   </div>
 </div>
