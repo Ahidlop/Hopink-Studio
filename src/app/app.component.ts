@@ -6,13 +6,22 @@ import { MenuComponent } from './components/menu/menu.component';
 import { filter } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { CookiesComponent } from './components/cookies/cookies.component';
+import { HttpClientModule } from '@angular/common/http';  // Import HTTP client module
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, FooterComponent, HeaderComponent, MenuComponent, CookiesComponent],
+  imports: [
+    RouterOutlet,
+    RouterModule,
+    FooterComponent,
+    HeaderComponent,
+    MenuComponent,
+    CookiesComponent,
+    HttpClientModule  // Add HttpClientModule to imports
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'hopink-studio';
@@ -24,7 +33,10 @@ export class AppComponent {
     console.log('Menu:', this.menuVisible);
   }
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: Object) {
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
     this.router.events
