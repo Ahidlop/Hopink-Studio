@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!-- Si NO has hecho login -->
 <div class="accountPage" *ngIf="!isLoggedIn">
   <h2>Bienvenido a HopInk</h2>
@@ -54,6 +55,36 @@
     <a routerLink="/returns"   class="returns">Devoluciones</a>
     <a routerLink="/wishList"  class="wishlist">Lista de deseos</a>
     <a routerLink="/settings"  class="settings">Configuración</a>
+=======
+<div class="accountPage" *ngIf="!isLoggedIn">
+  <h2>Bienvenido a HopInk</h2>
+  <div class="accountForms">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <h3>Iniciar sesión</h3>
+      <input type="email"       formControlName="email"    placeholder="Email" required>
+      <input type="password"    formControlName="password" placeholder="Contraseña" required>
+      <button type="submit" class="next">Siguiente</button>
+    </form>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <h3>Registrarse</h3>
+      <input type="text"        formControlName="name"     placeholder="Nombre completo" required>
+      <input type="email"       formControlName="email"    placeholder="Email" required>
+      <input type="password"    formControlName="password" placeholder="Contraseña" required>
+      <button type="submit">Crear cuenta</button>
+    </form>
+  </div>
+</div>
+
+<div class="accountPage" *ngIf="isLoggedIn">
+  <h2>Bienvenid&#64;, {{ user?.name }} </h2>
+  <div class="accountMenu">
+    <a href="#" class="profile">Mi perfil</a>
+    <a href="#" class="orders">Mis pedidos</a>
+    <a href="#" class="returns">Devoluciones</a>
+    <a routerLink="/wishList" class="wishlist">Lista de deseos</a>
+    <a href="#" class="settings">Configuración</a>
+>>>>>>> Stashed changes
     <button (click)="logout()">Cerrar sesión</button>
   </div>
 </div>

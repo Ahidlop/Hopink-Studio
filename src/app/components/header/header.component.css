@@ -71,6 +71,7 @@ header{
 }
 
 .loggedInDot{
+<<<<<<< Updated upstream
     position: absolute;
     top: 4px;
     right: 4px;
@@ -80,6 +81,15 @@ header{
     border-radius: 50%;
 }
 
+=======
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    margin-left: 4px;
+}
+>>>>>>> Stashed changes
 .cartNumber{
     margin-bottom: 5rem;
     right: -0.01rem;
@@ -91,7 +101,11 @@ header{
     font-weight: bold;
 }
 
+<<<<<<< Updated upstream
 .login:hover, .cart:hover, .burguerbutt:hover{
+=======
+.burguerbutt:hover, .login:hover, .cart:hover{
+>>>>>>> Stashed changes
     background-color:var(--fourthColor);
     color: var(--secondColor);
 }
@@ -113,6 +127,10 @@ header{
 .burguerbutt svg{
     width: 20px;
     height: 20px;   
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
 }
 
 .burguer:hover {

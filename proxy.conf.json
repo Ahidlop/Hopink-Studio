@@ -1,0 +1,8 @@
+{
+  "/hopink-api": {
+    "target": "http://localhost",   
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": { "^/hopink-api": "/hopink-api" }
+  }
+}

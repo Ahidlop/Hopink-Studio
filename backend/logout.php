@@ -1,4 +1,5 @@
 <?php
+<<<<<<< Updated upstream
     include 'db.php';
     session_start();
 
@@ -9,4 +10,15 @@
     session_destroy();
 
     echo json_encode(['status'=>'success']);
+=======
+// backends/logout.php
+session_start();
+header('Content-Type: application/json');
+
+// destruimos sesión
+$_SESSION = [];
+session_destroy();
+
+echo json_encode(['status'=>'success']);
+>>>>>>> Stashed changes
 ?>
