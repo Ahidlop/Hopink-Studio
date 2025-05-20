@@ -15,28 +15,15 @@ header{
     box-sizing: border-box;/*hola*/
 }
 
-.burguer {
-    display: inline-block;
-    justify-content: left;
+.logo{
+    margin-left: auto;
+    flex-shrink: 1;
 }
 
-.burguerbutt{
-    background-color: var(--secondColor);
-    padding: 10px 20px;
-    border: none;
+.logo img{
+    height: 80px;
+    width: auto;
     border-radius: var(--usualBorderRadius);
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.burguerbutt svg{
-    width: 20px;
-    height: 20px;   
-    
-}
-
-.burguer:hover {
-    display: block;
 }
 
 .searchDiv{
@@ -78,10 +65,31 @@ header{
     transition: background 0.3s;
 }
 
-.cart svg, .login svg{
+.login svg,.cart svg{
     height: 20px;
     width: auto;
 }
+
+.loggedInDot{
+<<<<<<< Updated upstream
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    background-color: #00e676;
+    border-radius: 50%;
+}
+
+=======
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    margin-left: 4px;
+}
+>>>>>>> Stashed changes
 .cartNumber{
     margin-bottom: 5rem;
     right: -0.01rem;
@@ -93,18 +101,38 @@ header{
     font-weight: bold;
 }
 
-.logo{
-    margin-left: auto;
-    flex-shrink: 1;
-}
-
-.logo img{
-    height: 80px;
-    width: auto;
-    border-radius: var(--usualBorderRadius);
-}
-
+<<<<<<< Updated upstream
+.login:hover, .cart:hover, .burguerbutt:hover{
+=======
 .burguerbutt:hover, .login:hover, .cart:hover{
+>>>>>>> Stashed changes
     background-color:var(--fourthColor);
     color: var(--secondColor);
+}
+
+.burguer {
+    display: inline-block;
+    justify-content: left;
+}
+
+.burguerbutt{
+    background-color: var(--secondColor);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--usualBorderRadius);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.burguerbutt svg{
+    width: 20px;
+    height: 20px;   
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
+}
+
+.burguer:hover {
+    display: block;
 }

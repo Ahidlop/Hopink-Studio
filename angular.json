@@ -61,8 +61,12 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "serve": {
+            "builder": "@angular-devkit/build-angular:dev-server",
+            "options": {
+              "buildTarget": "hopink-studio:build",
+              "proxyConfig": "proxy.conf.json"
+            },
           "configurations": {
             "production": {
               "buildTarget": "hopink-studio:build:production"
@@ -98,5 +102,12 @@
         }
       }
     }
+  },
+  "cli": {
+<<<<<<< Updated upstream
+    "analytics": "c67a014f-c877-4f50-ad20-77b489ad37e0"
+=======
+    "analytics": false
+>>>>>>> Stashed changes
   }
 }
