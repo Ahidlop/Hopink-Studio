@@ -46,7 +46,7 @@ export class AccountComponent implements OnInit {
 
   /** Comprueba si hay sesión llamando a getUser.php */
   checkSession() {
-    this.http.get<ApiResponse>('backends/getUser.php')
+    this.http.get<ApiResponse>('/backend/getUser.php')
       .subscribe({
         next: res => {
           if (res.status === 'success' && res.user) {
@@ -68,7 +68,7 @@ export class AccountComponent implements OnInit {
   /** Iniciar sesión */
   login() {
     const { email, password } = this.loginForm.value;
-    this.http.post<ApiResponse>('backends/login.php', { email, password })
+    this.http.post<ApiResponse>('backend/login.php', { email, password })
       .subscribe({
         next: res => {
           if (res.status === 'success' && res.user) {
@@ -89,7 +89,7 @@ export class AccountComponent implements OnInit {
   /** Registrarse */
   register() {
     const { name, email, password } = this.registerForm.value;
-    this.http.post<ApiResponse>('backends/register.php', { name, email, password })
+    this.http.post<ApiResponse>('backend/register.php', { name, email, password })
       .subscribe({
         next: res => {
           if (res.status === 'success') {
@@ -108,7 +108,7 @@ export class AccountComponent implements OnInit {
 
   /** Cerrar sesión */
   logout() {
-    this.http.get<ApiResponse>('backends/logout.php')
+    this.http.get<ApiResponse>('backend/logout.php')
       .subscribe({
         next: () => {
           this.isLoggedIn = false;

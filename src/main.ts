@@ -1,10 +1,7 @@
 // src/main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter }        from '@angular/router';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi
-}                                from '@angular/common/http';
+import {  provideHttpClient,  withInterceptorsFromDi, withFetch} from '@angular/common/http';
 import { HTTP_INTERCEPTORS }    from '@angular/common/http';
 
 import { AppComponent }          from './app/app.component';
@@ -16,7 +13,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     // registra HttpClient (y lee los interceptores que se hayan
     // proporcionado vía HTTP_INTERCEPTORS)
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withFetch()),
 
     // tu interceptor para añadir credenciales/session cookies
     {

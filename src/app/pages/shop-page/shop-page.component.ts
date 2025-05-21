@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// src/app/pages/shop-page/shop-page.component.ts
+import { Component, OnInit } from '@angular/core';
 import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-shop-page',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './shop-page.component.html',
-  styleUrls: ['./shop-page.component.css']
+  styleUrls: ['./shop-page.component.css'],
 })
-export class ShopPageComponent {
+export class ShopPageComponent implements OnInit {
   allProducts: Product[] = [];
   filteredProducts: Product[] = [];
   currentFilter: string = 'all';
+  isLoading = true;
 
   constructor(
     private productService: ProductService,
@@ -21,25 +23,32 @@ export class ShopPageComponent {
   ) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(products => {
-      this.allProducts = products;
-      this.filteredProducts = products;
+    this.isLoading = true;
+    this.productService.getProducts().subscribe({
+      next: products => {
+        this.allProducts = products;
+        this.filteredProducts = products;
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error('Error cargando productos', err);
+        this.isLoading = false;
+      }
     });
   }
 
   changeFilter(filter: string): void {
     this.currentFilter = filter;
-    this.filteredProducts = this.currentFilter === 'all'
+    this.filteredProducts = filter === 'all'
       ? this.allProducts
-      : this.allProducts.filter(p => p.category === this.currentFilter);
+      : this.allProducts.filter(p => p.category === filter);
   }
 
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
-    console.log('Añadido al carrito:', product.name);
   }
+
   addToWishlist(product: Product): void {
     this.cartService.addToWishlist(product);
-    console.log('Añadido a favoritos:', product.name);
   }
 }
