@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+// src/app/pages/account/account.component.ts
+import { Component, OnInit }           from '@angular/core';
+import { FormBuilder, FormGroup }      from '@angular/forms';
+import { HttpClient }                  from '@angular/common/http';
+import { CommonModule }                from '@angular/common';
+import { ReactiveFormsModule }         from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -17,7 +20,6 @@ interface ApiResponse {
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  // Apunta directamente a tu servidor XAMPP
   private readonly API = 'http://localhost/Hopink-Studio/backend';
 
   loginForm!: FormGroup;
@@ -36,6 +38,7 @@ export class AccountComponent implements OnInit {
     this.checkSession();
   }
 
+  /** Comprueba sesión activa */
   checkSession() {
     this.http.get<ApiResponse>(
       `${this.API}/getUser.php`,
@@ -47,37 +50,41 @@ export class AccountComponent implements OnInit {
           this.user       = res.user;
         } else {
           this.isLoggedIn = false;
-          this.user       = null;
         }
       },
       error: () => {
         this.isLoggedIn = false;
-        this.user       = null;
       }
     });
   }
 
-  // account.component.ts
-login() {
-  const { email, password } = this.loginForm.value;
-  this.http.post<ApiResponse>(
-    'http://localhost/Hopink-Studio/backend/login.php',
-    { email, password },
-    { withCredentials: true }
-  ).subscribe({
-    next: res => {
-      if (res.status === 'success' && res.user) {
-        this.isLoggedIn = true;
-        this.user       = res.user;
-      } else {
-        alert(res.message);
+  /** Iniciar sesión */
+  login() {
+    const { email, password } = this.loginForm.value;
+    const url = `${this.API}/login.php`;
+    console.log('LOGIN →', url);
+    return this.http.post<ApiResponse>( 
+      url,   
+      { email, password },
+      { withCredentials: true }
+    ).subscribe({
+      next: res => {
+        if (res.status === 'success' && res.user) {
+          this.isLoggedIn = true;
+          this.user       = res.user;
+          this.loginForm.reset();
+        } else {
+          alert(res.message || 'Email o contraseña incorrectos');
+        }
+      },
+      error: err => {
+        console.error('login error', err);
+        alert('Error de red al iniciar sesión');
       }
-    },
-    error: () => alert('Error de red al iniciar sesión')
-  });
-}
+    });
+  }
 
-
+  /** Registrarse */
   register() {
     const { name, email, password } = this.registerForm.value;
     this.http.post<ApiResponse>(
@@ -87,16 +94,20 @@ login() {
     ).subscribe({
       next: res => {
         if (res.status === 'success') {
-          alert('Registro exitoso. Ahora confirma tu correo y luego inicia sesión.');
+          alert('Registro exitoso. Ahora inicia sesión.');
           this.registerForm.reset();
         } else {
           alert(res.message || 'Error al registrar');
         }
       },
-      error: () => alert('Error de red al registrar')
+      error: err => {
+        console.error('register error', err);
+        alert('Error de red al registrar');
+      }
     });
   }
 
+  /** Cerrar sesión */
   logout() {
     this.http.get<ApiResponse>(
       `${this.API}/logout.php`,

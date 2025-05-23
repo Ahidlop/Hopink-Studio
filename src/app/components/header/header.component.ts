@@ -1,9 +1,8 @@
-// src/app/components/header/header.component.ts
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule }                    from '@angular/common';
 import { RouterModule }                    from '@angular/router';
 import { HttpClient }    from '@angular/common/http';
-import { CartService }                     from '../../services/cart.service';
+import { CartService }    from '../../services/cart.service';
 import { Observable }                      from 'rxjs';
 
 interface ApiResponse {
@@ -18,7 +17,7 @@ interface ApiResponse {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Output() toggleMenu = new EventEmitter<void>();
 
   /** Observable que emite la respuesta de sesión */
@@ -28,7 +27,11 @@ export class HeaderComponent {
     public cartService: CartService,
     private http: HttpClient
   ) {
-    // Al crear el componente arrancamos la petición
+    // Inicializamos el observable pero lo dispararemos en ngOnInit
+    this.user$ = new Observable<ApiResponse>();
+  }
+
+  ngOnInit() {
     this.user$ = this.http.get<ApiResponse>(
       'http://localhost/Hopink-Studio/backend/getUser.php',
       { withCredentials: true }

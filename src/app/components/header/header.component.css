@@ -65,15 +65,21 @@ header{
     transition: background 0.3s;
 }
 
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .login svg,.cart svg{
     height: 20px;
     width: auto;
 }
 
-.loggedInDot{
+.loggedIn{
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 2.3rem;
+    right: 11.8rem;
     width: 10px;
     height: 10px;
     background-color: #00e676;
