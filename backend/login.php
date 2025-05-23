@@ -7,33 +7,42 @@
     header('Content-Type: application/json');
 
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header('Access-Control-Allow-Methods: GET,POST,OPTIONS');
+    header('Access-Control-Allow-Methods: POST,OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type');
     exit;
     }
-    include 'db.php';
+
     session_start();
+    require_once __DIR__ . '/db.php';
 
-    $data = json_decode(file_get_contents("php://input"), true);
-    $email    = $conn->real_escape_string($data['email']);
-    $password = $data['password'];
+    $body = json_decode(file_get_contents('php://input'), true);
+    $email = $conn->real_escape_string(trim($body['email'] ?? ''));
+    $pass  = $body['password'] ?? '';
 
-    $result = $conn->query("SELECT * FROM users WHERE email='$email'");
-    if ($result->num_rows===0) {
-    echo json_encode(['status'=>'error','message'=>'Email no encontrado']);
-    exit;
+    $stmt = $conn->prepare(
+    "SELECT id,name,password FROM users
+    WHERE email = ? AND status = 1"
+    );
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($user = $res->fetch_assoc()) {
+    if (password_verify($pass, $user['password'])) {
+        $_SESSION['user'] = [
+        'id'    => $user['id'],
+        'name'  => $user['name'],
+        'email' => $email
+        ];
+        echo json_encode(['status'=>'success','user'=>$_SESSION['user']]);
+    } else {
+        http_response_code(401);
+        echo json_encode(['status'=>'error','message'=>'Contraseña incorrecta']);
     }
-
-    $user = $result->fetch_assoc();
-    if (!password_verify($password, $user['password'])) {
-    echo json_encode(['status'=>'error','message'=>'Contraseña incorrecta']);
-    exit;
+    } else {
+    http_response_code(404);
+    echo json_encode(['status'=>'error','message'=>'Usuario no existe o no confirmado']);
     }
-
-    // Login OK: guarda en $_SESSION
-    unset($user['password']);
-    $_SESSION['user'] = $user;
-
-    // envía la cookie de sesión (PHPSESSID) automáticamente
-    echo json_encode(['status'=>'success','user'=>$user]);
+    $stmt->close();
+    $conn->close();
 ?>

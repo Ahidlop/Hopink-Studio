@@ -1,8 +1,7 @@
-// src/app/pages/account/account.component.ts
-import { Component, OnInit }           from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient }                  from '@angular/common/http';
-import { CommonModule }                from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -18,7 +17,8 @@ interface ApiResponse {
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  private readonly BASE = '/backend';
+  // Apunta directamente a tu servidor XAMPP
+  private readonly API = 'http://localhost/Hopink-Studio/backend';
 
   loginForm!: FormGroup;
   registerForm!: FormGroup;
@@ -38,19 +38,21 @@ export class AccountComponent implements OnInit {
 
   checkSession() {
     this.http.get<ApiResponse>(
-      `${this.BASE}/getUser.php`,
-      { withCredentials: true }     
+      `${this.API}/getUser.php`,
+      { withCredentials: true }
     ).subscribe({
       next: res => {
         if (res.status === 'success' && res.user) {
           this.isLoggedIn = true;
-          this.user       = res.user!;
+          this.user       = res.user;
         } else {
           this.isLoggedIn = false;
+          this.user       = null;
         }
       },
       error: () => {
         this.isLoggedIn = false;
+        this.user       = null;
       }
     });
   }
@@ -58,9 +60,9 @@ export class AccountComponent implements OnInit {
   login() {
     const { email, password } = this.loginForm.value;
     this.http.post<ApiResponse>(
-      `${this.BASE}/login.php`,
+      `${this.API}/login.php`,
       { email, password },
-      { withCredentials: true }  
+      { withCredentials: true }
     ).subscribe({
       next: res => {
         if (res.status === 'success' && res.user) {
@@ -72,19 +74,18 @@ export class AccountComponent implements OnInit {
       },
       error: () => alert('Error de red al iniciar sesión')
     });
-    console.log('▶ register() called', this.loginForm.value);
   }
 
   register() {
     const { name, email, password } = this.registerForm.value;
     this.http.post<ApiResponse>(
-      `${this.BASE}/register.php`,
+      `${this.API}/register.php`,
       { name, email, password },
-      { withCredentials: true }      
+      { withCredentials: true }
     ).subscribe({
       next: res => {
         if (res.status === 'success') {
-          alert('Registro exitoso. Ahora inicia sesión.');
+          alert('Registro exitoso. Ahora confirma tu correo y luego inicia sesión.');
           this.registerForm.reset();
         } else {
           alert(res.message || 'Error al registrar');
@@ -92,13 +93,12 @@ export class AccountComponent implements OnInit {
       },
       error: () => alert('Error de red al registrar')
     });
-    console.log('▶ register() called', this.registerForm.value);
   }
 
   logout() {
     this.http.get<ApiResponse>(
-      `${this.BASE}/logout.php`,
-      { withCredentials: true }    
+      `${this.API}/logout.php`,
+      { withCredentials: true }
     ).subscribe({
       next: () => {
         this.isLoggedIn = false;

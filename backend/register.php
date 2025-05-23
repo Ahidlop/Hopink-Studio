@@ -1,17 +1,58 @@
 <?php
-    include 'db.php';
-    $data = json_decode(file_get_contents("php://input"), true);
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
 
-    $name     = $conn->real_escape_string($data['name']);
-    $email    = $conn->real_escape_string($data['email']);
-    $password = password_hash($data['password'], PASSWORD_DEFAULT);
+    // CORS
+    header('Access-Control-Allow-Origin: http://localhost:4200');
+    header('Access-Control-Allow-Credentials: true');
+    header('Content-Type: application/json');
 
-    $check = $conn->query("SELECT id FROM users WHERE email='$email'");
-    if ($check->num_rows>0) {
-    echo json_encode(['status'=>'error','message'=>'Email ya registrado']);
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header('Access-Control-Allow-Methods: POST,OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    exit;
+    }
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['status'=>'error','message'=>'Método no permitido']);
     exit;
     }
 
-    $conn->query("INSERT INTO users (name,email,password) VALUES ('$name','$email','$password')");
-    echo json_encode(['status'=>'success']);
+    require_once __DIR__ . '/db.php';
+
+    $raw  = file_get_contents('php://input');
+    $body = json_decode($raw, true);
+    if (!$body) {
+    http_response_code(400);
+    echo json_encode(['status'=>'error','message'=>'JSON inválido o vacío']);
+    exit;
+    }
+
+    $name  = $conn->real_escape_string(trim($body['name']  ?? ''));
+    $email = $conn->real_escape_string(trim($body['email'] ?? ''));
+    $pass  =           trim($body['password']    ?? '');
+
+    if (!$name || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($pass) < 4) {
+    http_response_code(400);
+    echo json_encode(['status'=>'error','message'=>'Datos inválidos']);
+    exit;
+    }
+
+    $hash  = password_hash($pass, PASSWORD_DEFAULT);
+    $token = bin2hex(random_bytes(16));
+
+    $stmt = $conn->prepare(
+    "INSERT INTO users (name,email,password,token,status)
+    VALUES (?, ?, ?, ?, 0)"
+    );
+    $stmt->bind_param('ssss', $name, $email, $hash, $token);
+    if ($stmt->execute()) {
+    // Aquí podrías enviar mail("$email", ...)
+    echo json_encode(['status'=>'success','message'=>'Usuario creado']);
+    } else {
+    http_response_code(409);
+    echo json_encode(['status'=>'error','message'=>'Email ya registrado']);
+    }
+    $stmt->close();
+    $conn->close();
 ?>
