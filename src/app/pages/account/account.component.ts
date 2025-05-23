@@ -57,24 +57,26 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  login() {
-    const { email, password } = this.loginForm.value;
-    this.http.post<ApiResponse>(
-      `${this.API}/login.php`,
-      { email, password },
-      { withCredentials: true }
-    ).subscribe({
-      next: res => {
-        if (res.status === 'success' && res.user) {
-          this.isLoggedIn = true;
-          this.user       = res.user;
-        } else {
-          alert(res.message || 'Error al iniciar sesión');
-        }
-      },
-      error: () => alert('Error de red al iniciar sesión')
-    });
-  }
+  // account.component.ts
+login() {
+  const { email, password } = this.loginForm.value;
+  this.http.post<ApiResponse>(
+    'http://localhost/Hopink-Studio/backend/login.php',
+    { email, password },
+    { withCredentials: true }
+  ).subscribe({
+    next: res => {
+      if (res.status === 'success' && res.user) {
+        this.isLoggedIn = true;
+        this.user       = res.user;
+      } else {
+        alert(res.message);
+      }
+    },
+    error: () => alert('Error de red al iniciar sesión')
+  });
+}
+
 
   register() {
     const { name, email, password } = this.registerForm.value;

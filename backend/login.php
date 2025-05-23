@@ -12,16 +12,34 @@
     exit;
     }
 
-    session_start();
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['status'=>'error','message'=>'Método no permitido']);
+    exit;
+    }
+
     require_once __DIR__ . '/db.php';
 
     $body = json_decode(file_get_contents('php://input'), true);
-    $email = $conn->real_escape_string(trim($body['email'] ?? ''));
-    $pass  = $body['password'] ?? '';
+    if (!$body) {
+    http_response_code(400);
+    echo json_encode(['status'=>'error','message'=>'JSON inválido']);
+    exit;
+    }
+
+    $email = trim($body['email']    ?? '');
+    $pass  =           $body['password'] ?? '';
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($pass) < 4) {
+    http_response_code(400);
+    echo json_encode(['status'=>'error','message'=>'Email o contraseña incorrectos']);
+    exit;
+    }
 
     $stmt = $conn->prepare(
-    "SELECT id,name,password FROM users
-    WHERE email = ? AND status = 1"
+    "SELECT id,name,password
+        FROM users
+        WHERE email = ? AND status = 1
+        LIMIT 1"
     );
     $stmt->bind_param('s', $email);
     $stmt->execute();
@@ -29,6 +47,7 @@
 
     if ($user = $res->fetch_assoc()) {
     if (password_verify($pass, $user['password'])) {
+        session_start();
         $_SESSION['user'] = [
         'id'    => $user['id'],
         'name'  => $user['name'],
@@ -43,6 +62,7 @@
     http_response_code(404);
     echo json_encode(['status'=>'error','message'=>'Usuario no existe o no confirmado']);
     }
+
     $stmt->close();
     $conn->close();
 ?>
