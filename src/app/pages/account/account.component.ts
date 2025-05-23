@@ -18,10 +18,12 @@ interface ApiResponse {
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
+  private readonly BASE = '/backend';
+
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   isLoggedIn = false;
-  user: { id: number; name: string; email: string } | null = null;
+  user: ApiResponse['user'] | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -29,94 +31,80 @@ export class AccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 1) Crear los formularios
-    this.loginForm = this.fb.group({
-      email: [''],
-      password: ['']
-    });
-    this.registerForm = this.fb.group({
-      name: [''],
-      email: [''],
-      password: ['']
-    });
-
-    // 2) Comprobar sesión activa
+    this.loginForm    = this.fb.group({ email: [''], password: [''] });
+    this.registerForm = this.fb.group({ name: [''], email: [''], password: [''] });
     this.checkSession();
   }
 
-  /** Comprueba si hay sesión llamando a getUser.php */
   checkSession() {
-    this.http.get<ApiResponse>('/backend/getUser.php')
-      .subscribe({
-        next: res => {
-          if (res.status === 'success' && res.user) {
-            this.isLoggedIn = true;
-            this.user = res.user;
-          } else {
-            this.isLoggedIn = false;
-            this.user = null;
-          }
-        },
-        error: err => {
-          console.error('checkSession error', err);
+    this.http.get<ApiResponse>(
+      `${this.BASE}/getUser.php`,
+      { withCredentials: true }     
+    ).subscribe({
+      next: res => {
+        if (res.status === 'success' && res.user) {
+          this.isLoggedIn = true;
+          this.user       = res.user!;
+        } else {
           this.isLoggedIn = false;
-          this.user = null;
         }
-      });
+      },
+      error: () => {
+        this.isLoggedIn = false;
+      }
+    });
   }
 
-  /** Iniciar sesión */
   login() {
     const { email, password } = this.loginForm.value;
-    this.http.post<ApiResponse>('backend/login.php', { email, password })
-      .subscribe({
-        next: res => {
-          if (res.status === 'success' && res.user) {
-            this.isLoggedIn = true;
-            this.user = res.user;
-            // this.loginForm.reset();
-          } else {
-            alert(res.message || 'Error al iniciar sesión');
-          }
-        },
-        error: err => {
-          console.error('login error', err);
-          alert('Error de red al iniciar sesión');
+    this.http.post<ApiResponse>(
+      `${this.BASE}/login.php`,
+      { email, password },
+      { withCredentials: true }  
+    ).subscribe({
+      next: res => {
+        if (res.status === 'success' && res.user) {
+          this.isLoggedIn = true;
+          this.user       = res.user;
+        } else {
+          alert(res.message || 'Error al iniciar sesión');
         }
-      });
+      },
+      error: () => alert('Error de red al iniciar sesión')
+    });
+    console.log('▶ register() called', this.loginForm.value);
   }
 
-  /** Registrarse */
   register() {
     const { name, email, password } = this.registerForm.value;
-    this.http.post<ApiResponse>('backend/register.php', { name, email, password })
-      .subscribe({
-        next: res => {
-          if (res.status === 'success') {
-            alert('Registro exitoso. Ahora inicia sesión.');
-            this.registerForm.reset();
-          } else {
-            alert(res.message || 'Error al registrar');
-          }
-        },
-        error: err => {
-          console.error('register error', err);
-          alert('Error de red al registrar');
+    this.http.post<ApiResponse>(
+      `${this.BASE}/register.php`,
+      { name, email, password },
+      { withCredentials: true }      
+    ).subscribe({
+      next: res => {
+        if (res.status === 'success') {
+          alert('Registro exitoso. Ahora inicia sesión.');
+          this.registerForm.reset();
+        } else {
+          alert(res.message || 'Error al registrar');
         }
-      });
+      },
+      error: () => alert('Error de red al registrar')
+    });
+    console.log('▶ register() called', this.registerForm.value);
   }
 
-  /** Cerrar sesión */
   logout() {
-    this.http.get<ApiResponse>('backend/logout.php')
-      .subscribe({
-        next: () => {
-          this.isLoggedIn = false;
-          this.user = null;
-        },
-        error: err => {
-          console.error('logout error', err);
-        }
-      });
+    this.http.get<ApiResponse>(
+      `${this.BASE}/logout.php`,
+      { withCredentials: true }    
+    ).subscribe({
+      next: () => {
+        this.isLoggedIn = false;
+        this.user       = null;
+      },
+      error: err => console.error('logout error', err)
+    });
   }
 }

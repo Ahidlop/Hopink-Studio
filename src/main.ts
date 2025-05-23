@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { AppComponent }          from './app/app.component';
 import { routes }                from './app/app.routes';
 import { CredentialsInterceptor } from './app/interceptors/credentials.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -20,7 +21,8 @@ bootstrapApplication(AppComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: CredentialsInterceptor,
       multi: true
-    }
+    },
+    CookieService
   ]
 })
 .catch(err => console.error(err));

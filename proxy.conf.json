@@ -1,8 +1,10 @@
 {
-  "/backend": {
+  "/Hopink-Studio/backend": {
     "target": "http://localhost/Hopink-Studio",
     "secure": false,
     "changeOrigin": true,
-    "pathRewrite": { "^/backend": "/backend" }
+    "pathRewrite": {
+      "^/Hopink-Studio": ""  
+    }
   }
 }
