@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { CommonModule }                    from '@angular/common';
-import { RouterModule }                    from '@angular/router';
-import { HttpClient }    from '@angular/common/http';
-import { CartService }    from '../../services/cart.service';
-import { Observable }                      from 'rxjs';
+import { CommonModule }                            from '@angular/common';
+import { RouterModule, Router, NavigationEnd }     from '@angular/router';
+import { HttpClient }                              from '@angular/common/http';
+import { CartService }                             from '../../services/cart.service';
+import { Observable }                              from 'rxjs';
+import { filter }                                  from 'rxjs/operators';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -20,25 +21,37 @@ interface ApiResponse {
 export class HeaderComponent implements OnInit {
   @Output() toggleMenu = new EventEmitter<void>();
 
-  /** Observable que emite la respuesta de sesión */
+  /** Observable que siempre apunta al último getUser.php */
   user$: Observable<ApiResponse>;
+
+  private readonly API = 'http://localhost/Hopink-Studio/backend';
 
   constructor(
     public cartService: CartService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
-    // Inicializamos el observable pero lo dispararemos en ngOnInit
-    this.user$ = new Observable<ApiResponse>();
+    // petición inicial
+    this.user$ = this.fetchSession();
   }
 
   ngOnInit() {
-    this.user$ = this.http.get<ApiResponse>(
-      'http://localhost/Hopink-Studio/backend/getUser.php',
-      { withCredentials: true }
-    );
+    // cada vez que termine una navegación, vuelve a llamar a getUser.php
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.user$ = this.fetchSession();
+      });
   }
 
   toggleMenuClick() {
     this.toggleMenu.emit();
+  }
+
+  private fetchSession(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.API}/getUser.php`,
+      { withCredentials: true }
+    );
   }
 }

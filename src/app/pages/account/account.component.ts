@@ -73,6 +73,7 @@ export class AccountComponent implements OnInit {
           this.isLoggedIn = true;
           this.user       = res.user;
           this.loginForm.reset();
+          window.location.reload();
         } else {
           alert(res.message || 'Email o contraseña incorrectos');
         }
@@ -116,8 +117,12 @@ export class AccountComponent implements OnInit {
       next: () => {
         this.isLoggedIn = false;
         this.user       = null;
+        // FORZAR refresco de la SPA para que el header re-ejecute su check
+        window.location.reload();
       },
-      error: err => console.error('logout error', err)
+      error: err => {
+        console.error('logout error', err);
+      }
     });
   }
 }
