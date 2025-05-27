@@ -14,4 +14,3 @@
         'message' => 'DB connection failed: ' . $conn->connect_error
         ]));
     }
-?>

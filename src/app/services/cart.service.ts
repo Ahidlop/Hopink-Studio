@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Product } from './product.service';
+import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
-export interface CartItem extends Product {
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
   quantity: number;
 }
 
@@ -10,61 +16,126 @@ export interface CartItem extends Product {
   providedIn: 'root'
 })
 export class CartService {
+  private wishList: Product[] = [];
+  private cartSubject = new BehaviorSubject<CartItem[]>([]);
+  public cart$ = this.cartSubject.asObservable();
   private cart: CartItem[] = [];
-  private wishList: Product[] =[];
-  private cartSubject = new BehaviorSubject<CartItem[]>(this.cart);
+  private readonly API = 'http://localhost/Hopink-Studio/backend';
+  private cartUrl = `${this.API}/cart.php`;
+  private httpOptions = { withCredentials: true };
+
+  constructor(private http: HttpClient) {}
 
   getCartObservable() {
-    return this.cartSubject.asObservable();
+    return this.cart$;
   }
 
   getCart(): CartItem[] {
     return this.cart;
   }
 
-  addToCart(product: Product): void {
-    const item = this.cart.find(p => p.id === product.id);
-    if (item) {
-      item.quantity += 1;
-    } else {
-      this.cart.push({ ...product, quantity: 1 });
-    }
-    this.cartSubject.next([...this.cart]);
+  // Carga el carrito desde el backend y desempaqueta el array de items
+  loadCart(): void {
+    this.http.get<{ success: boolean; items: CartItem[] }>(this.cartUrl, this.httpOptions)
+      .pipe(
+        map(response => response.items)
+      )
+      .subscribe(
+        items => {
+          this.cart = items;
+          this.cartSubject.next(this.cart);
+        },
+        err => {
+          console.error('Error cargando carrito', err);
+        }
+      );
   }
 
-  decreaseQuantity(id: number): void {
-  const index = this.cart.findIndex(item => item.id === id);
-  if (index !== -1) {
-    if (this.cart[index].quantity > 1) {
-      this.cart[index].quantity -= 1;
-    } else {
-      this.cart.splice(index, 1);
-    }
-    this.cartSubject.next([...this.cart]);
-  }
-}
-
-  removeFromCart(id: number): void {
-    this.cart = this.cart.filter(p => p.id !== id);
-    this.cartSubject.next([...this.cart]);
+  setCart(items: CartItem[]): void {
+    this.cart = items;
+    this.cartSubject.next(this.cart);
   }
 
-  emptyCart(): void {
+  // Añadir al carrito
+  addToCart(product: { id: number }): void {
+    this.http.post<{ success: boolean; items: CartItem[] }>(
+      this.cartUrl,
+      { product_id: product.id, quantity: 1 },
+      this.httpOptions
+    )
+    .pipe(
+      map(response => response.items)
+    )
+    .subscribe({
+      next: items => {
+        this.cart = items;
+        this.cartSubject.next(this.cart);
+      },
+      error: err => {
+        console.error('Error añadiendo al carrito', err);
+        console.log('>>> Respuesta bruta del servidor:', err.error);
+      }
+    });
+  }
+
+  // Disminuir cantidad
+  decreaseQuantity(productId: number): void {
+    this.http.post<{ success: boolean; items: CartItem[] }>(
+      this.cartUrl,
+      { product_id: productId, quantity: -1 },
+      this.httpOptions
+    )
+    .pipe(
+      map(response => response.items)
+    )
+    .subscribe(
+      items => {
+        this.cart = items;
+        this.cartSubject.next(this.cart);
+      },
+      err => {
+        console.error('Error disminuyendo cantidad', err);
+      }
+    );
+  }
+
+  // Eliminar del carrito
+  removeFromCart(productId: number): void {
+    this.http.delete<{ success: boolean; items: CartItem[] }>(
+      `${this.cartUrl}?product_id=${productId}`,
+      this.httpOptions
+    )
+    .pipe(
+      map(response => response.items)
+    )
+    .subscribe(
+      items => {
+        this.cart = items;
+        this.cartSubject.next(this.cart);
+      },
+      err => {
+        console.error('Error eliminando del carrito', err);
+      }
+    );
+  }
+
+  clearCart(): void {
     this.cart = [];
-    this.cartSubject.next([]);
+    this.cartSubject.next(this.cart);
   }
 
+  // Cálculo de totales
   getTotal(): number {
     return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
+  // Wishlist
   getWishlist(): Product[] {
-  return this.wishList;
+    return this.wishList;
   }
 
   addToWishlist(product: Product): void {
-    const exists = this.wishList.find(p => p.id === product.id);
-    if (!exists) {
+    if (!this.wishList.find(p => p.id === product.id)) {
       this.wishList.push(product);
     }
   }
@@ -73,8 +144,8 @@ export class CartService {
     this.wishList = this.wishList.filter(p => p.id !== id);
   }
 
-  getItemCount(): number{
-    return this.cart.reduce((sum,item) => sum + item.quantity, 0)
+  // Contador de items
+  getItemCount(): number {
+    return this.cart.reduce((sum, item) => sum + item.quantity, 0);
   }
-
 }

@@ -44,7 +44,8 @@ export class ShopPageComponent implements OnInit {
       : this.allProducts.filter(p => p.category === filter);
   }
 
-  addToCart(product: Product): void {
+  addToCart(product: Product) {
+    console.log('Añadiendo al carrito:', product);
     this.cartService.addToCart(product);
   }
 

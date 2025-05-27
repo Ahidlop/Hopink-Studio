@@ -22,6 +22,7 @@
     }
 
     require_once __DIR__ . '/db.php';
+    require_once __DIR__ . '/cart_helpers.php';
 
     $body = json_decode(file_get_contents('php://input'), true);
     $email    = trim($body['email']    ?? '');
@@ -47,11 +48,23 @@
     if (password_verify($password, $user['password'])) {
         session_start();
         $_SESSION['user'] = [
-        'id'    => $user['id'],
-        'name'  => $user['name'],
-        'email' => $email
+            'id'    => $user['id'],
+            'name'  => $user['name'],
+            'email' => $email
         ];
-        echo json_encode(['status'=>'success','user'=>$_SESSION['user']]);
+        // Fusionar carrito invitado con carrito de usuario
+        if (isset($_SESSION['cart_id'])) {
+            mergeCart($_SESSION['cart_id'], $_SESSION['user']['id']);
+            unset($_SESSION['cart_id']);
+        }
+        //Obtengo los productos del carrito antes de devolver la respuesta al json
+        $cartItems = getCartItemsByUserId($_SESSION['user']['id']);
+        echo json_encode([
+            'status' => 'success',
+            'user'   => $_SESSION['user'],
+            'cart'   => $cartItems
+        ]);
+        exit;
     } else {
         http_response_code(401);
         echo json_encode(['status'=>'error','message'=>'Contraseña incorrecta']);

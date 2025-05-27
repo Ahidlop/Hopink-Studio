@@ -5,6 +5,8 @@ import { HttpClient }                  from '@angular/common/http';
 import { CommonModule }                from '@angular/common';
 import { ReactiveFormsModule }         from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { CartService }                 from '../../services/cart.service';
+import { RouterModule } from '@angular/router';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -15,7 +17,7 @@ interface ApiResponse {
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
@@ -29,7 +31,8 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -73,6 +76,7 @@ export class AccountComponent implements OnInit {
           this.isLoggedIn = true;
           this.user       = res.user;
           this.loginForm.reset();
+          this.cartService.loadCart();
           window.location.reload();
         } else {
           alert(res.message || 'Email o contraseña incorrectos');
@@ -117,6 +121,7 @@ export class AccountComponent implements OnInit {
       next: () => {
         this.isLoggedIn = false;
         this.user       = null;
+        this.cartService.clearCart();
         // FORZAR refresco de la SPA para que el header re-ejecute su check
         window.location.reload();
       },

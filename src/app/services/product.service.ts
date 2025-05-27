@@ -15,6 +15,9 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
+  getAll(): Observable<Product[]> {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost/Hopink-Studio/backend/get_products.php';
 
   constructor(private http: HttpClient) {}
