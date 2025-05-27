@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart.service';
-import { Product } from '../../services/product.service';
+import { CommonModule }      from '@angular/common';
+import { WishlistService, SimpleProduct } from '../../services/wishlist.service';
+import { CartService }       from '../../services/cart.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -11,21 +11,23 @@ import { Product } from '../../services/product.service';
   styleUrls: ['./wishlist.component.css']
 })
 export class WishlistComponent implements OnInit {
-  wishlist: Product[] = [];
+  public wishlist: SimpleProduct[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private wishlistService: WishlistService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.wishlist = this.cartService.getWishlist();
+    this.wishlistService.loadWishlist();
+    this.wishlistService.wishlist$.subscribe(items => this.wishlist = items);
   }
 
-  removeFromWishlist(id: number): void {
-    this.cartService.removeFromWishlist(id);
-    this.wishlist = this.cartService.getWishlist(); // actualizar vista
+  addToCart(product: SimpleProduct): void {
+    this.cartService.addToCart({ id: product.id });
   }
 
-  addToCart(product: Product): void {
-    this.cartService.addToCart(product);
-    this.removeFromWishlist(product.id);
+  removeFromWishlist(pid: number): void {
+    this.wishlistService.removeFromWishlist(pid);
   }
 }

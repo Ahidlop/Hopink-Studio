@@ -120,3 +120,24 @@ svg {
   width: 30px;
   height: 20px;
 }
+
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #4caf50;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-weight: bold;
+  z-index: 9999;
+  animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateY(-10px); }
+  10%  { opacity: 1; transform: translateY(0); }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}

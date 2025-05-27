@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
 import { CartService, CartItem }        from '../../services/cart.service';
+
 @Component({
   selector: 'app-cart',
   standalone: true,
