@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule }                            from '@angular/common';
 import { RouterModule, Router, NavigationEnd }     from '@angular/router';
-import { HttpClient }                              from '@angular/common/http';
+import { HttpClient, HttpClientModule }            from '@angular/common/http';
 import { CartService }                             from '../../services/cart.service';
-import { Observable }                              from 'rxjs';
 import { filter }                                  from 'rxjs/operators';
+import { Observable }                              from 'rxjs';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -14,15 +14,15 @@ interface ApiResponse {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HttpClientModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   @Output() toggleMenu = new EventEmitter<void>();
 
-  /** Observable que siempre apunta al último getUser.php */
-  user$: Observable<ApiResponse>;
+  public itemCount = 0;
+  public user$!: Observable<ApiResponse>;
 
   private readonly API = 'http://localhost/Hopink-Studio/backend';
 
@@ -30,26 +30,31 @@ export class HeaderComponent implements OnInit {
     public cartService: CartService,
     private http: HttpClient,
     private router: Router
-  ) {
-    // petición inicial
-    this.user$ = this.fetchSession();
-  }
+  ) {}
 
-  ngOnInit() {
-    // cada vez que termine una navegación, vuelve a llamar a getUser.php
+  ngOnInit(): void {
+    // 1) Cargar carrito al arrancar
+    this.cartService.loadCart();
+    this.cartService.cart$
+      .subscribe(items => {
+        this.itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+      });
+
+    // 2) Petición inicial de sesión
+    this.loadSession();
+
+    // 3) Al cambiar de ruta, volvemos a cargar la sesión
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(() => {
-        this.user$ = this.fetchSession();
-      });
+      .subscribe(() => this.loadSession());
   }
 
-  toggleMenuClick() {
+  toggleMenuClick(): void {
     this.toggleMenu.emit();
   }
 
-  private fetchSession(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(
+  private loadSession(): void {
+    this.user$ = this.http.get<ApiResponse>(
       `${this.API}/getUser.php`,
       { withCredentials: true }
     );

@@ -1,79 +1,113 @@
 <?php
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+// ————————————————
+// 1) Errores mientras depuras
+// ————————————————
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-    // 1) Cabeceras CORS para permitir Angular en 4200
-    header('Access-Control-Allow-Origin: http://localhost:4200');
-    header('Access-Control-Allow-Credentials: true');
-    header('Content-Type: application/json');
+// ————————————————
+// 2) CORS (¡antes de cualquier salida!)
+// ————————————————
+header('Access-Control-Allow-Origin: http://localhost:4200');
+header('Access-Control-Allow-Credentials: true');
+header('Content-Type: application/json; charset=utf-8');
 
-    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Responder preflight
-    header('Access-Control-Allow-Methods: POST,OPTIONS');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    // Preflight CORS
+    header('Access-Control-Allow-Methods: POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type');
     exit;
-    }
+}
 
-    // 2) Sólo POST
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+// ————————————————
+// 3) Sólo POST
+// ————————————————
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['status'=>'error','message'=>'Método no permitido']);
+    echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
     exit;
-    }
+}
 
-    require_once __DIR__ . '/db.php';
-    require_once __DIR__ . '/cart_helpers.php';
+// ————————————————
+// 4) Conexión y helpers
+// ————————————————
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/cart_helpers.php';
 
-    $body = json_decode(file_get_contents('php://input'), true);
-    $email    = trim($body['email']    ?? '');
-    $password =            $body['password'] ?? '';
+// ————————————————
+// 5) Leer body y validar
+// ————————————————
+$body     = json_decode(file_get_contents('php://input'), true) ?: [];
+$email    = trim($body['email']    ?? '');
+$password =            $body['password'] ?? '';
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 4) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 4) {
     http_response_code(400);
-    echo json_encode(['status'=>'error','message'=>'Email o contraseña inválidos']);
+    echo json_encode(['status' => 'error', 'message' => 'Email o contraseña inválidos']);
     exit;
-    }
+}
 
-    $stmt = $conn->prepare(
-    "SELECT id,name,password 
-        FROM users 
-        WHERE email = ? 
-        LIMIT 1"
-    );
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $res = $stmt->get_result();
+// ————————————————
+// 6) Buscar usuario
+// ————————————————
+$stmt = $conn->prepare("
+    SELECT id, name, password
+      FROM users
+     WHERE email = ?
+     LIMIT 1
+");
+$stmt->bind_param('s', $email);
+$stmt->execute();
+$res = $stmt->get_result();
 
-    if ($user = $res->fetch_assoc()) {
+if ($user = $res->fetch_assoc()) {
+    // ————————————————
+    // 7) Verificar contraseña
+    // ————————————————
     if (password_verify($password, $user['password'])) {
         session_start();
         $_SESSION['user'] = [
-            'id'    => $user['id'],
+            'id'    => (int)$user['id'],
             'name'  => $user['name'],
             'email' => $email
         ];
-        // Fusionar carrito invitado con carrito de usuario
-        if (isset($_SESSION['cart_id'])) {
-            mergeCart($_SESSION['cart_id'], $_SESSION['user']['id']);
+
+        // ————————————————
+        // 8) Fusionar carrito invitado (si existía)
+        // ————————————————
+        if (!empty($_SESSION['cart_id'])) {
+            mergeCart((int)$_SESSION['cart_id'], (int)$_SESSION['user']['id']);
             unset($_SESSION['cart_id']);
         }
-        //Obtengo los productos del carrito antes de devolver la respuesta al json
-        $cartItems = getCartItemsByUserId($_SESSION['user']['id']);
+
+        // ————————————————
+        // 9) Obtener el ID de carrito “open” del usuario
+        // ————————————————
+        $cartId = getOrCreateCartByUserId((int)$_SESSION['user']['id']);
+
+        // ————————————————
+        // 10) Recuperar los items de ese carrito
+        // ————————————————
+        $cartItems = getCartItemsByCartId($cartId);
+
+        // ————————————————
+        // 11) Devolver JSON al cliente
+        // ————————————————
         echo json_encode([
             'status' => 'success',
             'user'   => $_SESSION['user'],
             'cart'   => $cartItems
-        ]);
+        ], JSON_UNESCAPED_UNICODE);
         exit;
-    } else {
-        http_response_code(401);
-        echo json_encode(['status'=>'error','message'=>'Contraseña incorrecta']);
-    }
-    } else {
-    http_response_code(404);
-    echo json_encode(['status'=>'error','message'=>'Usuario no existe o no confirmado']);
     }
 
-    $stmt->close();
-    $conn->close();
-?>
+    // Contraseña incorrecta
+    http_response_code(401);
+    echo json_encode(['status' => 'error', 'message' => 'Contraseña incorrecta']);
+    exit;
+}
+
+// Usuario no encontrado
+http_response_code(404);
+echo json_encode(['status' => 'error', 'message' => 'Usuario no existe o no confirmado']);
+exit;
