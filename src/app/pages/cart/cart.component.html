@@ -31,9 +31,10 @@
 
     <p class="total"><strong>Total:</strong> {{ total | currency:'EUR' }}</p>
 
-    <div class="buttons">
+    <div *ngIf="cart.length > 0" class="buttons">
       <button class="empty" (click)="clearCart()">Vaciar carrito</button>
-      <button class="pay">Finalizar compra</button>
+      <!-- Botón personalizado que abre PayPal en nueva pestaña -->
+      <button class="pay" (click)="onPay()">Finalizar compra</button>
     </div>
-  </div>
 </div>
+

@@ -9,6 +9,7 @@ import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { CookiesComponent } from './components/cookies/cookies.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { PaypalComponent } from './pages/paypal/paypal.component';
 import path from 'path';
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
   {path: 'cookies' , component: CookiesComponent},
   {path: 'wishList', component: WishlistComponent},
   {path: 'search', component: SearchResultsComponent },
+  {path: 'paypal', component: PaypalComponent }
 ];
 
 export const appRouterProviders = provideRouter(routes);
