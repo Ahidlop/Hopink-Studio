@@ -39,11 +39,16 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/cart_helpers.php';
 
 // ————————————————
-// 5) Lógica del carrito (igual que antes)
+// 5) Lógica del carrito sin generar warnings
 // ————————————————
-if (!empty($_SESSION['user']['id'])) {
-    $cartId = getOrCreateCartByUserId((int)$_SESSION['user']['id']);
+// Tomamos user_id si existe, o null en caso contrario
+$userId = $_SESSION['user']['id'] ?? null;
+
+if (is_int($userId)) {
+    // Usuario logueado
+    $cartId = getOrCreateCartByUserId($userId);
 } else {
+    // Invitado
     if (empty($_SESSION['cart_id'])) {
         $_SESSION['cart_id'] = createGuestCart();
     }
@@ -86,10 +91,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
 // 6) ¡Salida limpia!
 // ————————————————
 header('Content-Type: application/json; charset=utf-8');
-// QUITAR cualquier ob_clean() u ob_start() si lo había
 echo json_encode([
   'success' => true,
   'items'   => $result
 ], JSON_UNESCAPED_UNICODE);
 exit;
-?>

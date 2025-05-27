@@ -34,16 +34,17 @@ function getOrCreateCartByUserId(int $uid): int {
 
 /** Crea un carrito para invitado */
 function createGuestCart(): int {
-    global $conn;
-    $stmt = $conn->prepare("
-      INSERT INTO cart (user_id, status)
-           VALUES (NULL, 'open')
-    ");
-    $stmt->execute();
-    $newId = $stmt->insert_id;
-    $stmt->close();
-    return $newId;
+  global $conn;
+  $stmt = $conn->prepare("
+    INSERT INTO cart (user_id, status)
+         VALUES (NULL, 'open')
+  ");
+  $stmt->execute();
+  $newId = $stmt->insert_id;
+  $stmt->close();
+  return $newId;
 }
+
 
 /** Devuelve los items de un carrito */
 function getCartItemsByCartId(int $cid): array {
