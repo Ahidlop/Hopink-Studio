@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-/** Devuelve array de productos en la wishlist de un usuario */
+//Devuelve array de productos en la wishlist de un usuario 
 function getWishlistByUserId(int $uid): array {
     global $conn;
     $sql = "
@@ -19,7 +19,7 @@ function getWishlistByUserId(int $uid): array {
     return $items;
 }
 
-/** Añade un producto si no existe aún */
+//Añade un producto si no existe aún 
 function addWishlistItem(int $uid, int $pid): void {
     global $conn;
     // evita duplicados
@@ -39,7 +39,7 @@ function addWishlistItem(int $uid, int $pid): void {
     $stmt->close();
 }
 
-/** Elimina de la wishlist */
+//Elimina de la wishlist 
 function removeWishlistItem(int $uid, int $pid): void {
     global $conn;
     $stmt = $conn->prepare("

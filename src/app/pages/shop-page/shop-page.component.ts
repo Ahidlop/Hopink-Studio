@@ -1,4 +1,3 @@
-// src/app/pages/shop-page/shop-page.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
@@ -20,9 +19,9 @@ export class ShopPageComponent implements OnInit {
   currentFilter: string = 'all';
   isLoading = true;
 
-  wishIds: number[] = [];
   showToastProductId: number | null = null;
   toastMessage = '';
+  wishlistIds: number[] = [];
 
   constructor(
     private productService: ProductService,
@@ -31,11 +30,6 @@ export class ShopPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //Cargo wishlist
-    this.wishlistService.wishlist$.subscribe(items => {
-      this.wishIds = items.map(i => i.id);
-    });
-    this.wishlistService.loadWishlist();
 
     //Cargo productos
     this.productService.getProducts().subscribe({
@@ -48,6 +42,10 @@ export class ShopPageComponent implements OnInit {
         console.error('Error cargando productos', err);
         this.isLoading = false;
       }
+    });
+
+    this.wishlistService.items$.subscribe(items => {
+      this.wishlistIds = items.map(i => i.id);
     });
   }
 
@@ -63,21 +61,24 @@ export class ShopPageComponent implements OnInit {
     this.cartService.addToCart(product);
   }
 
-  isInWishlist(id: number): boolean {
-    return this.wishIds.includes(id);
-  } 
+  onAddToWishlist(productId: number): void {
+    this.wishlistService.addToWishlist(productId).subscribe({
+      next: res => {
+        // sólo si la petición fue 200 mostramos el toast
+        this.showToastProductId = productId;
+        this.toastMessage = 'Producto añadido a la lista de deseos';
+        setTimeout(() => (this.showToastProductId = null), 2000);
+      },
+      error: err => {
+        // si es 401 (no logueado), no hacemos nada y no hay toast
+        if (err.status === 401) {
+          alert('Debes iniciar sesión para usar la lista de deseos');
+        }
+      }
+    });
+  }
 
-  onAddToWishlist(id: number): void {
-    if (this.isInWishlist(id)) {
-      // Si ya está, sólo mostramos mensaje
-      this.toastMessage = 'El producto ya se encuentra en la wishlist';
-    } else {
-      // Si no, lo añadimos y mostramos mensaje
-      this.wishlistService.addToWishlist(id);
-      this.toastMessage = 'Producto añadido a la Lista de deseos';
-    }
-    // Disparamos el toast en este producto
-    this.showToastProductId = id;
-    setTimeout(() => this.showToastProductId = null, 3000);
+  isInWishlist(id: number): boolean {
+    return this.wishlistIds.includes(id);
   }
 }

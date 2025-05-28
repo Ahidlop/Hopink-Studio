@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
 
 export interface SimpleProduct {
   id: number;
@@ -10,7 +11,8 @@ export interface SimpleProduct {
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
-  private wishlistSubject = new BehaviorSubject<SimpleProduct[]>([]);
+  private wishlistSubject = new BehaviorSubject<any[]>([]);
+  public items$ = this.wishlistSubject.asObservable();
   public wishlist$: Observable<SimpleProduct[]> = this.wishlistSubject.asObservable();
   private API = 'http://localhost/Hopink-Studio/backend/wishlist.php';
   private httpOptions = { withCredentials: true };
@@ -25,17 +27,16 @@ export class WishlistService {
       });
   }
 
-  addToWishlist(pid: number): void {
-    this.http.post<{status:string, items:SimpleProduct[]}>(this.API,
-      { product_id: pid },
-      this.httpOptions
-    ).subscribe({
-      next: res => this.wishlistSubject.next(res.items),
-      error: err => {
-        if (err.status === 401) alert('Debes iniciar sesión para usar la lista de deseos');
-        else console.error(err);
-      }
-    });
+  addToWishlist(pid: number): Observable<{ status: string; items: any[] }> {
+    return this.http
+      .post<{ status: string; items: any[] }>(
+        `${this.API}/wishlist`,
+        { product_id: pid },
+        this.httpOptions
+      )
+      .pipe(
+        tap(res => this.wishlistSubject.next(res.items))
+      );
   }
 
   removeFromWishlist(pid: number): void {

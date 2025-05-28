@@ -1,0 +1,71 @@
+.return-policy {
+  max-width: 800px;
+  margin: 9rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Encabezados */
+.return-policy h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #222;
+  border-bottom: 2px solid #f05a28;
+  padding-bottom: 0.5rem;
+}
+
+/* Párrafos */
+.return-policy p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Listas */
+.return-policy ul {
+  list-style: disc inside;
+  margin-bottom: 1.5rem;
+}
+
+.return-policy ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+/* Énfasis en texto importante */
+.return-policy .important {
+  font-weight: bold;
+  color: #c0392b;
+}
+
+/* Enlace de contacto */
+.return-policy a {
+  color: #f05a28;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.return-policy a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .return-policy {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .return-policy h2 {
+    font-size: 1.5rem;
+  }
+
+  .return-policy p,
+  .return-policy ul li {
+    font-size: 0.95rem;
+  }
+}

@@ -1,11 +1,8 @@
-/* src/app/pages/shop-page/shop-page.component.css */
-
-/* El contenedor principal debe ser relativo para que el spinner se superponga */
 .shop-wrapper {
   position: relative;
 }
 
-/* Spinner overlay: mostrado durante la carga */
+/*durante la carga */
 .spinner-overlay {
   position: absolute;
   top: 0;
@@ -19,7 +16,6 @@
   z-index: 10;
 }
 
-/* Mientras shop-wrapper tiene la clase .loading, ocultamos filtros y productos */
 .shop-wrapper.loading .filters,
 .shop-wrapper.loading .shopContent {
   visibility: hidden;
@@ -28,7 +24,7 @@
 .filters {
   display: flex;
   justify-content: space-around;
-  margin-top: 6.6rem;
+
   background-color: var(--secondColor);
   padding: 0.5rem;
 }

@@ -1,7 +1,7 @@
 .wishlistBox {
     max-width: 90%;
+    min-height: 95%;
     margin: 3rem;
-    margin-top: 10rem;
     padding: 1rem;
     background-color: var(--lastColor);
     border-radius: 16px;
@@ -13,21 +13,24 @@
     display: flex;
     justify-content: center;
   }
-  svg{
-    width: 40px;
-    height: auto;
+  h2 svg{
+    width: 2rem;
   }
-  .emptyCart{
+  button svg{
+    width: auto;;
+    height: 1rem;
+  }
+  .empty{
     min-height: 10rem;
   }
   
-  .cartList {
+  .wishList {
     padding: 0;
     min-height: 15rem;
     width: 100%;
   }
   
-  .cartItem {
+  .wishItem {
     background-color: var(--fourthColor);
     margin: 1rem;
     padding: 1rem;
@@ -35,17 +38,17 @@
     border-radius: 16px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; 
   }
 
-  .removeButtons{
+  .remove{
     display: flex;
     justify-content: space-around;
     gap:0.5rem;
     
   }
 
-  .decrease, .remove{
+  .add, .remove{
     color:red;
     font-weight: bold;
     padding: 0.8rem;
@@ -77,9 +80,6 @@
     color: var(--mainColor);
     
   }  
-  .total {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-  }
+
   
   

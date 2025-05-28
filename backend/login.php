@@ -1,13 +1,9 @@
 <?php
-// ————————————————
-// 1) Errores mientras depuras
-// ————————————————
+//Errores mientras depuras
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// ————————————————
-// 2) CORS (¡antes de cualquier salida!)
-// ————————————————
+//CORS
 header('Access-Control-Allow-Origin: http://localhost:4200');
 header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json; charset=utf-8');
@@ -19,24 +15,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// ————————————————
-// 3) Sólo POST
-// ————————————————
+//Sólo POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
     exit;
 }
 
-// ————————————————
-// 4) Conexión y helpers
-// ————————————————
+// Conexión y helpers
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/cart_helpers.php';
 
-// ————————————————
-// 5) Leer body y validar
-// ————————————————
+//Leer body y validar
 $body     = json_decode(file_get_contents('php://input'), true) ?: [];
 $email    = trim($body['email']    ?? '');
 $password =            $body['password'] ?? '';
@@ -47,9 +37,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 4) {
     exit;
 }
 
-// ————————————————
-// 6) Buscar usuario
-// ————————————————
+//Buscar usuario
 $stmt = $conn->prepare("
     SELECT id, name, password
       FROM users
@@ -61,9 +49,7 @@ $stmt->execute();
 $res = $stmt->get_result();
 
 if ($user = $res->fetch_assoc()) {
-    // ————————————————
-    // 7) Verificar contraseña
-    // ————————————————
+    // Verificar contraseña
     if (password_verify($password, $user['password'])) {
         session_start();
         $_SESSION['user'] = [
@@ -72,27 +58,20 @@ if ($user = $res->fetch_assoc()) {
             'email' => $email
         ];
 
-        // ————————————————
-        // 8) Fusionar carrito invitado (si existía)
-        // ————————————————
+        //Fusionar carrito invitado
         if (!empty($_SESSION['cart_id'])) {
             mergeCart((int)$_SESSION['cart_id'], (int)$_SESSION['user']['id']);
             unset($_SESSION['cart_id']);
         }
 
-        // ————————————————
-        // 9) Obtener el ID de carrito “open” del usuario
-        // ————————————————
+        // Obtener el ID de carrito “open” del usuario
         $cartId = getOrCreateCartByUserId((int)$_SESSION['user']['id']);
 
-        // ————————————————
-        // 10) Recuperar los items de ese carrito
-        // ————————————————
+
+        // Recuperar los items de ese carrito
         $cartItems = getCartItemsByCartId($cartId);
 
-        // ————————————————
-        // 11) Devolver JSON al cliente
-        // ————————————————
+        // Devolver JSON al cliente
         echo json_encode([
             'status' => 'success',
             'user'   => $_SESSION['user'],

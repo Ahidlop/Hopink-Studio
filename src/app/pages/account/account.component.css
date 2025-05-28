@@ -1,6 +1,5 @@
 .accountPage {
     max-width: 85%;
-    margin: 5rem;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -75,8 +74,8 @@
     transition: background 0.3s ease;
   }
 
-    .accountMenu a:hover{
-        background: var(--thirdColor);
-        color: var(--fourthColor);
-    }
+  .accountMenu a:hover{
+      background: var(--thirdColor);
+      color: var(--fourthColor);
+  }
   
