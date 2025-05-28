@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { WishlistComponent } from '../wishlist/wishlist.component';
 import { WishlistService } from '../../services/wishlist.service';
 
@@ -18,8 +19,9 @@ export class ShopPageComponent implements OnInit {
   filteredProducts: Product[] = [];
   currentFilter: string = 'all';
   isLoading = true;
+
   wishIds: number[] = [];
-  public showToastProductId: number | null = null;
+  showToastProductId: number | null = null;
   toastMessage = '';
 
   constructor(
@@ -29,11 +31,13 @@ export class ShopPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
+    //Cargo wishlist
     this.wishlistService.wishlist$.subscribe(items => {
       this.wishIds = items.map(i => i.id);
     });
     this.wishlistService.loadWishlist();
+
+    //Cargo productos
     this.productService.getProducts().subscribe({
       next: products => {
         this.allProducts = products;
@@ -63,11 +67,17 @@ export class ShopPageComponent implements OnInit {
     return this.wishIds.includes(id);
   } 
 
-  onAddToWishlist(productId: number) {
-    this.wishlistService.addToWishlist(productId);
-    // Mostramos solo aquí el toast
-    this.showToastProductId = productId;
-    this.toastMessage = 'Producto añadido a favoritos';
+  onAddToWishlist(id: number): void {
+    if (this.isInWishlist(id)) {
+      // Si ya está, sólo mostramos mensaje
+      this.toastMessage = 'El producto ya se encuentra en la wishlist';
+    } else {
+      // Si no, lo añadimos y mostramos mensaje
+      this.wishlistService.addToWishlist(id);
+      this.toastMessage = 'Producto añadido a la Lista de deseos';
+    }
+    // Disparamos el toast en este producto
+    this.showToastProductId = id;
     setTimeout(() => this.showToastProductId = null, 3000);
   }
 }

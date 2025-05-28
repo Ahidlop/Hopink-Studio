@@ -101,24 +101,25 @@ export class CartService {
 
   // Eliminar del carrito
   removeFromCart(productId: number): void {
-    this.http.delete<{ success: boolean; items: CartItem[] }>(
-      `${this.cartUrl}?product_id=${productId}`,
-      this.httpOptions
-    )
-    .pipe(
-      map(response => response.items)
-    )
-    .subscribe(
-      items => {
-        this.cart = items;
-        this.cartSubject.next(this.cart);
-      },
-      err => {
-        console.error('Error eliminando del carrito', err);
-      }
-    );
+    this.http
+      .delete<{ success: boolean; items: CartItem[] }>(
+        this.cartUrl,               // <-- sin `?product_id=…`
+        {
+          body: { product_id: productId },
+          withCredentials: true
+        }
+      )
+      .pipe(map(res => res.items))
+      .subscribe({
+        next: items => {
+          this.cart = items;
+          this.cartSubject.next(this.cart);
+        },
+        error: err => console.error('Error borrando del carrito', err)
+      });
   }
 
+  //Vaciar carrito
   clearCart(): void {
     this.cart = [];
     this.cartSubject.next(this.cart);

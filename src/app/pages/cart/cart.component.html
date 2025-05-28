@@ -23,7 +23,7 @@
         <span class="qty">x{{ item.quantity }}</span>
         <span class="price">{{ item.price * item.quantity | currency:'EUR' }}</span>
         <div class="removeButtons">
-          <button class="decrease" (click)="decreaseProduct(item.id)">−</button>
+          <button class="decrease" (click)="decrement(item)">−</button>
           <button class="remove" (click)="removeProduct(item.id)">✕</button>
         </div>
       </li>

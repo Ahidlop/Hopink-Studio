@@ -1,4 +1,3 @@
-// src/app/cart/cart.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
 import { CartService, CartItem }        from '../../services/cart.service';
@@ -29,7 +28,7 @@ export class CartComponent implements OnInit {
     this.cartService.clearCart();
   }
 
-  /** Al hacer click, abrimos sandbox de PayPal en nueva pestaña */
+  /** Al hacer click, abrimos PayPal*/
   onPay(): void {
     const amount = this.total.toFixed(2);
     const url = 
@@ -42,7 +41,14 @@ export class CartComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  /** Opcionales: si tienes botones de disminuir o eliminar ítems */
+  decrement(item: CartItem) {
+    if (item.quantity > 1) {
+      this.cartService.decreaseQuantity(item.id);
+    } else {
+      this.cartService.removeFromCart(item.id);
+    }
+  }
+
   decreaseProduct(id: number): void {
     this.cartService.decreaseQuantity(id);
   }

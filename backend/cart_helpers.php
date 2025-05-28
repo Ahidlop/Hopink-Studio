@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-/** Obtiene o crea el carrito “open” de un usuario */
+// Coge o crea el carrito del usuario 
 function getOrCreateCartByUserId(int $uid): int {
     global $conn;
-    // 1) Intentar recuperar uno abierto
+    //Intentar recuperarlo
     $stmt = $conn->prepare("
       SELECT id
         FROM cart
@@ -20,7 +20,7 @@ function getOrCreateCartByUserId(int $uid): int {
         return $cid;
     }
     $stmt->close();
-    // 2) Si no existe, insertar
+    //Si no existe, lo crea
     $stmt = $conn->prepare("
       INSERT INTO cart (user_id, status)
            VALUES (?, 'open')
@@ -32,7 +32,7 @@ function getOrCreateCartByUserId(int $uid): int {
     return $newId;
 }
 
-/** Crea un carrito para invitado */
+//Crear carrito de invitado
 function createGuestCart(): int {
   global $conn;
   $stmt = $conn->prepare("
@@ -46,7 +46,7 @@ function createGuestCart(): int {
 }
 
 
-/** Devuelve los items de un carrito */
+//Devuelve productos del carrito
 function getCartItemsByCartId(int $cid): array {
     global $conn;
     $sql = "
@@ -64,7 +64,7 @@ function getCartItemsByCartId(int $cid): array {
     return $items;
 }
 
-/** Añade o actualiza un item en el carrito */
+//Añade o actualiza un producto del carrito
 function addOrUpdateCartItem(int $cid, int $pid, int $qty): void {
     global $conn;
     $stmt = $conn->prepare("
@@ -87,7 +87,7 @@ function addOrUpdateCartItem(int $cid, int $pid, int $qty): void {
     $stmt->close();
 }
 
-/** Elimina un item del carrito */
+//Elimina producto del carrito
 function removeCartItem(int $cid, int $pid): void {
     global $conn;
     $stmt = $conn->prepare("

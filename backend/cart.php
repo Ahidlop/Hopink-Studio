@@ -1,30 +1,22 @@
 <?php
-// ————————————————
-// 1) Errores mientras depuras
-// ————————————————
+//Errores mientras depuro
 ini_set('display_errors','1');
 ini_set('display_startup_errors','1');
 error_reporting(E_ALL);
 
-// ————————————————
-// 2) CORS (¡antes de cualquier salida!)
-// ————————————————
+//CORS
 header('Access-Control-Allow-Origin: http://localhost:4200');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// ————————————————
-// 3) Responder OPTIONS y salir
-// ————————————————
+//Responder OPTIONS y salir
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
 
-// ————————————————
-// 4) Sesión y helpers
-// ————————————————
+//Sesión y helpers
 session_set_cookie_params([
   'lifetime' => 0,
   'path'     => '/',
@@ -38,9 +30,6 @@ session_start();
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/cart_helpers.php';
 
-// ————————————————
-// 5) Lógica del carrito sin generar warnings
-// ————————————————
 // Tomamos user_id si existe, o null en caso contrario
 $userId = $_SESSION['user']['id'] ?? null;
 
@@ -74,10 +63,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 
     case 'DELETE':
-        parse_str(file_get_contents('php://input'), $body);
+        //lee el raw body como JSON
+        $body = json_decode(file_get_contents('php://input'), true);
+        //si existe, borra
         if (isset($body['product_id'])) {
             removeCartItem($cartId, (int)$body['product_id']);
         }
+        //devuelve el carrito actualizado
         $result = getCartItemsByCartId($cartId);
         break;
 
@@ -87,9 +79,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         exit;
 }
 
-// ————————————————
-// 6) ¡Salida limpia!
-// ————————————————
+//Salida
 header('Content-Type: application/json; charset=utf-8');
 echo json_encode([
   'success' => true,
