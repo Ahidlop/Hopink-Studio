@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule }            from '@angular/common/http';
 import { CartService }                             from '../../services/cart.service';
 import { filter }                                  from 'rxjs/operators';
 import { Observable }                              from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -14,13 +15,14 @@ interface ApiResponse {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   @Output() toggleMenu = new EventEmitter<void>();
 
+  searchTerm = '';
   public itemCount = 0;
   public user$!: Observable<ApiResponse>;
 
@@ -33,17 +35,17 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1) Cargar carrito al arrancar
+    //Cargar carrito al arrancar
     this.cartService.loadCart();
     this.cartService.cart$
       .subscribe(items => {
         this.itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
       });
 
-    // 2) Petición inicial de sesión
+    //Petición cargar sesión
     this.loadSession();
 
-    // 3) Al cambiar de ruta, volvemos a cargar la sesión
+    //Al cambiar de ruta, volvemos a cargar la sesión
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(() => this.loadSession());
@@ -51,6 +53,19 @@ export class HeaderComponent implements OnInit {
 
   toggleMenuClick(): void {
     this.toggleMenu.emit();
+  }
+
+  onSearch(): void {
+    const term = this.searchTerm.trim();
+    this.router.navigate(['/shopPage'], { queryParams: { q: term } });
+  }
+
+  onSearchLive(): void {
+    const term = this.searchTerm.trim();
+    this.router.navigate(['/shopPage'], {
+      queryParams: { q: term },
+      queryParamsHandling: 'merge'
+    });
   }
 
   private loadSession(): void {

@@ -1,5 +1,5 @@
 <app-header (toggleMenu)="toggleMenu()"></app-header>
 <app-menu [isVisible]="menuVisible" (closeMenu)="menuVisible = false"></app-menu> <!--Solo se muestra si menuVisible=true-->
-<router-outlet></router-outlet>
+<router-outlet class="content"></router-outlet>
 <app-footer></app-footer>
 <app-cookies></app-cookies>

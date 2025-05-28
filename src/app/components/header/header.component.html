@@ -3,11 +3,15 @@
     <img src="imagenes/General/hopinkLogo.png" alt="Logo" class="logo">
   </div>
 
-  <form action="buscar" method="get" class="searchDiv">
-    <input type="text" name="q" class="searchbox" placeholder="Buscar...">
-    <button type="submit" class="searchbutton">
-      <img src="" alt="" class="lupa">
-    </button>
+  <form (ngSubmit)="onSearch()" #searchForm="ngForm" class="searchDiv">
+    <input
+      type="text"
+      name="q"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchLive()"
+      class="searchbox"
+      placeholder="Buscar..."
+    />
   </form>
 
   <a routerLink="/account" class="login">

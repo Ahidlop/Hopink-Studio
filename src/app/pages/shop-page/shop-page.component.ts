@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { WishlistComponent } from '../wishlist/wishlist.component';
 import { WishlistService } from '../../services/wishlist.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shop-page',
@@ -19,6 +20,8 @@ export class ShopPageComponent implements OnInit {
   currentFilter: string = 'all';
   isLoading = true;
 
+   searchTerm = '';
+
   showToastProductId: number | null = null;
   toastMessage = '';
   wishlistIds: number[] = [];
@@ -26,34 +29,61 @@ export class ShopPageComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+    //Búsqueda
+    this.route.queryParams.subscribe(params => {
+      this.searchTerm = params['q']?.trim().toLowerCase() || '';
+      this.applyFilters();
+    });
 
     //Cargo productos
     this.productService.getProducts().subscribe({
       next: products => {
         this.allProducts = products;
-        this.filteredProducts = products;
+        this.applyFilters();  
         this.isLoading = false;
       },
-      error: err => {
-        console.error('Error cargando productos', err);
-        this.isLoading = false;
-      }
+      error: () => {this.isLoading = false}
     });
 
+    // Cargo wishlist
     this.wishlistService.items$.subscribe(items => {
       this.wishlistIds = items.map(i => i.id);
     });
+
   }
 
   changeFilter(filter: string): void {
     this.currentFilter = filter;
-    this.filteredProducts = filter === 'all'
-      ? this.allProducts
-      : this.allProducts.filter(p => p.category === filter);
+    this.searchTerm = '';
+
+    // Quitar el parámetro ?q= de la URL
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { q: null },
+      queryParamsHandling: 'merge'
+  });
+
+  // Aplicar solo el filtro de categoría
+  this.applyFilters();
+  }
+
+   applyFilters(): void {
+    const term = this.searchTerm.toLowerCase();
+    if (term) {
+      // búsqueda por nombre
+      this.filteredProducts = this.allProducts
+        .filter(p => p.name.toLowerCase().includes(term));
+    } else {
+      // filtrado por categoría
+      this.filteredProducts = this.allProducts
+        .filter(p => this.currentFilter === 'all' || p.category === this.currentFilter);
+    }
   }
 
   addToCart(product: Product) {
