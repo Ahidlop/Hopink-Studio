@@ -20,12 +20,44 @@
 
 <div class="accountPage" *ngIf="isLoggedIn">
   <h2>Bienvenid&#64;, {{ user?.name }} </h2>
-  <div class="accountMenu">
-    <a href="#" class="profile">Mi perfil</a>
-    <a href="#" class="orders">Mis pedidos</a>
-    <a routerLink="/accountLinks" class="returns">Devoluciones</a>
-    <a routerLink="/wishList" class="wishlist">Lista de deseos</a>
-    <a href="#" class="settings">Configuración</a>
-    <button (click)="logout()">Cerrar sesión</button>
+  <div class="accountContainer">
+    <nav class="accountMenu">
+      <a href="#profile">Mi perfil</a>
+      <a href="#orders">Mis pedidos</a>
+      <a href="#budgets">Mis presupuestos</a>
+      <a routerLink="/accountLinks">Devoluciones</a>
+      <a routerLink="/wishList">Lista de deseos</a>
+      <a href="#settings">Configuración</a>
+      <button (click)="logout()" class="logout">Cerrar sesión</button>
+    </nav>
+
+    <div class="accountContent">
+      <section id="profile">
+        <h3>Mi perfil</h3>
+        <!-- Contenido del perfil aquí -->
+      </section>
+
+      <section id="orders">
+        <h3>Mis pedidos</h3>
+        <!-- Contenido de pedidos aquí -->
+      </section>
+
+      <section id="budgets">
+        <h3>Mis presupuestos</h3>
+        <div *ngIf="budgets.length === 0">No tienes presupuestos guardados.</div>
+        <div *ngFor="let b of budgets" class="budget-card">
+          <h4>{{ b.service | titlecase }} con {{ b.artist }}</h4>
+          <p><strong>Presupuesto:</strong> {{ b.budget }} €</p>
+          <p *ngIf="b.height && b.width">Tamaño: {{ b.height }} x {{ b.width }} cm</p>
+          <p *ngIf="b.message">{{ b.message }}</p>
+        </div>
+      </section>
+
+      <section id="settings">
+        <h3>Configuración</h3>
+        <!-- Configuración del usuario -->
+      </section>
+    </div>
   </div>
 </div>
+

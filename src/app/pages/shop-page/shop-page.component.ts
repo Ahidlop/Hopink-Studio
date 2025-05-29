@@ -38,6 +38,8 @@ export class ShopPageComponent implements OnInit {
     //Búsqueda
     this.route.queryParams.subscribe(params => {
       this.searchTerm = params['q']?.trim().toLowerCase() || '';
+      const urlFilter = params['filter'] || 'all';
+      this.currentFilter = urlFilter;
       this.applyFilters();
     });
 
@@ -65,7 +67,7 @@ export class ShopPageComponent implements OnInit {
     // Quitar el parámetro ?q= de la URL
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { q: null },
+      queryParams: { q: null, filter },
       queryParamsHandling: 'merge'
   });
 

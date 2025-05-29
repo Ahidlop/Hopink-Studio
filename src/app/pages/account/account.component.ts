@@ -26,6 +26,8 @@ export class AccountComponent implements OnInit {
   isLoggedIn = false;
   user: ApiResponse['user'] | null = null;
 
+  budgets: any[] = [];
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -46,8 +48,8 @@ export class AccountComponent implements OnInit {
           if (res.status === 'success' && res.user) {
             this.isLoggedIn = true;
             this.user       = res.user;
-            // Si hay sesión, recarga el carrito
             this.cartService.loadCart();
+            this.loadBudgets(); // Carga presupuestos
           } else {
             this.isLoggedIn = false;
           }
@@ -55,6 +57,14 @@ export class AccountComponent implements OnInit {
         error: () => {
           this.isLoggedIn = false;
         }
+      });
+  }
+
+  private loadBudgets(): void {
+    this.http.get<any[]>(`${this.API}/get_budgets.php`, { withCredentials: true })
+      .subscribe({
+        next: data => this.budgets = data,
+        error: err => console.error('Error al cargar presupuestos', err)
       });
   }
 
@@ -69,8 +79,8 @@ export class AccountComponent implements OnInit {
         if (res.status === 'success' && res.user) {
           this.isLoggedIn = true;
           this.user       = res.user;
-          // Cargar carrito sin recargar toda la página
           this.cartService.loadCart();
+          this.loadBudgets(); 
           this.router.navigate(['/shopPage']);
         } else {
           alert(res.message || 'Email o contraseña incorrectos');
@@ -88,6 +98,7 @@ export class AccountComponent implements OnInit {
       .subscribe(() => {
         this.isLoggedIn = false;
         this.user       = null;
+        this.budgets    = []; 
         this.cartService.clearCart();
         this.router.navigate(['/shopPage']);
       });

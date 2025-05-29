@@ -79,3 +79,31 @@
       color: var(--fourthColor);
   }
   
+  .accountContainer {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.accountMenu {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.accountContent {
+  flex: 1;
+  background-color: var(--fourthColor);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.budget-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+}

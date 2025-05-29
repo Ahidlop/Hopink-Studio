@@ -58,6 +58,8 @@ if ($user = $res->fetch_assoc()) {
             'email' => $email
         ];
 
+        $_SESSION['user_id'] = (int)$user['id'];
+        
         //Fusionar carrito invitado
         if (!empty($_SESSION['cart_id'])) {
             mergeCart((int)$_SESSION['cart_id'], (int)$_SESSION['user']['id']);
