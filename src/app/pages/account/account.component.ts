@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { WishlistService, SimpleProduct } from '../../services/wishlist.service';
+import { ViewportScroller } from '@angular/common';
 
 interface ApiResponse {
   status: 'success' | 'error';
@@ -18,6 +20,7 @@ interface ApiResponse {
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
+
 export class AccountComponent implements OnInit {
   private readonly API = 'http://localhost/Hopink-Studio/backend';
 
@@ -31,18 +34,24 @@ export class AccountComponent implements OnInit {
   budgets: any[] = [];
   selectedBudget: any = null;
   showConfirmDelete = false;
+  public wishlist: SimpleProduct[] = [];
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private wishlistService: WishlistService,
+    private scroller: ViewportScroller
   ) {}
 
   ngOnInit() {
     this.loginForm    = this.fb.group({ email: [''], password: [''] });
     this.registerForm = this.fb.group({ name: [''], email: [''], password: [''] });
     this.checkSession();
+
+    this.wishlistService.loadWishlist();
+    this.wishlistService.wishlist$.subscribe(items => this.wishlist = items);
   }
 
   private checkSession() {
@@ -141,6 +150,11 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  //Tras login
+  scrollTo(anchor: string): void {
+    this.scroller.scrollToAnchor(anchor);
+  }
+  
   //Presupuestos	
   getServiceLabel(service: string): string {
   switch (service) {
@@ -208,5 +222,13 @@ deleteBudget() {
     }
   });
 }
+
+  addToCart(product: SimpleProduct): void {
+    this.cartService.addToCart({ id: product.id });
+  }
+
+  removeFromWishlist(pid: number): void {
+    this.wishlistService.removeFromWishlist(pid);
+  }
 
 }

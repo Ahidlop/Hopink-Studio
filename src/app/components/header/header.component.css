@@ -1,7 +1,6 @@
 header{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     background-color: var(--secondColor);
     position:relative;
@@ -12,7 +11,7 @@ header{
     z-index: 999;
     padding: 10px 20px;
     gap:20px;
-    box-sizing: border-box;/*hola*/
+    box-sizing: border-box;
 }
 
 .logo{
@@ -29,10 +28,9 @@ header{
 .searchDiv{
     display: flex;
     align-items: center;
-    margin:0 20px;
     gap:15px;
     padding:3px;
-    flex-grow: 1;/*hace que crezca la busqueda en proporción al resto de la pg*/
+    flex-grow: 1;
     max-width: 100%; 
     background-color:var(--lastColor);
     border-radius: var(--usualBorderRadius) ;
@@ -45,9 +43,7 @@ header{
     padding: 8px 10px;
     outline: none;
 }
-.searchbutton{
-    border: none;
-}
+
 .lupa{
     height: auto;
     transform: rotate(45deg);
@@ -77,9 +73,6 @@ header{
 }
 
 .loggedIn{
-    position: absolute;
-    top: 2.3rem;
-    right: 11.8rem;
     width: 10px;
     height: 10px;
     background-color: #00e676;
