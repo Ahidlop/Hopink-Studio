@@ -21,12 +21,16 @@ interface ApiResponse {
 export class AccountComponent implements OnInit {
   private readonly API = 'http://localhost/Hopink-Studio/backend';
 
+  //Login y registro
   loginForm!: FormGroup;
   registerForm!: FormGroup;
   isLoggedIn = false;
   user: ApiResponse['user'] | null = null;
 
+  // Presupuestos
   budgets: any[] = [];
+  selectedBudget: any = null;
+  showConfirmDelete = false;
 
   constructor(
     private fb: FormBuilder,
@@ -60,11 +64,22 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  private loadBudgets(): void {
-    this.http.get<any[]>(`${this.API}/get_budgets.php`, { withCredentials: true })
+  loadBudgets(): void {
+    const email = this.user?.email;
+    if (!email) return;
+
+    this.http.post('http://localhost/Hopink-Studio/backend/get_budgets.php', { email })
       .subscribe({
-        next: data => this.budgets = data,
-        error: err => console.error('Error al cargar presupuestos', err)
+        next: (res: any) => {
+          if (res.ok) {
+            this.budgets = res.budgets;
+          } else {
+            console.error('Presupuestos no cargados correctamente');
+          }
+        },
+        error: err => {
+          console.error('Error al cargar presupuestos', err);
+        }
       });
   }
 
@@ -125,4 +140,73 @@ export class AccountComponent implements OnInit {
       }
     });
   }
+
+  //Presupuestos	
+  getServiceLabel(service: string): string {
+  switch (service) {
+    case 'color': return 'Tatuaje a color';
+    case 'black': return 'Tatuaje blanco y negro';
+    case 'piercing': return 'Piercing';
+    default: return service;
+  }
+}
+
+getBasePrice(artist: string): number {
+  switch (artist.toLowerCase()) {
+    case 'alejandra':
+    case 'pedro':
+      return 80;
+    case 'raul':
+    case 'fernando':
+      return 70;
+    case 'aprendiz':
+      return 40;
+    default:
+      return 60;
+  }
+}
+
+getEstimatedHours(height: number, width: number): number {
+  const area = height * width;
+  if (area <= 100) return 1;
+  if (area <= 300) return 2;
+  if (area <= 600) return 3;
+  return 4; // ajusta según tu criterio
+}
+
+getTotalPrice(service: string, artist: string, height: number, width: number): number {
+  const base = this.getBasePrice(artist);
+  const hours = this.getEstimatedHours(height, width);
+  const colorSupplement = service === 'color' ? 30 : 0;
+  return base * hours + colorSupplement;
+}
+
+confirmDelete(budget: any) {
+  this.selectedBudget = budget;
+  this.showConfirmDelete = true;
+}
+
+cancelDelete() {
+  this.selectedBudget = null;
+  this.showConfirmDelete = false;
+}
+
+deleteBudget() {
+  if (!this.selectedBudget?.id) return;
+
+  this.http.post('http://localhost/Hopink-Studio/backend/delete_budget.php', {
+    id: this.selectedBudget.id
+  }).subscribe({
+    next: (res: any) => {
+      if (res.ok) {
+        this.budgets = this.budgets.filter(b => b.id !== this.selectedBudget.id);
+        this.showConfirmDelete = false;
+      }
+    },
+    error: err => {
+      console.error('Error al eliminar presupuesto', err);
+    }
+  });
+}
+
 }

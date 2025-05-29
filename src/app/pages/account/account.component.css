@@ -106,4 +106,53 @@
   padding: 1rem;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
+  position: relative;
+}
+
+.confirmDeleteIf {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmDeleteBox {
+  background-color: #fff4f4;
+  border: 2px solid #d33;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.confirmDeleteBox p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.deleteButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.deleteButtons button {
+  background-color: var(--secondColor);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deleteButtons button:hover {
+  background-color: var(--mainColor);
 }

@@ -42,22 +42,45 @@
         <!-- Contenido de pedidos aquí -->
       </section>
 
-      <section id="budgets">
+      <!-- Presupuestos -->
+       <section id="settings">
         <h3>Mis presupuestos</h3>
-        <div *ngIf="budgets.length === 0">No tienes presupuestos guardados.</div>
+      
         <div *ngFor="let b of budgets" class="budget-card">
-          <h4>{{ b.service | titlecase }} con {{ b.artist }}</h4>
+          <button class="close" (click)="confirmDelete(b)">X</button>
+          <h4>
+            {{ getServiceLabel(b.service) }} con {{ b.artist | titlecase }}
+          </h4>
+
           <p><strong>Presupuesto:</strong> {{ b.budget }} €</p>
-          <p *ngIf="b.height && b.width">Tamaño: {{ b.height }} x {{ b.width }} cm</p>
-          <p *ngIf="b.message">{{ b.message }}</p>
+          <ng-container *ngIf="b.service !== 'piercing'">
+            <p>Base: {{ getBasePrice(b.artist) }} €/hora</p>
+            <p *ngIf="b.service === 'color'">+ Suplemento por color: 30 €</p>
+            <p>Tiempo estimado: {{ getEstimatedHours(b.height, b.width) }} hora(s)</p>
+            <p>Total estimado: {{ getTotalPrice(b.service, b.artist, b.height, b.width) }} €</p>
+          </ng-container>
+          <p><em>Fecha del presupuesto: {{ b.created_at | date:'dd/MM/yyyy HH:mm' }}</em></p>
         </div>
       </section>
+
 
       <section id="settings">
         <h3>Configuración</h3>
         <!-- Configuración del usuario -->
       </section>
-    </div>
+    
   </div>
+
+
+  <!-- Confirmación eliminar presupuesto -->
+      <div *ngIf="showConfirmDelete" class="confirmDeleteIf">
+        <div class="confirmDeleteBox">
+          <p>¿Estás seguro que quieres borrar el presupuesto permanentemente?</p>
+          <div class="deleteButtons">
+            <button (click)="deleteBudget()">Sí, borrar</button>
+            <button (click)="cancelDelete()">Cancelar</button>
+          </div>
+        </div>
+      </div>
 </div>
 
