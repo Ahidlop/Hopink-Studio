@@ -1,3 +1,8 @@
+body, html {
+  width:100%;
+  height: 100%;
+}
+
 .accountPage {
     max-width: 85%;
     padding: 2rem;
@@ -219,6 +224,7 @@ h3{
   background-color: white;
   padding: 1rem;
   border-radius: 10px;
+  text-align: justify;
 }
 /*wishlist*/
 .wishlistProducts{
@@ -266,4 +272,170 @@ h3{
 
 .addwish:hover,.removewish:hover {
   background-color: var(--mainColor);
+}
+
+/* Tablet*/
+@media (max-width: 1024px) {
+  .accountPage {
+    padding: 1rem;
+    max-width: 95%;
+  }
+
+  .accountForms {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .loginForm, .registerForm {
+    max-width: 80%;
+    width: 100%;
+  }
+
+  /*Tras login*/
+  .accountPageLogged {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+  }
+
+  .accountMenu {
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: unset;
+    max-width: unset;
+    width: 97%;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .accountMenu h2 {
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem;
+  }
+
+  .accountMenu a,
+  .accountMenu button.logout {
+    flex: 1 1 40%;
+    min-width: 140px;
+  }
+
+  .accountContent {
+    padding: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  h3 {
+    font-size: 1.7rem;
+  }
+
+  .budget-card {
+    padding: 0.75rem;
+  }
+
+  .wishlistProducts {
+    padding: 0;
+  }
+
+  .wishItem {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
+}
+
+
+/* Movil */
+@media (max-width: 767px) {
+  .accountPage {
+    max-width: 100%;
+  }
+
+  .accountForms {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .loginForm, .registerForm {
+    max-width: 100%;
+    width: 80%;
+  }
+
+  form input {
+    font-size: 0.95rem;
+  }
+
+  form button, .close {
+    width: 100%;
+  }
+
+  .accountPageLogged {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .accountMenu {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    gap: 0.5rem;
+    margin: 0 auto;
+  }
+
+  .accountMenu a,
+  .accountMenu button.logout {
+    width: 90%;
+  }
+
+  .accountContent {
+    padding: 0.75rem;
+    width: 100%;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .budget-card {
+    padding: 0.5rem;
+  }
+  .close{
+    width: 2rem;
+    margin:auto;
+    float: right;
+  }
+
+  .wishlistProducts {
+    padding: 0;
+  }
+
+  .wishItem {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
+
+  .returnPolicy {
+    padding: 0.75rem;
+  }
+
+  .confirmDeleteBox {
+    width: 90%;
+  }
 }

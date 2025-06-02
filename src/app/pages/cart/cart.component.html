@@ -1,10 +1,6 @@
-<!-- src/app/cart/cart.component.html -->
 <div class="cartBox">
   <h2 class="cartTitle">
-    <!-- Icono de carrito -->
-    <svg xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 0 64 64"
-         id="Cart">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="Cart">
       <path d="M20 64c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zM44 64c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zm0-12c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" fill="#34a853" class="svgShape"></path>
       <path d="M26 56h12v2H26zM13.002 57.073 L9.07 3H0V1h10.93l4.068 55.927z"fill="#34a853"class="svgShape"></path>
       <path d="M13.07 43.998l-.14-1.996 42.264-2.948L61.74 11H11V9h53.26l-7.454 31.946z"fill="#34a853"class="svgShape"></path>
@@ -33,7 +29,7 @@
 
     <div *ngIf="cart.length > 0" class="buttons">
       <button class="empty" (click)="clearCart()">Vaciar carrito</button>
-      <!-- Botón personalizado que abre PayPal en nueva pestaña -->
+      <!-- Botón PayPal -->
       <button class="pay" (click)="onPay()">Finalizar compra</button>
     </div>
 </div>

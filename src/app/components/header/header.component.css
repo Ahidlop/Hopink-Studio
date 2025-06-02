@@ -117,3 +117,188 @@ header{
 .burguer:hover {
     display: block;
 }
+
+/* Tablet */
+@media (max-width: 1024px) and (min-width: 768px) {
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 10px 20px;
+    background-color: var(--secondColor);
+    width: 100vw;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .logo {
+    flex-shrink: 0;
+  }
+
+  .logo img {
+    height: 60px;
+    width: auto;
+    border-radius: var(--usualBorderRadius);
+    object-fit: contain;
+  }
+
+  .searchDiv {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background-color: var(--lastColor);
+    border-radius: var(--usualBorderRadius);
+    padding: 6px 12px;
+    box-sizing: border-box;
+    gap: 10px;
+  }
+
+  .searchbox {
+    flex-grow: 1;
+    width: 100%;
+    font-size: 1rem;
+    padding: 6px;
+    border: none;
+    outline: none;
+  }
+
+  .login,
+  .cart,
+  .burguer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    flex-shrink: 0;
+  }
+  .login{
+    position: relative;
+  }
+  .loggedIn {
+    position: absolute;
+    top: -0.3rem;
+    right: 0;    
+  }
+
+  .cart {
+  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartNumber {
+  position: absolute;
+  top: -0.5rem;
+  right: -1rem;
+}
+
+  .login svg,
+  .cart svg,
+  .burguerbutt svg {
+    height: 20px;
+    width: auto;
+  }
+
+  .burguerbutt {
+    padding: 1rem;
+  }
+
+  .cartNumber {
+    font-size: 0.7rem;
+    padding: 2px 5px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 767px) {
+  header {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    grid-template-areas: "logo search login cart burguer";
+    align-items: center;
+    gap: 10px;
+    background-color: var(--secondColor);
+    width: 100%;
+  }
+
+  .logo {
+    grid-area: logo;
+  }
+
+  .logo img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+    border-radius: var(--usualBorderRadius);
+  }
+
+  .searchDiv {
+    grid-area: search;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--lastColor);
+    border-radius: var(--usualBorderRadius);
+    padding: 4px 8px;
+    box-sizing: border-box;
+  }
+
+  .searchbox {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 6px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .login {
+    grid-area: login;
+    display: flex;
+    justify-content: center;
+    padding: 6px;
+    position: relative;
+  }
+  .loggedIn {
+    position: absolute;
+    top: 0;
+    right: 0;    
+  }
+
+  .cart {
+  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartNumber {
+  position: absolute;
+  top: 4px;
+}
+
+  .burguer {
+    grid-area: burguer;
+    display: flex;
+    justify-content: center;
+  }
+
+  .burguerbutt {
+    padding: 1rem;
+  }
+
+  .login svg,
+  .cart svg,
+  .burguerbutt svg {
+    height: 18px;
+    width: auto;
+  }
+
+  .cartNumber {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+}

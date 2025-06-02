@@ -1,0 +1,7 @@
+.legal{
+    color: var(--mainColor);
+    background-color: var(--lastColor);
+    margin:3rem;
+    padding: 2rem;
+    text-align: justify;
+}

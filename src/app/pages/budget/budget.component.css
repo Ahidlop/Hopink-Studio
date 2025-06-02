@@ -1,3 +1,4 @@
+
 legend{
     color: var(--lastColor);
     display: flex;
@@ -7,16 +8,16 @@ legend{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     padding: 1rem;
-    margin: 3rem;
+    max-width: 1500px;
+    margin: 3rem auto;
   }
 
   .budget img{
-    width: 50%;
-    height: auto;
+    width: auto;
     border-radius: 16px;
-    max-height:40rem;
+    max-height:50rem;
   }
 
   .budgetForm{
@@ -51,9 +52,37 @@ legend{
     min-width: 3rem;
     height: 1.9rem;
   } 
+  .fileInput {
+  position: absolute;   
+  width: 0;
+  height: 0;
+  opacity: 0;          
+  pointer-events: none; 
+}
+
+.fileLabel {
+  background-color: var(--fourthColor);   
+  border: 1px solid var(--border-input);
+  border-radius: 16px;  
+  padding: 1rem ;                
+  font-size: 1rem;
+  color: var(--mainColor);            
+  cursor: pointer;
+}
+
+
+  .submit{
+    background-color: var(--lastColor);
+    border-radius: 16px;
+    border: none;
+    padding: 0.4rem;
+    font-family: var(--fontFamily);
+    color: var(--secondColor);
+    font-weight: bold;
+  }
 
   .message{
-    height: 4rem;
+    height: 10rem;
   }
 
   .image::file-selector-button { 
@@ -68,3 +97,41 @@ legend{
     background-color: var(--lastColor);
     transform: scale(1.05);
   }
+
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .budgetForm label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+  }
+
+  .budget img{
+    display: none;
+  }
+
+  .budgetForm input[type="radio"] {
+    margin-left: 0;
+    margin-right: 0.5rem;
+    float: none;
+  }
+}
+
+
+/*Movil*/
+@media (max-width: 767px) {
+  .budgetForm label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+  }
+
+  .budgetForm input[type="radio"] {
+    margin-left: 0;
+    margin-right: 0.5rem;
+    float: none;
+  }
+}

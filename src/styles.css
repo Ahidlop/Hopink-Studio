@@ -1,15 +1,15 @@
 :root{
     --mainFont: "rock salt", cursive, 'Poppins', sans-serif;
     --mainColor:#0B0F0A;
-    --secondColor:#1E2E26; /*bloques o menus*/
-    --thirdColor: #6A9F84;/*botones o resaltado*/
-    --fourthColor: #C2EABD;/*hover o fondos suaves*/
-    --lastColor: #F2F2F2;/*blanco destacar texto*/
+    --secondColor:#1E2E26; 
+    --thirdColor: #6A9F84;
+    --fourthColor: #C2EABD;
+    --lastColor: #F2F2F2;
     --usualBorderRadius:5px;
 }
 html, body{
-    height: 100%;
-    margin: 00;
+    width: 100%;
+    margin: 0;
     padding: 0;
     scroll-behavior: smooth;
 }

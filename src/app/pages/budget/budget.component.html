@@ -5,10 +5,10 @@
   <form class="budgetForm" (ngSubmit)="submitRequest()">
     <label>Nombre:</label>
     <input type="text" [(ngModel)]="form.name" name="name" required>
-
+    <br>
     <label>Email:</label>
     <input type="email" [(ngModel)]="form.email" name="email" required>
-
+    <br>
     <label>Artista:</label>
     <select [(ngModel)]="form.artist" name="artist" (change)="calculateBudget()" required>
       <option value="">Selecciona un artista</option>
@@ -18,35 +18,38 @@
       <option value="fernando">Fernando Peinado</option>
       <option value="aprendiz">Artista en prácticas</option>
     </select>
-
+    <br>
     <div class="service">
-      <label>Tipo de servicio:</label><br>
-      <input type="radio" name="service" value="color" [(ngModel)]="form.service" (change)="calculateBudget()">
-      <label>&emsp;Tatuaje a color</label><br>
+      <label for="color">Tipo de servicio:</label><br>
+        <input type="radio" id="color" name="service" value="color" [(ngModel)]="form.service" (change)="calculateBudget()">
+        <label>&emsp;Tatuaje a color</label><br>
       <input type="radio" name="service" value="black" [(ngModel)]="form.service" (change)="calculateBudget()">
       <label>&emsp;Tatuaje blanco y negro</label><br>
       <input type="radio" name="service" value="piercing" [(ngModel)]="form.service" (change)="calculateBudget()">
       <label>&emsp;Piercing</label>
     </div>
-
+    <br>
     <div class="size">
       <label>Alto aproximado (cm):</label>
       <input type="number" [(ngModel)]="form.height" name="height" min="2" max="60"
              [disabled]="form.service === 'piercing'" (change)="calculateBudget()">
-
+      <br>
       <label>Ancho aproximado (cm):</label>
       <input type="number" [(ngModel)]="form.width" name="width" min="2" max="60"
              [disabled]="form.service === 'piercing'" (change)="calculateBudget()">
     </div>
-
-    <label>Imagen de tatuaje:</label>
-    <input type="file" [disabled]="form.service === 'piercing'">
-
+    <br>
+    <p>Suba una imagen de su tatuaje:</p>
+    <label for="fileUpload" class="fileLabel">
+      Selecionar...
+    </label>
+    <input type="file" id="fileUpload" [disabled]="form.service === 'piercing'"class="fileInput"/>
+    <br>
     <label>Mensaje:</label>
-    <input type="text" [(ngModel)]="form.message" name="message" placeholder="Consultas, sugerencias...">
-
+    <input type="text" [(ngModel)]="form.message" name="message" class="message" placeholder="Consultas, sugerencias...">
+    <br>
     <p *ngIf="budget !== null"><strong>Presupuesto estimado:</strong> {{ budget | currency:'EUR' }}</p>
 
-    <button type="submit">Enviar</button>
+    <button type="submit" class="submit">Enviar</button>
   </form>
 </fieldset>

@@ -1,44 +1,63 @@
 footer{
     background-color: var(--secondColor);
     color: var(--lastColor);
-    padding-top: 1rem;
+    padding: 2rem 1rem;
     left: 0;
-    width: 100%;
     bottom :0;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    flex-wrap: wrap;
+    text-align: center;
+    bottom: 0;
+}
+
+
+.firstColumn, .secondColumn, .thirdColumn{
     display: flex;
     flex-direction: column;
     align-items: center;
-    position:relative;
-    bottom: 0;
-}
-.logoFooter{
-    margin: 1vh;
-    flex-shrink: 1;
+    justify-content: space-between;
+    flex: 1;
+    min-width: 200px;
+    padding: 0.5rem;
 }
 
 .logoFooter-img{
     height: 80px;
     width: auto;
     border-radius: var(--usualBorderRadius);
+    margin: 0.5rem;
 }
+
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+
+.legal a {
+  color: var(--fourthColor);
+  text-decoration: none;
+  opacity: 0.75;
+}
+
 .timetable{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: space-around;
     text-align: center;
+    margin:0.5rem;
     font-size: 14px;
     color: var(--fourthColor);
     opacity: 75%;
     line-height: 1.2px;
 }
-.links{
-    display: flex;
-    flex-direction: row;
 
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    height: 100px;
+.instagramSVG,
+.mailSVG {
+  margin-top: 0.5rem;
 }
 
 .instagramSVG, .phoneSVG{
@@ -55,4 +74,102 @@ footer{
     
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+    .firstColumn:not(:last-child)::after,
+.secondColumn:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 80%;
+  margin: 1rem auto 0;
+  border-bottom: 1px solid var(--fourthColor);
+  opacity: 0.2;
+}
 
+  .firstColumn, .secondColumn, .thirdColumn {
+    flex: 1 1 100%;
+    max-width: 90%;
+    margin-bottom: 1.5rem;
+  }
+  .firstColumn, .thirdColumn {
+    gap: 1rem;
+  }
+
+
+  .logoFooter-img {
+    height: 60px;
+  }
+
+  .timetable {
+    font-size: 13px;
+  }
+}
+
+/* Móvil*/
+@media (max-width: 767px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    gap: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .firstColumn, .secondColumn, .thirdColumn {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem 0;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .firstColumn, .thirdColumn {
+    gap: 1rem;
+  }
+
+  .firstColumn:not(:last-child)::after,
+.secondColumn:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 80%;
+  margin: 1rem auto 0;
+  border-bottom: 1px solid var(--fourthColor);
+  opacity: 0.2;
+}
+
+  .logoFooter-img {
+    height: 60px;
+    margin: 1rem 0;
+  }
+
+  .timetable {
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0.5rem 0;
+  }
+
+  .legal {
+    font-size: 13px;
+    gap: 0.3rem;
+    margin-top: 1rem;
+  }
+
+  .instagramSVG, .phoneSVG, .mailSVG {
+    height: 2rem;
+    width: auto;
+    margin: 0.3rem;
+  }
+
+  .mailSVG {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}

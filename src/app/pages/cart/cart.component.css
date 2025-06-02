@@ -1,13 +1,15 @@
 .cartBox {
     max-width: 90%;
-    margin: 3rem;
-    margin-top: 10rem;
+    margin: 3rem auto;
     padding: 1rem;
     background-color: var(--lastColor);
     border-radius: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    min-height: 45rem;
+    max-width: 1500px;
   }
   h2{
     display: flex;
@@ -82,4 +84,97 @@
     font-size: 1.2rem;
   }
   
-  
+
+  @media (max-width: 1024px) {
+  .cartBox {
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 800px;   
+  }
+
+  .cartItem {
+    width: 90%;           
+    max-width: 30rem;      
+    margin: 1rem auto;    
+    padding: 1rem;
+    flex-direction: row;   
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .removeButtons {
+    gap: 0.5rem;
+  }
+
+  .total {
+    font-size: 1.15rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  button,
+  button.empty {
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+
+/* Movil*/
+@media (max-width: 767px) {
+  .cartBox {
+    margin: 1.5rem auto;
+    padding: 0.8rem;
+    max-width: 95%;
+  }
+
+  .cartItem {
+    width: calc(100% - 2rem);
+    max-width: none;
+    margin: 0.8rem auto;
+    padding: 0.8rem;
+    flex-direction: column;       
+    align-items: flex-start;
+  }
+
+  .removeButtons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .total {
+    font-size: 1.1rem;
+    margin-top: 0.8rem;
+    text-align: center;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+
+  button,
+  button.empty {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  svg {
+    width: 30px;
+  }
+}
