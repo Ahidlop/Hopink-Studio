@@ -44,11 +44,6 @@ header{
     outline: none;
 }
 
-.lupa{
-    height: auto;
-    transform: rotate(45deg);
-}
-
 .login, .cart {
     background-color: var(--secondColor); 
     color: var(--lastColor);   
@@ -65,6 +60,10 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    position:relative;
+}
+.cart{
+  position: relative
 }
 
 .login svg,.cart svg{
@@ -77,17 +76,21 @@ header{
     height: 10px;
     background-color: #00e676;
     border-radius: 50%;
+    position:absolute;
+    top:0.1rem;
+    right:0.8rem;
 }
 
 .cartNumber{
-    margin-bottom: 5rem;
-    right: -0.01rem;
+    top:0.1rem;
+    right: 0.2rem;
     background-color: red;
     color: var(--lastColor);
     font-size: 0.7rem;
     padding-right: 0.3rem;
     border-radius: 50%;
     font-weight: bold;
+    position:absolute
 }
 
 .login:hover, .cart:hover, .burguerbutt:hover{
@@ -191,8 +194,8 @@ header{
 
 .cartNumber {
   position: absolute;
-  top: -0.5rem;
-  right: -1rem;
+  top: -0.4rem;
+  right: -1.1rem;
 }
 
   .login svg,
@@ -277,7 +280,8 @@ header{
 
 .cartNumber {
   position: absolute;
-  top: 4px;
+  top: 0rem;
+  right: -0.2rem;
 }
 
   .burguer {

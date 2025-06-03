@@ -242,7 +242,9 @@ h3{
   margin-bottom: 0.75rem;
   gap: 1rem;
 }
-
+.name{
+  min-width: 15rem;
+}
 .price {
   font-weight: bold;
 }

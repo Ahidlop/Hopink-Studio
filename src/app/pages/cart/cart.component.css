@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  min-height: 45rem;
+  min-height: 5rem;
 }
   h2{
     display: flex;

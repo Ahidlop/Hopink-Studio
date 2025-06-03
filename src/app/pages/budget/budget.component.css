@@ -1,4 +1,3 @@
-
 legend{
     color: var(--lastColor);
     display: flex;
@@ -11,7 +10,7 @@ legend{
     justify-content: space-around;
     padding: 1rem;
     max-width: 1500px;
-    margin: 3rem auto;
+    margin: 3rem ;
   }
 
   .budget img{
@@ -82,7 +81,7 @@ legend{
   }
 
   .message{
-    height: 10rem;
+    height: 8rem;
   }
 
   .image::file-selector-button { 
