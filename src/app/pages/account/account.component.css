@@ -1,22 +1,18 @@
-body, html {
-  width:100%;
-  height: 100%;
-}
-
 .accountPage {
-    max-width: 85%;
+    max-width: 100%;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     text-align: center;
+    min-height: 800px;
   }
 
   .accountForms {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 4rem;
     justify-content: center;
-    margin-top: 2rem;
+    margin: 2rem auto;
   }
   
   .loginForm, .registerForm {
@@ -24,8 +20,8 @@ body, html {
     padding: 1rem;
     border-radius: 12px;
     width: 100%;
-    min-width: 15rem;
-    max-width: 35rem;
+    min-width: 35rem;
+    max-width: 40rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -68,9 +64,10 @@ body, html {
   gap: 2rem;
 }
 
-/* Menú a la izquierda, fijo */
+/* Menú a la izquierda fijo */
 .accountMenu {
   position: sticky;
+  top: 2rem;
   align-self: flex-start;
   background-color: var(--lastColor);
   padding: 1.5rem;
@@ -286,6 +283,7 @@ h3{
     gap: 2rem;
     align-items: center;
     margin-bottom: 2.5rem;
+    min-width: none;
   }
 
   .loginForm, .registerForm {
@@ -310,6 +308,7 @@ h3{
     width: 97%;
     gap: 0.5rem;
     padding: 1rem;
+    top: 0rem;
   }
 
   .accountMenu h2 {
@@ -358,27 +357,25 @@ h3{
 @media (max-width: 767px) {
   .accountPage {
     max-width: 100%;
+    padding: 1rem; 
+    box-sizing: border-box;
+    min-height: none;
   }
 
   .accountForms {
+    display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     align-items: center;
-    margin-bottom: 2.5rem;
+    max-width: 50%;
+    min-width: auto;
+    margin:  auto;
   }
 
-  .loginForm, .registerForm {
-    max-width: 100%;
-    width: 80%;
-  }
-
-  form input {
-    font-size: 0.95rem;
-  }
-
-  form button, .close {
+  form button,
+  .close {
     width: 100%;
   }
+
 
   .accountPageLogged {
     flex-direction: column;

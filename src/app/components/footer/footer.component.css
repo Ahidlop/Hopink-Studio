@@ -22,6 +22,10 @@ footer{
     min-width: 200px;
     padding: 0.5rem;
 }
+.firstColumn {
+    margin-top: 3rem;
+    color: var(--lastColor);
+}
 
 .logoFooter-img{
     height: 80px;
@@ -50,7 +54,7 @@ footer{
     text-align: center;
     margin:0.5rem;
     font-size: 14px;
-    color: var(--fourthColor);
+    color: var(--lastColor);
     opacity: 75%;
     line-height: 1.2px;
 }

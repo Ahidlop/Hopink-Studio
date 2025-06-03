@@ -3,7 +3,6 @@ import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { WishlistComponent } from '../wishlist/wishlist.component';
 import { WishlistService } from '../../services/wishlist.service';
 import { Router, ActivatedRoute } from '@angular/router';
 

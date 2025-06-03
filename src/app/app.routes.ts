@@ -7,7 +7,6 @@ import { AccountComponent } from './pages/account/account.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { CookiesComponent } from './components/cookies/cookies.component';
-import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { PaypalComponent } from './pages/paypal/paypal.component';
 import { LegalComponent } from './components/legal/legal.component';
 import path from 'path';
@@ -21,7 +20,6 @@ export const routes: Routes = [
   {path: 'cart', component: CartComponent },
   {path: 'shopPage', component: ShopPageComponent },
   {path: 'cookies' , component: CookiesComponent},
-  {path: 'wishList', component: WishlistComponent},
   {path: 'paypal', component: PaypalComponent },
   {path: 'legal', component: LegalComponent },
 ];

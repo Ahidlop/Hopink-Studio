@@ -4,6 +4,8 @@
     gap: 2rem;
     padding: 2rem;
     color: var(--lastColor);
+    max-width:80%;
+    margin: 0 auto;
   }
   
   .spaces{
@@ -48,7 +50,7 @@
     font-size: 0.9rem;
     color: #666;
     margin: 0.5rem 0 0.5rem;
-    height: 40px;
+    height: auto;
     overflow: hidden;
   }
   
@@ -73,3 +75,86 @@
     color: #cc0000;
     font-size: 1.2rem;
   }
+
+  /*Tablet*/
+  @media (max-width: 1024px) {
+
+  .mostImportant {
+    max-width: 100%;
+  }
+  .spaces{
+    gap: 1rem;
+  }
+  .description {
+    height: auto;
+  }
+  .spaces img {
+    height: 12rem;
+  }
+  .spacesText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 0;                             
+    gap: 0.5rem;
+    width: 100%;                               
+  }
+
+  .spaces h3 {
+    font-size: 1rem;                           
+  }
+  .description {
+    font-size: 0.85rem;
+    height: auto;                             
+    margin: 0.4rem 0;
+  }
+  .spaces a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.95rem;
+  }
+  button.wishlist {
+    font-size: 1.1rem;                       
+  }
+}
+
+
+/* Movil*/
+@media (max-width: 767px) {
+  .mostImportant {
+    max-width: 100%;
+  }
+  .description {
+    height: auto;
+  }
+  .spaces{
+    gap:1.5rem;
+  }
+  .spaces img {
+    height: 12rem;;
+  }
+  .spacesText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 0;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .spaces h3 {
+    font-size: 0.95rem;                         
+    margin: 0.4rem 0;
+  }
+  .description {
+    font-size: 0.8rem;
+    height: auto;                              
+    margin: 0.3rem 0;
+  }
+  .spaces a {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.9rem;
+  }
+  button.wishlist {
+    font-size: 1rem;                           
+  }
+}

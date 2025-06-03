@@ -103,7 +103,7 @@
   font-size: 0.9rem;
   color: #666;
   margin: 0.5rem 0;
-  height: 40px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -145,4 +145,52 @@ button.wishlist.in-wishlist {
 }
 button.wishlist.in-wishlist:hover {
   background-color: #ad1457;
+}
+
+/*Movil*/
+@media (max-width: 767px) {
+
+  .shopContent {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .products {
+    padding: 1rem;
+  }
+
+  .products img {
+    height: 30%;
+  }
+
+  .products h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0 0.5rem;
+  }
+
+  .description {
+    font-size: 0.8rem;
+    margin: 0.5rem 0;
+  }
+
+  .price {
+    margin-bottom: 0.5rem;
+  }
+
+  .actions {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  svg {
+    width: 24px;
+    height: 16px;
+  }
 }

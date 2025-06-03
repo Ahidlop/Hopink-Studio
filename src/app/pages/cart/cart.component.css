@@ -1,16 +1,16 @@
 .cartBox {
-    max-width: 90%;
-    margin: 3rem auto;
-    padding: 1rem;
-    background-color: var(--lastColor);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    min-height: 45rem;
-    max-width: 1500px;
-  }
+  width: 90%;
+  max-width: 1200px;
+  margin: 3rem auto;    
+  padding: 1rem;
+  background-color: var(--lastColor);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 45rem;
+}
   h2{
     display: flex;
     justify-content: center;
@@ -27,6 +27,7 @@
     padding: 0;
     min-height: 15rem;
     width: 100%;
+    margin: 3rem auto;
   }
   
   .cartItem {
@@ -38,6 +39,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .name{
+    min-width: 18rem;
   }
 
   .removeButtons{
@@ -84,24 +89,34 @@
     font-size: 1.2rem;
   }
   
-
+  /*Tablet*/
   @media (max-width: 1024px) {
   .cartBox {
-    margin: 2rem auto;
+    width: 90%;
+    max-width: 1000px;
+    margin: 3rem auto;    
     padding: 1rem;
-    max-width: 800px;   
+    background-color: var(--lastColor);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 45rem; 
   }
 
   .cartItem {
-    width: 90%;           
-    max-width: 30rem;      
-    margin: 1rem auto;    
-    padding: 1rem;
+    width: 100%;                 
+    margin: 1rem auto;
+    display: flex;   
     flex-direction: row;   
     justify-content: space-between;
     align-items: center;
   }
 
+  .name{
+    min-width: none;
+  }
   .removeButtons {
     gap: 0.5rem;
   }
@@ -130,25 +145,34 @@
 /* Movil*/
 @media (max-width: 767px) {
   .cartBox {
-    margin: 1.5rem auto;
-    padding: 0.8rem;
-    max-width: 95%;
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 100%;
   }
 
   .cartItem {
-    width: calc(100% - 2rem);
-    max-width: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;           
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
     margin: 0.8rem auto;
     padding: 0.8rem;
-    flex-direction: column;       
-    align-items: flex-start;
   }
 
-  .removeButtons {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
-    margin-top: 0.6rem;
+  .removeButtons {               
+    width: 20%;               
+    display: flex;
+    flex-direction: row;   
+    align-items: center;     
+    gap: 1rem;
+    padding: 0.5rem;
+    margin: 0.6rem auto;
+  }
+  .removeButtons button{
+    width: 3rem;
   }
 
   .total {
@@ -158,14 +182,17 @@
   }
 
   .buttons {
-    flex-direction: column;
-    gap: 0.6rem;
+    display: flex;
+    flex-direction: row;       
+    justify-content: center;   
+    gap: 0.6rem;              
     margin-top: 0.8rem;
   }
 
-  button,
-  button.empty {
-    width: 100%;
+  .buttons button,
+  .buttons button.empty {
+    flex: 1;                  
+    max-width: 200px;         
     padding: 0.6rem;
     font-size: 0.9rem;
   }
