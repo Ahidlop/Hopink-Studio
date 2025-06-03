@@ -1,29 +1,48 @@
 .cookie-banner {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--fourthColor);
-    color: var(--secondColor);
-    padding: 1rem;
-    z-index: 999;
-    text-align: center;
-    padding: 0.5rem;
-  }
-  
-  .cookie-buttons button {
-    margin: 0 10px;
-    background-color: var(--mainColor);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-  }
-  
-  .cookie-info {
-    margin-top: 1rem;
-    background: #333;
-    padding: 1rem;
-    border-radius: 5px;
-  }
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  color: #000;
+  padding: 5rem;
+  z-index: 10000;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.cookie-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.cookie-buttons button:hover {
+  background-color: #555;
+}
+
+.cookie-preferences {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.cookie-preferences label {
+  display: block;
+  margin: 0.5rem 0;
+}

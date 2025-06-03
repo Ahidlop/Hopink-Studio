@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { WishlistService, SimpleProduct } from '../../services/wishlist.service';
 import { ViewportScroller } from '@angular/common';
-
+import { ActivatedRoute } from '@angular/router';
 interface ApiResponse {
   status: 'success' | 'error';
   message?: string;
@@ -42,7 +42,8 @@ export class AccountComponent implements OnInit {
     private cartService: CartService,
     private router: Router,
     private wishlistService: WishlistService,
-    private scroller: ViewportScroller
+    private scroller: ViewportScroller,
+    private route: ActivatedRoute //Para deslizar hasta una clase
   ) {}
 
   ngOnInit() {
@@ -52,6 +53,22 @@ export class AccountComponent implements OnInit {
 
     this.wishlistService.loadWishlist();
     this.wishlistService.wishlist$.subscribe(items => this.wishlist = items);
+  
+    //Para deslizar hasta una class
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        const tryScroll = () => {
+          const el = document.getElementById(fragment);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            // Intenta más tarde si aun no hay login
+            setTimeout(tryScroll, 100);
+          }
+        };
+        tryScroll();
+      }
+    });
   }
 
   private checkSession() {

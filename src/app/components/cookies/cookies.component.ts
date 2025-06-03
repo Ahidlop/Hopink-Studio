@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
   selector: 'app-cookies',
   standalone: true,                               
   templateUrl: './cookies.component.html',
+  styleUrls: ['./cookies.component.css'],
   imports: [
     CommonModule,                                   
     FormsModule     
