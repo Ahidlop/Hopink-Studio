@@ -1,58 +1,57 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-contact',
+  standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.css'
+  styleUrls: ['./contact.component.css'],
 })
-export class ContactComponent implements AfterViewInit {
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient
-  ) {}
-
+export class ContactComponent {
   form = {
     name: '',
     email: '',
     artist: '',
-    message: ''
+    message: '',
   };
 
-  ngAfterViewInit(): void {
-    this.route.fragment.subscribe(fragment => {
-      if (fragment) {
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            const el = document.getElementById(fragment);
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          }, 200);
-        });
-      }
-    });
-  }
-  sendDate(): void {
-    if (!this.form.name || !this.form.email || !this.form.artist) {
-      alert('Por favor, rellena los campos obligatorios');
+  showBanner = false;            // controla visibilidad del overlay
+  bannerData = { name: '', email: '', artist: '', message: '' };
+
+  sendDate(formRef: NgForm): void {
+    if (formRef.invalid) {
+      formRef.control.markAllAsTouched(); // marca errores
       return;
     }
+    // copiar datos ingresados para mostrarlos
+    this.bannerData = { ...this.form };
+    // vaciar formulario
+    formRef.resetForm();
+    this.form = { name: '', email: '', artist: '', message: '' };
+    // mostrar banner
+    this.showBanner = true;
+  }
 
-    const url = 'http://localhost/Hopink-Studio/backend/save_date.php'; // cambia si usas otro nombre o ruta
+  closeMessage(): void {
+    this.showBanner = false; // oculta banner
+  }
 
-    this.http.post(url, this.form, { withCredentials: true }).subscribe({
-      next: () => {
-        alert('Cita enviada correctamente');
-        this.form = { name: '', email: '', artist: '', message: '' }; // limpia
-      },
-      error: (err) => {
-        console.error('Error al enviar cita:', err);
-        alert('Error al enviar la cita. Inténtalo más tarde.');
-      }
-    });
+  getErrorMessage(formRef: NgForm): string {
+    const controls = formRef.controls;
+    if (controls['name']?.invalid) {
+      return 'Falta nombre';
+    }
+    if (controls['email']?.invalid) {
+      return 'Email no válido';
+    }
+    if (controls['artist']?.invalid) {
+      return 'Selecciona artista';
+    }
+    if (controls['message']?.invalid) {
+      return 'Falta mensaje';
+    }
+    return 'Completa el formulario';
   }
 }

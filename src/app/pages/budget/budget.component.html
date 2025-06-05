@@ -10,7 +10,7 @@
     <label>Email:</label>
     <input type="email" name="email" [(ngModel)]="form.email" required
      #emailRef="ngModel" [class.invalid]="emailRef.invalid && emailRef.touched"
-    />
+    pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
     <div *ngIf="emailRef.invalid && emailRef.touched" class="error">
       Introduce un email válido.
     </div>

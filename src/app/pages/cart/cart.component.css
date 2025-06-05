@@ -101,7 +101,118 @@
     margin-top: 1rem;
     font-size: 1.2rem;
   }
-  
+  .checkoutBox {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 1200px;
+  margin-top: 0;                /* Se ancla al tope de .cartWrapper */
+  padding: 2rem 1.5rem;
+  background-color: var(--lastColor);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;                  /* Para que quede encima de todo */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeInOverlay 0.3s ease-out;
+}
+
+/* Animación para que el overlay aparezca suavemente */
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Título dentro del overlay */
+.checkoutBox h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  color: #222;
+}
+
+/* Grupos de label + input en el formulario */
+.checkoutBox .formGroup {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkoutBox .formGroup label {
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #444;
+  font-size: 1rem;
+}
+
+.checkoutBox .formGroup input[type="text"],
+.checkoutBox .formGroup input[type="email"],
+.checkoutBox .formGroup input[type="tel"] {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: var(--fontFamily);
+  color: #333;
+  transition: border-color 0.2s ease;
+}
+
+.checkoutBox .formGroup input[type="text"]:focus,
+.checkoutBox .formGroup input[type="email"]:focus,
+checkoutBox .formGroup input[type="tel"]:focus {
+  outline: none;
+  border-color: var(--secondColor);
+}
+
+/* Contenedor de botones dentro del overlay */
+.buttonsCheckout {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.buttonsCheckout button {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--fontFamily);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttonsCheckout .cancel {
+  background-color: rgb(191, 78, 78);
+  color: var(--lastColor);
+}
+
+.buttonsCheckout .cancel:hover {
+  background-color: rgb(160, 65, 65);
+}
+
+.buttonsCheckout .pay {
+  background-color: var(--secondColor);
+  color: var(--lastColor);
+}
+
+.buttonsCheckout .pay:hover {
+  background-color: var(--thirdColor);
+}
+
   /*Tablet*/
   @media (max-width: 1024px) {
   .cartBox {
@@ -151,8 +262,25 @@
     padding: 0.6rem 1rem;
     font-size: 0.95rem;
   }
+  .checkoutBox {
+    width: 95%;
+    padding: 1.5rem 1rem;
+  }
+  .checkoutBox h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .checkoutBox .formGroup {
+    max-width: 100%;
+  }
+  .buttonsCheckout {
+    gap: 0.8rem;
+  }
+  .buttonsCheckout button {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.8rem;
+  }
 }
-
 
 /* Movil*/
 @media (max-width: 767px) {
@@ -215,5 +343,34 @@
 
   svg {
     width: 30px;
+  }
+  .checkoutBox {
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100vh;   /* Cubre toda la pantalla */
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  .checkoutBox h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .checkoutBox .formGroup {
+    width: 100%;
+    margin-bottom: 0.8rem;
+  }
+  .buttonsCheckout {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .buttonsCheckout button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
   }
 }

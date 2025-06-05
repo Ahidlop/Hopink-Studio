@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './product.service';
-import { environment } from '../../environments/environment';
-import { map } from 'rxjs/operators';
 
 export interface CartItem {
   id: number;
@@ -36,13 +34,11 @@ export class CartService {
 
   // Carga el carrito desde el backend y desempaqueta el array de items
   loadCart(): void {
-    this.http.get<{ success: boolean; items: CartItem[] }>(this.cartUrl, this.httpOptions)
-      .pipe(
-        map(response => response.items)
-      )
+    this.http
+      .get<{ success: boolean; items: CartItem[] }>(this.cartUrl, this.httpOptions)
       .subscribe(
-        items => {
-          this.cart = items;
+        itemsResponse => {
+          this.cart = itemsResponse.items;
           this.cartSubject.next(this.cart);
         },
         err => {
@@ -58,68 +54,62 @@ export class CartService {
 
   // Añadir al carrito
   addToCart(product: { id: number }): void {
-    this.http.post<{ success: boolean; items: CartItem[] }>(
-      this.cartUrl,
-      { product_id: product.id, quantity: 1 },
-      this.httpOptions
-    )
-    .pipe(
-      map(response => response.items)
-    )
-    .subscribe({
-      next: items => {
-        this.cart = items;
-        this.cartSubject.next(this.cart);
-      },
-      error: err => {
-        console.error('Error añadiendo al carrito', err);
-        console.log('>>> Respuesta bruta del servidor:', err.error);
-      }
-    });
+    this.http
+      .post<{ success: boolean; items: CartItem[] }>(
+        this.cartUrl,
+        { product_id: product.id, quantity: 1 },
+        this.httpOptions
+      )
+      .subscribe({
+        next: itemsResponse => {
+          this.cart = itemsResponse.items;
+          this.cartSubject.next(this.cart);
+        },
+        error: err => {
+          console.error('Error añadiendo al carrito', err);
+          console.log('>>> Respuesta bruta del servidor:', err.error);
+        }
+      });
   }
 
   // Disminuir cantidad
   decreaseQuantity(productId: number): void {
-    this.http.post<{ success: boolean; items: CartItem[] }>(
-      this.cartUrl,
-      { product_id: productId, quantity: -1 },
-      this.httpOptions
-    )
-    .pipe(
-      map(response => response.items)
-    )
-    .subscribe(
-      items => {
-        this.cart = items;
-        this.cartSubject.next(this.cart);
-      },
-      err => {
-        console.error('Error disminuyendo cantidad', err);
-      }
-    );
+    this.http
+      .post<{ success: boolean; items: CartItem[] }>(
+        this.cartUrl,
+        { product_id: productId, quantity: -1 },
+        this.httpOptions
+      )
+      .subscribe(
+        itemsResponse => {
+          this.cart = itemsResponse.items;
+          this.cartSubject.next(this.cart);
+        },
+        err => {
+          console.error('Error disminuyendo cantidad', err);
+        }
+      );
   }
 
   // Eliminar del carrito
   removeFromCart(productId: number): void {
     this.http
-      .delete<{ success: boolean; items: CartItem[] }>(
-        this.cartUrl,               // <-- sin `?product_id=…`
-        {
-          body: { product_id: productId },
-          withCredentials: true
-        }
-      )
-      .pipe(map(res => res.items))
+      .delete<{ success: boolean; items: CartItem[] }>(this.cartUrl, {
+        body: { product_id: productId },
+        withCredentials: true
+      })
       .subscribe({
-        next: items => {
-          this.cart = items;
+        next: itemsResponse => {
+          this.cart = itemsResponse.items;
           this.cartSubject.next(this.cart);
         },
-        error: err => console.error('Error borrando del carrito', err)
+        error: err => {
+          console.error('Error borrando del carrito', err);
+        }
       });
   }
 
-  //Vaciar carrito
+  // Vaciar carrito
   clearCart(): void {
     this.cart = [];
     this.cartSubject.next(this.cart);

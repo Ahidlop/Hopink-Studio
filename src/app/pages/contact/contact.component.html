@@ -1,99 +1,141 @@
+<!-- Banner -->
+<div class="overlay" *ngIf="showBanner">
+  <div class="banner">
+    <button class="close-btn" (click)="closeMessage()">✕</button>
+     <p class="message-text">
+       Gracias por su solicitud.<br />
+       Nos pondremos en contacto vía <strong>{{ bannerData.email }}</strong><br />
+       en un plazo de <strong>2-4 días laborables</strong>.
+     </p>
+  </div>
+</div>
+
+<!--Pagina de contact-->
 <section class="history">
-    <div class="paragraph" id="paragraph">
-        <img src="imagenes/Artistas/home.png" alt="">
-        <h2>Nuestra historia</h2>
-        <p>
-            Hace más de 20 años, cuando el arte del tatuaje aún era visto como un camino alternativo, nació Hop Ink: no como una moda, sino como una forma 
-            de vida. Lo que comenzó como un pequeño estudio con pasión por la tinta y la expresión personal, fue creciendo gracias al compromiso, la técnica
-            y, sobre todo, la confianza de quienes han depositado su piel y su historia en nuestras manos.
-        </p>
-        <p>
-            Durante estas dos décadas, hemos tatuado cicatrices, sueños, homenajes, y nuevos comienzos. Nos hemos formado, reinventado y perfeccionado,
-            sin perder de vista lo más importante: el respeto por cada cliente y el orgullo de hacer arte sobre piel viva. 
-            Pero Hop Ink no es solo un estudio. Con el paso del tiempo, vimos la necesidad de crear un espacio integral para el mundo del tatuaje y el 
-            piercing. Así nació también nuestra tienda, pensada tanto para profesionales como para amantes del arte corporal. Aquí encontrarás una selección
-            curada de tintas, agujas, grips, cremas, sprays y piercings de calidad — productos en los que confiamos y usamos día a día en nuestro propio trabajo.
-        </p>
-        <p>
-            Hoy damos un paso más: lanzamos nuestra nueva plataforma web para acercarnos aún más a ti. Ahora no solo podrás comprar nuestros productos desde
-            donde estés, sino también:
-        </p>
-        <p>
-            Agendar tu cita con cualquiera de nuestros artistas, consultar presupuestos estimados, y descubrir nuestro portafolio y nuevas 
-            colecciones de joyería corporal.
-        </p>
-        <p>
-            Esta evolución no es casualidad. Es el resultado de años de esfuerzo, amor por lo que hacemos y una comunidad que nos ha acompañado desde
-            el primer trazo.
-            En Hop Ink, cada línea cuenta una historia, y la nuestra es solo el comienzo.
-        </p>
-    </div>
-    <fieldset class="dateBox">
-  <legend id="date"><h2>Cita Previa</h2></legend>
-  <img src="imagenes/General/cita.png" alt="">
+  <div class="paragraph" id="paragraph">
+    <img src="imagenes/Artistas/home.png" alt="">
+    <h2>Nuestra historia</h2>
+    <p>
+      Hace más de 20 años, cuando el arte del tatuaje aún era visto como un camino alternativo, nació Hop Ink: no como una moda, sino como una forma 
+      de vida. Lo que comenzó como un pequeño estudio con pasión por la tinta y la expresión personal, fue creciendo gracias al compromiso, la técnica
+      y, sobre todo, la confianza de quienes han depositado su piel y su historia en nuestras manos.
+    </p>
+    <p>
+      Durante estas dos décadas, hemos tatuado cicatrices, sueños, homenajes, y nuevos comienzos. Nos hemos formado, reinventado y perfeccionado,
+      sin perder de vista lo más importante: el respeto por cada cliente y el orgullo de hacer arte sobre piel viva. 
+      Pero Hop Ink no es solo un estudio. Con el paso del tiempo, vimos la necesidad de crear un espacio integral para el mundo del tatuaje y el 
+      piercing. Así nació también nuestra tienda, pensada tanto para profesionales como para amantes del arte corporal. Aquí encontrarás una selección
+      curada de tintas, agujas, grips, cremas, sprays y piercings de calidad — productos en los que confiamos y usamos día a día en nuestro propio trabajo.
+    </p>
+    <p>
+      Hoy damos un paso más: lanzamos nuestra nueva plataforma web para acercarnos aún más a ti. Ahora no solo podrás comprar nuestros productos desde
+      donde estés, sino también:
+    </p>
+    <p>
+      Agendar tu cita con cualquiera de nuestros artistas, consultar presupuestos estimados, y descubrir nuestro portafolio y nuevas 
+      colecciones de joyería corporal.
+    </p>
+    <p>
+      Esta evolución no es casualidad. Es el resultado de años de esfuerzo, amor por lo que hacemos y una comunidad que nos ha acompañado desde
+      el primer trazo.
+      En Hop Ink, cada línea cuenta una historia, y la nuestra es solo el comienzo.
+    </p>
+  </div>
 
-  <form (ngSubmit)="sendDate()" #formRef="ngForm" class="dateForm" novalidate>
+  <!--Citas-->
+  <fieldset class="dateBox">
+    <legend id="date"><h2>Cita Previa</h2></legend>
+    <img src="imagenes/General/cita.png" alt="Cita previa">
 
-    <!-- Nombre -->
-    <label for="name">Nombre:</label>
-    <input
-      type="text"
-      [(ngModel)]="form.name"
-      name="name"
-      class="name"
-      required
-      #nameRef="ngModel"
-      [class.invalid]="nameRef.invalid && nameRef.touched"
-    />
-    <div *ngIf="nameRef.invalid && nameRef.touched" class="error">
-      El nombre es obligatorio.
-    </div>
-    <br>
+    <form (ngSubmit)="sendDate(formRef)" #formRef="ngForm" class="dateForm" novalidate>
+      <!-- Nombre -->
+      <label for="name">Nombre:</label>
+      <input
+        type="text"
+        id="name"
+        [(ngModel)]="form.name"
+        name="name"
+        class="name"
+        required
+        #nameRef="ngModel"
+        [class.invalid]="nameRef.invalid && nameRef.touched"
+      />
+      <div *ngIf="nameRef.invalid && nameRef.touched" class="error">
+        El nombre es obligatorio.
+      </div>
+      <br />
 
-    <!-- Email -->
-    <label for="email">Email:</label>
-    <input
-      type="email"
-      [(ngModel)]="form.email"
-      name="email"
-      class="email"
-      required
-      #emailRef="ngModel"
-      [class.invalid]="emailRef.invalid && emailRef.touched"
-    />
-    <div *ngIf="emailRef.invalid && emailRef.touched" class="error">
-      Introduce un email válido.
-    </div>
-    <br>
+      <!-- Email -->
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="form.email"
+        name="email"
+        class="email"
+        required
+        pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        #emailRef="ngModel"
+        [class.invalid]="emailRef.invalid && emailRef.touched"
+      />
+      <div *ngIf="emailRef.invalid && emailRef.touched" class="error">
+        Introduce un email válido (ej. usuario&#64;dominio.com).
+      </div>
+      <br />
 
-    <!-- Artista -->
-    <label for="artist">Artista:</label>
-        <select [(ngModel)]="form.artist" name="artist" required class="artist"
-        #artistRef="ngModel" [class.invalid]="artistRef.invalid && artistRef.touched"
-        >
-            <option value="" disabled selected>Selecciona un artista</option>
-            <option value="Alejandra">Alejandra López</option>
-            <option value="Pedro">Pedro Peña</option>
-            <option value="Raul">Raúl Suero</option>
-            <option value="Fernando">Fernando Peinado</option>
-            <option value="Practicas">Artista en prácticas</option>
-        </select>
-        <div *ngIf="artistRef.invalid && artistRef.touched" class="error">
-            Debes seleccionar un artista.
-        </div>
-        <br>
+      <!-- Artista -->
+      <label for="artist">Artista:</label>
+      <select
+        id="artist"
+        [(ngModel)]="form.artist"
+        name="artist"
+        required
+        class="artist"
+        #artistRef="ngModel"
+        [class.invalid]="artistRef.invalid && artistRef.touched"
+      >
+        <option value="" disabled>Selecciona un artista</option>
+        <option value="Alejandra">Alejandra López</option>
+        <option value="Pedro">Pedro Peña</option>
+        <option value="Raul">Raúl Suero</option>
+        <option value="Fernando">Fernando Peinado</option>
+        <option value="Practicas">Artista en prácticas</option>
+      </select>
+      <div *ngIf="artistRef.invalid && artistRef.touched" class="error">
+        Debes seleccionar un artista.
+      </div>
+      <br />
 
-        <!-- Mensaje -->
-        <label for="message">Mensaje:</label>
-        <input type="text" [(ngModel)]="form.message" name="message" class="message" required/>
-        <br>
+      <!-- Mensaje -->
+      <label for="message">Mensaje:</label>
+      <input
+        type="text"
+        id="message"
+        [(ngModel)]="form.message"
+        name="message"
+        class="message"
+        required
+        #messageRef="ngModel"
+        [class.invalid]="messageRef.invalid && messageRef.touched"
+      />
+      <div *ngIf="messageRef.invalid && messageRef.touched" class="error">
+        El mensaje es obligatorio.
+      </div>
+      <br />
 
-        <!-- Botón -->
-        <input type="submit" class="submit" value="Enviar" [disabled]="formRef.invalid"/>
+      <!-- Botón Enviar-->
+      <button
+        type="submit"
+        class="submit"
+        [ngClass]="{ 'disabled-button': formRef.invalid }"
+      >
+        Enviar
+      </button>
     </form>
-    </fieldset>
+  </fieldset>
 
-    <br><br>
+  <br /><br />
+   <br><br>
     <fieldset class="contactBox" id="contactBox" class="contactBox">
         <legend><h2>Contacto</h2></legend>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6444.704438741433!2d-5.451693!3d36.1336364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0c94ceaad65e99%3A0x7897e0a967658cc8!2sIES%20Kursaal!5e0!3m2!1ses!2ses!4v1746459957983!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -130,6 +172,4 @@
                 </div>
             </div>
     </fieldset>
-    
 </section>
-

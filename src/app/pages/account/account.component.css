@@ -20,13 +20,12 @@
     padding: 1rem;
     border-radius: 12px;
     width: 100%;
-    min-width: 35rem;
     max-width: 40rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    min-width:50rem;
   }
   
   form input {
@@ -45,6 +44,7 @@
     color: white;
     border: none;
     border-radius: 8px;
+    font-family: var(--fontFamily);
   }
   .next{
     margin-top: 3.4rem;
@@ -312,13 +312,15 @@ h3{
     flex-direction: column;
     gap: 2rem;
     align-items: center;
-    margin-bottom: 2.5rem;
-    min-width: none;
+    min-width: 40rem;
   }
 
   .loginForm, .registerForm {
-    max-width: 80%;
+    max-width: 100%;
     width: 100%;
+    min-width:none;
+    min-width: auto;
+    margin: 0 1rem;
   }
 
   /*Tras login*/
@@ -330,6 +332,7 @@ h3{
 
   .accountMenu {
     position: relative;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -349,9 +352,13 @@ h3{
 
   .accountMenu a,
   .accountMenu button.logout {
-    flex: 1 1 40%;
-    min-width: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1 1 0%;
   }
+
 
   .accountContent {
     padding: 1rem;
@@ -396,16 +403,15 @@ h3{
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 50%;
+    max-width: 100%;
     min-width: auto;
-    margin:  auto;
+    margin:  1rem 2rem;
   }
 
   form button,
   .close {
     width: 100%;
   }
-
 
   .accountPageLogged {
     flex-direction: column;

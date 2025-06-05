@@ -151,7 +151,12 @@ export class AccountComponent implements OnInit {
       },
       error: err => {
         console.error('register error', err);
-        alert('Error de red al registrar');
+        if (err.status === 409) {
+          // El backend devuelve "409 xq Email ya registrado"
+          alert('Email ya registrado');
+        } else {
+          alert('Error de red al registrar');
+        }
       }
     });
   }

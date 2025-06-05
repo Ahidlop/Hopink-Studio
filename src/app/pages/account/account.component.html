@@ -2,7 +2,7 @@
   <div class="accountForms">
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="loginForm">
       <h3>Iniciar sesión</h3>
-      <input type="email"       formControlName="email"    placeholder="Email" required>
+      <input type="email"       formControlName="email"   pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Email" required>
       <input type="password"    formControlName="password" placeholder="Contraseña" required>
       <button type="submit" class="next">Siguiente</button>
     </form>
@@ -10,7 +10,7 @@
     <form [formGroup]="registerForm" (ngSubmit)="register()" class="registerForm">
       <h3>Registrarse</h3>
       <input type="text"        formControlName="name"     placeholder="Nombre completo" required>
-      <input type="email"       formControlName="email"    placeholder="Email" required>
+      <input type="email"       formControlName="email"    placeholder="Email" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
       <input type="password"    formControlName="password" placeholder="Contraseña" required>
       <button type="submit">Crear cuenta</button>
     </form>
@@ -26,7 +26,7 @@
       <a (click)="scrollTo('orders')">Mis pedidos</a>
       <a (click)="scrollTo('budgets')">Mis presupuestos</a>
       <a (click)="scrollTo('returns')">Devoluciones</a>
-      <a (click)="scrollTo('wishlist')">Lista de deseos</a>
+      <a (click)="scrollTo('wishlist')" class="wishlistBtt">Lista de deseos</a>
       <button (click)="logout()" class="logout">Cerrar sesión</button>
     </div>
 
