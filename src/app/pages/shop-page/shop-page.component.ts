@@ -21,9 +21,14 @@ export class ShopPageComponent implements OnInit {
 
    searchTerm = '';
 
+  showCartToastProductId: number | null = null;
+  cartToastMessage = '';
+
   showToastProductId: number | null = null;
   toastMessage = '';
   wishlistIds: number[] = [];
+
+  
 
   constructor(
     private productService: ProductService,
@@ -90,6 +95,12 @@ export class ShopPageComponent implements OnInit {
   addToCart(product: Product) {
     console.log('Añadiendo al carrito:', product);
     this.cartService.addToCart(product);
+
+    this.showCartToastProductId = product.id;
+    this.cartToastMessage = 'Producto añadido al carrito';
+    setTimeout(() => {
+      this.showCartToastProductId = null;
+    }, 2000);
   }
 
   onAddToWishlist(productId: number): void {

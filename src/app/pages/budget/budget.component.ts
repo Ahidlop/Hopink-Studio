@@ -26,40 +26,50 @@ export class BudgetComponent {
 
   constructor(private http: HttpClient) {}
 
-  calculateBudget() {
-    if (this.form.service === 'piercing') {
-      this.budget = this.form.artist === 'aprendiz' ? 15 : 30;
-      return;
-    }
+  getBasePrice(artist: string): number {
+  switch (artist.toLowerCase()) {
+    case 'alejandra':
+    case 'pedro':
+      return 80;
+    case 'raul':
+    case 'fernando':
+      return 70;
+    case 'aprendiz':
+      return 40;
+    default:
+      return 60;
+  }
+}
 
-    const artistPrices: any = {
-      alejandra: 60,
-      pedro: 55,
-      raul: 70,
-      fernando: 65,
-      aprendiz: 30
-    };
+getEstimatedHours(height: number, width: number): number {
+  const area = height * width;
+  if (area <= 100) return 1;
+  if (area <= 300) return 2;
+  if (area <= 600) return 3;
+  return 4;
+}
 
-    const basePrice = artistPrices[this.form.artist] || 0;
-    const supplement = this.form.service === 'color' ? 10 : 0;
-    const hours = this.estimateHours(this.form.height, this.form.width);
-    this.budget = hours * (basePrice + supplement);
+getTotalPrice(service: string, artist: string, height: number, width: number): number {
+  if (service === 'piercing') {
+    return artist.toLowerCase() === 'aprendiz' ? 15 : 30;
   }
 
-  estimateHours(height: number, width: number): number {
-    const area = height * width;
-    if (area < 50) return 1;
-    if (area < 150) return 2;
-    if (area < 300) return 3;
-    return 4;
-  }
-
+  const base = this.getBasePrice(artist);
+  const hours = this.getEstimatedHours(height, width);
+  const colorSupplement = service === 'color' ? 30 : 0;
+  return base * hours + colorSupplement;
+}
   submitRequest() {
-    if (!this.form.name || !this.form.email || !this.form.artist || !this.form.service) {
-      alert('Rellena todos los campos obligatorios');
-      return;
-    }
+  if (!this.form.name || !this.form.email || !this.form.artist || !this.form.service) {
+    alert('Rellena todos los campos obligatorios');
+    return;
+  }
 
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(this.form.email)) {
+    alert('Introduce un email válido');
+    return;
+  }
     const data = {
       ...this.form,
       budget: this.budget

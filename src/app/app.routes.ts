@@ -1,4 +1,4 @@
-import { Routes, provideRouter } from '@angular/router';
+import { Routes, provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { ContactComponent } from './pages/contact/contact.component';
@@ -24,4 +24,11 @@ export const routes: Routes = [
   {path: 'legal', component: LegalComponent },
 ];
 
-export const appRouterProviders = provideRouter(routes);
+export const appRouterProviders = provideRouter(
+  routes,
+  withInMemoryScrolling({
+    anchorScrolling: 'enabled',
+    scrollPositionRestoration: 'enabled'
+  }),
+  withRouterConfig({ onSameUrlNavigation: 'reload' })
+);

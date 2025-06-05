@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private wishlistService: WishlistService,
     private scroller: ViewportScroller,
-    private route: ActivatedRoute //Para deslizar hasta una clase
+    private route: ActivatedRoute //Para deslizar
   ) {}
 
   ngOnInit() {
@@ -53,23 +53,8 @@ export class AccountComponent implements OnInit {
 
     this.wishlistService.loadWishlist();
     this.wishlistService.wishlist$.subscribe(items => this.wishlist = items);
-  
-    //Para deslizar hasta una class
-    this.route.fragment.subscribe(fragment => {
-      if (fragment) {
-        const tryScroll = () => {
-          const el = document.getElementById(fragment);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            // Intenta más tarde si aun no hay login
-            setTimeout(tryScroll, 100);
-          }
-        };
-        tryScroll();
-      }
-    });
   }
+
 
   private checkSession() {
     this.http.get<ApiResponse>(`${this.API}/getUser.php`, { withCredentials: true })
@@ -118,14 +103,17 @@ export class AccountComponent implements OnInit {
     ).subscribe({
       next: res => {
         if (res.status === 'success' && res.user) {
-          this.isLoggedIn = true;
-          this.user       = res.user;
-          this.cartService.loadCart();
-          this.loadBudgets(); 
-          this.router.navigate(['/shopPage']);
-        } else {
-          alert(res.message || 'Email o contraseña incorrectos');
-        }
+         this.isLoggedIn = true;
+         this.user       = res.user;
+         this.cartService.loadCart();
+         this.loadBudgets();
+         this.router.navigate(
+           ['/account'],
+           { fragment: 'wishlist' }
+         );
+       } else {
+         alert(res.message || 'Email o contraseña incorrectos');
+       }
       },
       error: err => {
         console.error('login error', err);
@@ -133,6 +121,7 @@ export class AccountComponent implements OnInit {
       }
     });
   }
+
 
   logout() {
     this.http.get<ApiResponse>(`${this.API}/logout.php`, { withCredentials: true })
@@ -206,10 +195,18 @@ getEstimatedHours(height: number, width: number): number {
 }
 
 getTotalPrice(service: string, artist: string, height: number, width: number): number {
-  const base = this.getBasePrice(artist);
-  const hours = this.getEstimatedHours(height, width);
-  const colorSupplement = service === 'color' ? 30 : 0;
-  return base * hours + colorSupplement;
+  if (service === 'piercing' && artist.toLowerCase() === 'aprendiz') {
+    return 15;
+  }
+  else if(service=== 'piercing' && artist.toLowerCase()!=='aprendiz'){
+    return 30;
+  }
+  else{
+    const base = this.getBasePrice(artist);
+    const hours = this.getEstimatedHours(height, width);
+    const colorSupplement = service === 'color' ? 30 : 0;
+    return base * hours + colorSupplement;
+  }
 }
 
 confirmDelete(budget: any) {
@@ -240,12 +237,31 @@ deleteBudget() {
   });
 }
 
+//Añadir al carrito desde wishlist
   addToCart(product: SimpleProduct): void {
     this.cartService.addToCart({ id: product.id });
+    this.showCartMessage = true;
+    setTimeout(() => {
+      this.showCartMessage = false;
+    }, 2500); // desaparece en 2.5 segundos
   }
 
-  removeFromWishlist(pid: number): void {
-    this.wishlistService.removeFromWishlist(pid);
-  }
+  confirmWishlistId: number | null = null;
 
+removeFromWishlist(id: number) {
+  this.confirmWishlistId = id; // mostrar confirmación
+}
+
+confirmRemoveWishlist() {
+  if (this.confirmWishlistId !== null) {
+    this.wishlist = this.wishlist.filter(p => p.id !== this.confirmWishlistId);
+    this.confirmWishlistId = null;
+  }
+}
+
+cancelRemoveWishlist() {
+  this.confirmWishlistId = null;
+}
+
+  showCartMessage = false;
 }

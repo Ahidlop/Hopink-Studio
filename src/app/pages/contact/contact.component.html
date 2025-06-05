@@ -29,29 +29,68 @@
         </p>
     </div>
     <fieldset class="dateBox">
-        <legend id="date"><h2>Cita Previa</h2></legend>
-        <img src="imagenes/General/cita.png" alt="">
-        <form action="" method="get" class="dateForm" >
-            <label for="name">Nombre:</label>
-            <input type="text" class="name" name="name" required>
-            <br>
-            <label for="email">Email:</label>
-            <input type="email" class="email" name="email" required>
-            <br>
-            <select class="artist" name="artist" required>
-                <option value="default" selected disabled>Selecciona un artista</option>
-                <option value="Alejandra">Alejandra López</option>
-                <option value="Pedro">Pedro Peña</option>
-                <option value="Raul">Raúl Suero</option>
-                <option value="Fernando">Fernando Peinado</option>
-                <option value="Practicas">Artista en prácticas</option>
-            </select>
-            <br>
-            <label for="message">Mensaje:</label>
-            <input type="text"class="message" name="message" >
-            <br>
-            <input type="submit" name="submit" class="submit" value="Enviar">
-        </form>
+  <legend id="date"><h2>Cita Previa</h2></legend>
+  <img src="imagenes/General/cita.png" alt="">
+
+  <form (ngSubmit)="sendDate()" #formRef="ngForm" class="dateForm" novalidate>
+
+    <!-- Nombre -->
+    <label for="name">Nombre:</label>
+    <input
+      type="text"
+      [(ngModel)]="form.name"
+      name="name"
+      class="name"
+      required
+      #nameRef="ngModel"
+      [class.invalid]="nameRef.invalid && nameRef.touched"
+    />
+    <div *ngIf="nameRef.invalid && nameRef.touched" class="error">
+      El nombre es obligatorio.
+    </div>
+    <br>
+
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      [(ngModel)]="form.email"
+      name="email"
+      class="email"
+      required
+      #emailRef="ngModel"
+      [class.invalid]="emailRef.invalid && emailRef.touched"
+    />
+    <div *ngIf="emailRef.invalid && emailRef.touched" class="error">
+      Introduce un email válido.
+    </div>
+    <br>
+
+    <!-- Artista -->
+    <label for="artist">Artista:</label>
+        <select [(ngModel)]="form.artist" name="artist" required class="artist"
+        #artistRef="ngModel" [class.invalid]="artistRef.invalid && artistRef.touched"
+        >
+            <option value="" disabled selected>Selecciona un artista</option>
+            <option value="Alejandra">Alejandra López</option>
+            <option value="Pedro">Pedro Peña</option>
+            <option value="Raul">Raúl Suero</option>
+            <option value="Fernando">Fernando Peinado</option>
+            <option value="Practicas">Artista en prácticas</option>
+        </select>
+        <div *ngIf="artistRef.invalid && artistRef.touched" class="error">
+            Debes seleccionar un artista.
+        </div>
+        <br>
+
+        <!-- Mensaje -->
+        <label for="message">Mensaje:</label>
+        <input type="text" [(ngModel)]="form.message" name="message" class="message" required/>
+        <br>
+
+        <!-- Botón -->
+        <input type="submit" class="submit" value="Enviar" [disabled]="formRef.invalid"/>
+    </form>
     </fieldset>
 
     <br><br>

@@ -27,12 +27,12 @@
     </div>
     <div class="thirdColumn">
         <div class="legal">
-            <a routerLink="/legal" fragment="legalAdvise">Legal</a><br>
-            <a routerLink="/legal" fragment="privacy">Política de privacidad</a><br>
+            <a [routerLink]="['/legal']" [fragment]="'legalAdvise'">Legal</a><br>
+            <a [routerLink]="['/legal']" [fragment]="'privacy'">Política de privacidad</a><br>
         </div>
         <div class="legal">
-            <a routerLink="/legal" fragment="cookies">Política de Cookies</a><br>
-            <a routerLink="/legal" fragment="terms">Términos y condiciones</a>
+            <a [routerLink]="['/legal']" [fragment]="'cookies'">Política de Cookies</a><br>
+            <a [routerLink]="['/legal']" [fragment]="'terms'">Términos y condiciones</a>
         </div>
         <a href="mailto: info@hopinkstudio.com" target="_blank">
             <svg class="mailSVG" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" id="mail">

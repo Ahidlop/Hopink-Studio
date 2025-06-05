@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { Router, RouterModule } from '@angular/router';
 @Component({
@@ -10,6 +10,15 @@ import { Router, RouterModule } from '@angular/router';
 })
 
 export class HomeComponent {
+  scrolled = false;
+
+  ngOnInit() {
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    this.scrolled = scrollY > 50; 
+  });
+}
+
   spaces =[
     {
     name: 'Los más vendidos entre tatuadores',

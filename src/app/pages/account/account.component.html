@@ -57,15 +57,17 @@
             {{ getServiceLabel(b.service) }} con {{ b.artist | titlecase }}
           </h4>
 
-          <p><strong>Presupuesto:</strong> {{ b.budget }} €</p>
-          <ng-container *ngIf="b.service !== 'piercing'">
-            <p>Base: {{ getBasePrice(b.artist) }} €/hora</p>
-            <p *ngIf="b.service === 'color'">+ Suplemento por color: 30 €</p>
-            <p>Tiempo estimado: {{ getEstimatedHours(b.height, b.width) }} hora(s)</p>
-            <p>Total estimado: {{ getTotalPrice(b.service, b.artist, b.height, b.width) }} €</p>
+          <p><strong>Presupuesto estimado:</strong> {{ getTotalPrice(b.service, b.artist, b.height, b.width) }} €</p>
+          <div class="budgetContent">
+            <ng-container *ngIf="b.service !== 'piercing'" class="budgetContent">
+              <p>Base: {{ getBasePrice(b.artist) }} €/hora</p>
+              <p *ngIf="b.service === 'color'">+ Suplemento por color: 30 €</p>
+              <p>Tiempo estimado: {{ getEstimatedHours(b.height, b.width) }} hora(s)</p>
           </ng-container>
           <p><em>Fecha del presupuesto: {{ b.created_at | date:'dd/MM/yyyy HH:mm' }}</em></p>
-        </div>
+        
+          </div>
+</div>
       </section>
 
       <hr class="section-divider" />
@@ -125,10 +127,10 @@
       <!-- Lista de deseos -->
        <section class="wishlist" id="wishlist">
         <h3>
+          Lista de deseos
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Heart" class="heart">
             <path fill-rule="evenodd" d="M21.28 5.627c-1.72 0-3.442.66-4.755 1.978L16 8.133l-.525-.528a6.685 6.685 0 0 0-4.752-1.976 6.69 6.69 0 0 0-4.754 1.976 6.755 6.755 0 0 0 0 9.536l.88.882 8.797 8.83a.5.5 0 0 0 .708 0l8.796-8.83.881-.882a6.755 6.755 0 0 0 0-9.536 6.687 6.687 0 0 0-4.752-1.978zm-10.557.992c1.46 0 2.919.566 4.043 1.694l.88.882a.5.5 0 0 0 .708 0l.88-.883a5.679 5.679 0 0 1 8.088 0 5.736 5.736 0 0 1 0 8.124l-.879.882L16 25.793l-8.443-8.475-.88-.882a5.736 5.736 0 0 1 0-8.123 5.694 5.694 0 0 1 4.046-1.694zm.027 1.01a4.752 4.752 0 0 0-4.113 7.125.5.5 0 1 0 .865-.5 3.748 3.748 0 0 1 3.248-5.625.5.5 0 1 0 0-1z" color="#000" font-family="sans-serif" font-weight="400" overflow="visible" style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;;white-space:normal;isolation:auto;mix-blend-mode:normal;" fill="#34a853" class="color000000 svgShape"></path>
           </svg>
-          Lista de deseos
         </h3>
         <div class="wishlistBox">
           <div *ngIf="wishlist.length === 0" class="empty">
@@ -152,7 +154,10 @@
       </section>
     
   </div>
-
+  <!--Cartel producto añadido al carrito-->
+  <div *ngIf="showCartMessage" class="cartMessage">
+    Producto añadido al carrito
+  </div>
 
   <!-- Confirmación eliminar presupuesto -->
       <div *ngIf="showConfirmDelete" class="confirmDeleteIf">
@@ -164,5 +169,14 @@
           </div>
         </div>
       </div>
+    <div *ngIf="confirmWishlistId" class="confirmDeleteIf">
+      <div class="confirmDeleteBox">
+        <p>¿Seguro que deseas eliminar este producto de la lista de deseos?</p>
+        <div class="deleteButtons">
+          <button (click)="confirmRemoveWishlist()">Borrar</button>
+          <button (click)="cancelRemoveWishlist()">Cancelar</button>
+        </div>
+      </div>
+    </div>
 </div>
 

@@ -34,7 +34,7 @@
     background-color: var(--fourthColor);
     margin: 1rem;
     padding: 1rem;
-    width:30rem;
+    width:100%;
     border-radius: 16px;
     display: flex;
     justify-content: space-between;
@@ -43,6 +43,9 @@
 
   .name{
     min-width: 18rem;
+  }
+  .price{
+    margin: 0.5rem;
   }
 
   .removeButtons{
@@ -55,7 +58,17 @@
   .decrease, .remove{
     color:red;
     font-weight: bold;
-    padding: 0.8rem;
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .more{
+    color:rgb(35, 182, 5);
+    font-weight: bold;
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 3rem;
   }
   
   .buttons {
@@ -102,7 +115,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    min-height: 45rem; 
   }
 
   .cartItem {

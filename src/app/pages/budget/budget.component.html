@@ -2,15 +2,21 @@
   <legend>PIDE TU PRESUPUESTO</legend>
   <img src="imagenes/General/budget2.png" alt="">
 
-  <form class="budgetForm" (ngSubmit)="submitRequest()">
+  <form #formRef="ngForm" class="budgetForm" (ngSubmit)="submitRequest()" novalidate>
+
     <label>Nombre:</label>
     <input type="text" [(ngModel)]="form.name" name="name" required>
     <br>
     <label>Email:</label>
-    <input type="email" [(ngModel)]="form.email" name="email" required>
+    <input type="email" name="email" [(ngModel)]="form.email" required
+     #emailRef="ngModel" [class.invalid]="emailRef.invalid && emailRef.touched"
+    />
+    <div *ngIf="emailRef.invalid && emailRef.touched" class="error">
+      Introduce un email válido.
+    </div>
     <br>
     <label>Artista:</label>
-    <select [(ngModel)]="form.artist" name="artist" (change)="calculateBudget()" required>
+    <select [(ngModel)]="form.artist" name="artist" required>
       <option value="">Selecciona un artista</option>
       <option value="alejandra">Alejandra López</option>
       <option value="pedro">Pedro Peña</option>
@@ -21,35 +27,51 @@
     <br>
     <div class="service">
       <label for="color">Tipo de servicio:</label><br>
-        <input type="radio" id="color" name="service" value="color" [(ngModel)]="form.service" (change)="calculateBudget()">
+        <input type="radio" id="color" name="service" value="color" [(ngModel)]="form.service">
         <label>&emsp;Tatuaje a color</label><br>
-      <input type="radio" name="service" value="black" [(ngModel)]="form.service" (change)="calculateBudget()">
-      <label>&emsp;Tatuaje blanco y negro</label><br>
-      <input type="radio" name="service" value="piercing" [(ngModel)]="form.service" (change)="calculateBudget()">
-      <label>&emsp;Piercing</label>
+        <input type="radio" name="service" value="black" [(ngModel)]="form.service">
+        <label>&emsp;Tatuaje blanco y negro</label><br>
+        <input type="radio" name="service" value="piercing" [(ngModel)]="form.service">
+        <label>&emsp;Piercing</label>
     </div>
     <br>
     <div class="size">
       <label>Alto aproximado (cm):</label>
       <input type="number" [(ngModel)]="form.height" name="height" min="2" max="60"
-             [disabled]="form.service === 'piercing'" (change)="calculateBudget()">
+             [disabled]="form.service === 'piercing'" #heightRef="ngModel" >
+      <div *ngIf="!heightRef.disabled && heightRef.invalid && (heightRef.dirty || heightRef.touched)" class="error">
+        <div *ngIf="heightRef.errors?.['min'] || heightRef.errors?.['max']">
+          El tatuaje debe estar entre 2 y 60 centímetros.
+        </div>
+      </div>
+      
       <br>
       <label>Ancho aproximado (cm):</label>
       <input type="number" [(ngModel)]="form.width" name="width" min="2" max="60"
-             [disabled]="form.service === 'piercing'" (change)="calculateBudget()">
+             [disabled]="form.service === 'piercing'" #widthRef="ngModel" >
+            <!--widthRef(y todas las que son asi) detecta cuando está activo-->
+      <div *ngIf="!widthRef.disabled && widthRef.invalid && (widthRef.dirty || widthRef.touched)" class="error">
+        <div *ngIf="widthRef.errors?.['min'] || widthRef.errors?.['max']">
+          El tatuaje debe estar entre 2 y 60 centímetros.
+        </div>
+      </div>
     </div>
     <br>
     <p>Suba una imagen de su tatuaje:</p>
-    <label for="fileUpload" class="fileLabel">
+    <label for="fileUpload" class="fileUpload" [class.disabledUpload]="form.service === 'piercing'">
       Selecionar...
     </label>
-    <input type="file" id="fileUpload" [disabled]="form.service === 'piercing'"class="fileInput"/>
+    <input type="file" id="fileUpload" [disabled]="form.service === 'piercing'"class="fileInput"
+    
+    />
     <br>
     <label>Mensaje:</label>
     <input type="text" [(ngModel)]="form.message" name="message" class="message" placeholder="Consultas, sugerencias...">
     <br>
-    <p *ngIf="budget !== null"><strong>Presupuesto estimado:</strong> {{ budget | currency:'EUR' }}</p>
-
-    <button type="submit" class="submit">Enviar</button>
+    <p *ngIf="form.service && form.artist">
+      <strong>Presupuesto estimado:</strong>
+      {{ getTotalPrice(form.service, form.artist, form.height, form.width) }} €
+    </p>
+    <button type="submit" class="submit" [disabled]="formRef.invalid">Enviar</button>
   </form>
 </fieldset>

@@ -1,21 +1,18 @@
 .burguer-options {
-    position: fixed; 
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 240px;
-    background:  var(--thirdColor); 
-    z-index: 100;
-    padding: 6rem 0;
-    flex-direction: column;
-    pointer-events: none;
-    text-align: center;
+  position: fixed;
+  top: 0; 
+  right: 0;
+  width: 240px;
+  background: var(--thirdColor);
+  z-index: 100;
+  padding: 6rem 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  transform: translateX(+100%);
+  transition: transform 0.4s ease, opacity 0.4s ease;
 
-    /*Al abrir la página no se ve*/
-    transform: translateX(+100%);
-    opacity: 0;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-  }
+}
 
   /*Animación al hacer click*/
 .burguer-options.active {       
@@ -27,7 +24,8 @@
 .burguer-options a{
     color: var(--secondColor);
     font-size: 17px;
-    padding: 25px 15px;
+    padding: 1.3rem;
+    text-align: right;
     text-decoration: none;
     display: block;
     border-bottom: 1px solid #ddd;
@@ -56,5 +54,6 @@
   .burguer-options a {
     font-size: 20px;
     padding: 20px 0;
+    text-align: center;
   }
 }

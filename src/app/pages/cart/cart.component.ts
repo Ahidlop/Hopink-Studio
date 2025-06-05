@@ -40,6 +40,9 @@ export class CartComponent implements OnInit {
       `&item_name=${encodeURIComponent('Compra en HopInk')}`;
     window.open(url, '_blank');
   }
+  more(item: CartItem) {
+    this.cartService.addToCart(item);
+  }
 
   decrement(item: CartItem) {
     if (item.quantity > 1) {

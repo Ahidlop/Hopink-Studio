@@ -39,7 +39,6 @@ legend{
     background-color: var(--fourthColor);
     color: var(--secondColor);
     font-family: var(--fontFamily);
-  
   }
 
   .name, .email{
@@ -59,7 +58,7 @@ legend{
   pointer-events: none; 
 }
 
-.fileLabel {
+.fileUpload {
   background-color: var(--fourthColor);   
   border: 1px solid var(--border-input);
   border-radius: 16px;  
@@ -69,6 +68,24 @@ legend{
   cursor: pointer;
 }
 
+  /*Cuando seleccionas piercing y se desactiva alto y ancho*/
+  .budgetForm input:disabled,.budgetForm select:disabled {
+    background-color: #333;
+    color: #ccc;
+    border-color: #555;
+  }
+  .disabledUpload {
+    background-color: #333;
+    color: #ccc;
+    border-color: #555;
+    cursor: not-allowed;
+  }
+  /*Para el error en min/max de ancho/alto */
+  .error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+  }
 
   .submit{
     background-color: var(--lastColor);
@@ -79,6 +96,7 @@ legend{
     color: var(--secondColor);
     font-weight: bold;
   }
+
 
   .message{
     height: 8rem;
