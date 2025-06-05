@@ -117,7 +117,7 @@ export class AccountComponent implements OnInit {
       },
       error: err => {
         console.error('login error', err);
-        alert('Error de red al iniciar sesión');
+        alert('Contraseña o email incorrectos');
       }
     });
   }
