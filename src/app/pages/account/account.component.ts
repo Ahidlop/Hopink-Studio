@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
@@ -43,12 +43,17 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private wishlistService: WishlistService,
     private scroller: ViewportScroller,
-    private route: ActivatedRoute //Para deslizar
-  ) {}
+    private route: ActivatedRoute, //Para deslizar
+  ) {
+      this.registerForm = this.fb.group({
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$')]],
+        password: ['', [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$')]]
+      })
+  }
 
   ngOnInit() {
     this.loginForm    = this.fb.group({ email: [''], password: [''] });
-    this.registerForm = this.fb.group({ name: [''], email: [''], password: [''] });
     this.checkSession();
 
     this.wishlistService.loadWishlist();
@@ -135,6 +140,11 @@ export class AccountComponent implements OnInit {
   }
 
   register() {
+    if (this.registerForm.invalid) {
+      alert('Por favor revisa el email o la contraseña. La contraseña debe tener al menos 8 caracteres con al menos una letra y un número.');
+      this.registerForm.markAllAsTouched();
+      return;
+    }
     const { name, email, password } = this.registerForm.value;
     this.http.post<ApiResponse>(
       `${this.API}/register.php`,

@@ -10,8 +10,18 @@
     <form [formGroup]="registerForm" (ngSubmit)="register()" class="registerForm">
       <h3>Registrarse</h3>
       <input type="text"        formControlName="name"     placeholder="Nombre completo" required>
+      <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+        <small>El nombre es obligatorio.</small>
+      </div>
       <input type="email"       formControlName="email"    placeholder="Email" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
-      <input type="password"    formControlName="password" placeholder="Contraseña" required>
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        <small>Email no válido. Ej: ejemplo&#64;correo.com</small>
+      </div>
+      <input type="password"    formControlName="password" placeholder="Contraseña" pathern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <small>La contraseña debe tener al menos 8 caracteres, con al menos una letra y un número.</small>
+        </div>
+      
       <button type="submit">Crear cuenta</button>
     </form>
   </div>
