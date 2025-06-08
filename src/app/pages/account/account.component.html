@@ -42,7 +42,7 @@
       <!-- Pedidos -->
       <section id="orders">
         <h3>Mis pedidos</h3>
-        <p>Aquí se mostrarán tus pedidos cuando estén disponibles.</p>
+        <p>No tienes pedidos disponibles.</p>
       </section>
 
       <hr class="section-divider" />
@@ -50,23 +50,26 @@
       <!-- Presupuestos -->
        <section class="budgets" id="budgets">
         <h3>Mis presupuestos</h3>
-      
-        <div *ngFor="let b of budgets" class="budget-card">
-          <button class="close" (click)="confirmDelete(b)">X</button>
-          <h4>
-            {{ getServiceLabel(b.service) }} con {{ b.artist | titlecase }}
-          </h4>
+        <div *ngIf="budgets.length === 0" class="empty">
+            <p>No tienes presupuestos disponibles.</p>
+        </div>
+        <div *ngIf="budgets.length >0">
+          <div *ngFor="let b of budgets" class="budget-card">
+            <button class="close" (click)="confirmDelete(b)">X</button>
+            <h4>
+              {{ getServiceLabel(b.service) }} con {{ b.artist | titlecase }}
+            </h4>
 
-          <p><strong>Presupuesto estimado:</strong> {{ getTotalPrice(b.service, b.artist, b.height, b.width) }} €</p>
-          <div class="budgetContent">
-            <ng-container *ngIf="b.service !== 'piercing'" class="budgetContent">
-              <p>Base: {{ getBasePrice(b.artist) }} €/hora</p>
-              <p *ngIf="b.service === 'color'">+ Suplemento por color: 30 €</p>
-              <p>Tiempo estimado: {{ getEstimatedHours(b.height, b.width) }} hora(s)</p>
-          </ng-container>
-          <p><em>Fecha del presupuesto: {{ b.created_at | date:'dd/MM/yyyy HH:mm' }}</em></p>
-        
+            <p><strong>Presupuesto estimado:</strong> {{ getTotalPrice(b.service, b.artist, b.height, b.width) }} €</p>
+            <div class="budgetContent">
+              <ng-container *ngIf="b.service !== 'piercing'" class="budgetContent">
+                <p>Base: {{ getBasePrice(b.artist) }} €/hora</p>
+                <p *ngIf="b.service === 'color'">+ Suplemento por color: 30 €</p>
+                <p>Tiempo estimado: {{ getEstimatedHours(b.height, b.width) }} hora(s)</p>
+            </ng-container>
+            <p><em>Fecha del presupuesto: {{ b.created_at | date:'dd/MM/yyyy HH:mm' }}</em></p>
           </div>
+        </div> 
 </div>
       </section>
 

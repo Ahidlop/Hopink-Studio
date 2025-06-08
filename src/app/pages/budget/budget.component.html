@@ -68,9 +68,7 @@
     <label for="fileUpload" class="fileUpload" [class.disabledUpload]="form.service === 'piercing'">
       Selecionar...
     </label>
-    <input type="file" id="fileUpload" [disabled]="form.service === 'piercing'"class="fileInput"
-    
-    />
+    <input type="file" id="fileUpload" [disabled]="form.service === 'piercing'"class="fileInput"/>
     <br>
     <label>Mensaje:</label>
     <input type="text" [(ngModel)]="form.message" name="message" class="message" placeholder="Consultas, sugerencias...">
@@ -79,6 +77,7 @@
       <strong>Presupuesto estimado:</strong>
       {{ getTotalPrice(form.service, form.artist, form.height, form.width) }} €
     </p>
+    
     <button type="submit" class="submit" [disabled]="formRef.invalid">Enviar</button>
   </form>
 </fieldset>

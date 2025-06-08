@@ -10,6 +10,38 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrl: './budget.component.css'
 })
 export class BudgetComponent {
+  isLoggedIn: boolean = false;
+  user: any = null;
+
+  ngOnInit() {
+  this.checkLoginStatus();
+}
+
+checkLoginStatus() {
+  this.http.get<any>('http://localhost/Hopink-Studio/backend/getUser.php', { withCredentials: true })
+    .subscribe({
+      next: (response) => {
+        if (response && response.status === 'success' && response.user && response.user.email) {
+          console.log('Usuario loggeado detectado:', response.user);
+          this.isLoggedIn = true;
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('user', JSON.stringify(response.user));
+        } else {
+          console.log('No hay usuario loggeado');
+          this.isLoggedIn = false;
+          localStorage.setItem('isLoggedIn', 'false');
+          localStorage.removeItem('user');
+        }
+      },
+      error: (err) => {
+        console.error('Error al comprobar login:', err);
+        this.isLoggedIn = false;
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('user');
+      }
+    });
+}
+
   form = {
     name: '',
     email: '',
@@ -61,40 +93,98 @@ getTotalPrice(service: string, artist: string, height: number, width: number): n
   const colorSupplement = service === 'color' ? 30 : 0;
   return base * hours + colorSupplement;
 }
-  submitRequest() {
-    const isLogged = localStorage.getItem('userLogged') === 'true';
-
-    if (!this.form.name || !this.form.email || !this.form.artist || !this.form.service) {
-      alert('Rellena todos los campos obligatorios');
+saveBudget(){
+  const user = localStorage.getItem('user');
+  const userEmail = user ? JSON.parse(user).email : null;
+  
+  if (!userEmail) {
+      console.error('No se encontró el email del usuario loggeado');
       return;
-    }
+  }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(this.form.email)) {
-      alert('Introduce un email válido');
-      return;
-    }
-      const data = {
-        ...this.form,
-        budget: this.budget
-      };
+  const budgetData = {
+      email: userEmail,
+      artist: this.form.artist,
+      service: this.form.service,
+      height: this.form.height,
+      width: this.form.width,
+      message: this.form.message
+  };
 
-      if(!isLogged){
-        //Si no hay usuario
-        this.bannerEmail = this.form.email;
-        this.bannerVisible = true;
-      }else{
-        //Si hay usuario
-        this.http.post(this.API, data, { withCredentials: true })
-        .subscribe({
-          next: () => {
-            alert('Presupuesto enviado correctamente');
-          },
-          error: err => {
-            console.error('Error al enviar presupuesto:', err);
-            alert('Hubo un error al enviar el presupuesto');
-          }
-        });
+  this.http.post('http://localhost/Hopink-Studio/backend/save_budget.php', budgetData).subscribe({
+      next: (response: any) => {
+          console.log('Presupuesto guardado correctamente', response);
+          // Limpiar el formulario después:
+          this.form = {
+              name: '',
+              email: '',
+              artist: '',
+              service: '',
+              height: 0,
+              width: 0,
+              message: ''
+          };
+      },
+      error: (error) => {
+          console.error('Error al guardar el presupuesto', error);
       }
-    }
+  });
 }
+submitRequest() {
+  if (!this.form.name || !this.form.email || !this.form.artist || !this.form.service) {
+    alert('Rellena todos los campos obligatorios');
+    return;
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(this.form.email)) {
+    alert('Introduce un email válido');
+    return;
+  }
+
+  console.log('¿Usuario loggeado?', this.isLoggedIn);
+
+  if (!this.isLoggedIn) {
+    console.log('Usuario NO loggeado, mostrar banner');
+    this.bannerEmail = this.form.email;
+    this.bannerVisible = true;
+    return; 
+  }
+  console.log('Usuario loggeado → guardar presupuesto');
+
+  this.bannerVisible = false; // por si estaba abierto antes
+
+  const user = localStorage.getItem('user');
+  const email = user ? JSON.parse(user).email : this.form.email;
+
+  const data = {
+    ...this.form,
+    email: email, // usar email correcto
+    budget: this.budget
+  };
+
+  console.log('Datos que se envían:', data);
+
+  this.http.post(this.API, data, { withCredentials: true })
+    .subscribe({
+      next: () => {
+        console.log('Presupuesto guardado correctamente');
+        alert('Presupuesto enviado correctamente');
+        this.form = {
+          name: '',
+          email: '',
+          artist: '',
+          service: '',
+          height: 0,
+          width: 0,
+          message: ''
+        };
+      },
+      error: err => {
+        console.error('Error al enviar presupuesto:', err);
+        alert('Hubo un error al enviar el presupuesto');
+      }
+    });
+}
+}
+
