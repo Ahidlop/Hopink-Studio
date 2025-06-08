@@ -64,14 +64,14 @@ footer{
   margin-top: 0.5rem;
 }
 
-.instagramSVG, .phoneSVG{
+.instagramSVG, .linkedinSVG{
     height: 2rem;
 }
 .mailSVG{
     height: 3rem;
     width: 3rem;
 }
-.instagramSVG:hover, .phoneSVG:hover, .mailSVG:hover{
+.instagramSVG:hover, .linkedinSVG:hover, .mailSVG:hover{
     cursor: pointer;
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
@@ -166,7 +166,7 @@ footer{
     margin-top: 1rem;
   }
 
-  .instagramSVG, .phoneSVG, .mailSVG {
+  .instagramSVG, .linkedinSVG, .mailSVG {
     height: 2rem;
     width: auto;
     margin: 0.3rem;
