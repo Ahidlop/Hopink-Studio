@@ -21,6 +21,8 @@ export class BudgetComponent {
   };
 
   budget: number | null = null;
+  public bannerVisible = false;
+  public bannerEmail='';
   
   private readonly API = 'http://localhost/Hopink-Studio/backend/save_budget.php';
 
@@ -60,30 +62,39 @@ getTotalPrice(service: string, artist: string, height: number, width: number): n
   return base * hours + colorSupplement;
 }
   submitRequest() {
-  if (!this.form.name || !this.form.email || !this.form.artist || !this.form.service) {
-    alert('Rellena todos los campos obligatorios');
-    return;
-  }
+    const isLogged = localStorage.getItem('userLogged') === 'true';
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(this.form.email)) {
-    alert('Introduce un email válido');
-    return;
-  }
-    const data = {
-      ...this.form,
-      budget: this.budget
-    };
+    if (!this.form.name || !this.form.email || !this.form.artist || !this.form.service) {
+      alert('Rellena todos los campos obligatorios');
+      return;
+    }
 
-    this.http.post(this.API, data, { withCredentials: true })
-      .subscribe({
-        next: () => {
-          alert('Presupuesto enviado correctamente');
-        },
-        error: err => {
-          console.error('Error al enviar presupuesto:', err);
-          alert('Hubo un error al enviar el presupuesto');
-        }
-      });
-  }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(this.form.email)) {
+      alert('Introduce un email válido');
+      return;
+    }
+      const data = {
+        ...this.form,
+        budget: this.budget
+      };
+
+      if(!isLogged){
+        //Si no hay usuario
+        this.bannerEmail = this.form.email;
+        this.bannerVisible = true;
+      }else{
+        //Si hay usuario
+        this.http.post(this.API, data, { withCredentials: true })
+        .subscribe({
+          next: () => {
+            alert('Presupuesto enviado correctamente');
+          },
+          error: err => {
+            console.error('Error al enviar presupuesto:', err);
+            alert('Hubo un error al enviar el presupuesto');
+          }
+        });
+      }
+    }
 }

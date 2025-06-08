@@ -14,6 +14,7 @@ import { CookiesComponent } from './components/cookies/cookies.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   title = 'hopink-studio';
   menuVisible: boolean = false;
@@ -31,9 +32,22 @@ export class AppComponent {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         if (this.isBrowser) {
-          setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'auto' });
-          }, 100);
+          const fragment = window.location.hash?.substring(1);
+          //Si hay fragmento, hace scroll al fragmento
+          if(fragment){
+            setTimeout(() => {
+                const element = document.getElementById(fragment);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }else{
+              //Si no hay fragmento, va arriba de la pagina
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'auto' });
+            }, 100);
+          }
+          
         }
       });
   }

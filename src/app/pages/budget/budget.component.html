@@ -2,8 +2,15 @@
   <legend>PIDE TU PRESUPUESTO</legend>
   <img src="imagenes/General/budget2.png" alt="">
 
+  <div class="overlay" *ngIf="bannerVisible">
+    <div class="banner">
+      <button class="close-btn" (click)="bannerVisible = false">✕</button>
+      <p class="message-text">
+        Su presupuesto se enviará al correo: <strong>{{ bannerEmail }}</strong>.
+      </p>
+    </div>
+  </div>
   <form #formRef="ngForm" class="budgetForm" (ngSubmit)="submitRequest()" novalidate>
-
     <label>Nombre:</label>
     <input type="text" [(ngModel)]="form.name" name="name" required>
     <br>
