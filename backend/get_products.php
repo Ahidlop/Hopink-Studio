@@ -19,11 +19,13 @@
     $products = [];
 
     if ($result->num_rows > 0) {
+        // Guardamos cada producto en el array
         while($row = $result->fetch_assoc()) {
             $productos[] = $row;
         }
     }
 
+    // Devolvemos los productos como JSON
     echo json_encode($productos);
     $conn->close();
 ?>

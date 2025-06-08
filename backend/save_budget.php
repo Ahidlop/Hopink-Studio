@@ -1,4 +1,5 @@
 <?php
+// Sessión y conexión
     session_start();
     require_once 'db.php';
 
@@ -13,12 +14,14 @@
         exit;
     }
 
+    // Solo usuarios logueados
     if (!isset($_SESSION['user_id'])) {
         http_response_code(401);
         echo json_encode(['error' => 'No autenticado']);
         exit;
     }
 
+    // Obtenemos datos enviados en JSON
     $userId = $_SESSION['user_id'];
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -31,11 +34,13 @@
     $message  = $data['message']  ?? '';
     $budget   = $data['budget']   ?? 0;
 
+    // Preparamos inserción segura
     $stmt = $conn->prepare("INSERT INTO budgets (user_id, name, email, artist, service, height, width, message, budget, created_at)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
     $stmt->bind_param("issssiisd", $userId, $name, $email, $artist, $service, $height, $width, $message, $budget);
 
     if ($stmt->execute()) {
+        // Guardado exitoso
         echo json_encode(['success' => true]);
     } else {
         http_response_code(500);
